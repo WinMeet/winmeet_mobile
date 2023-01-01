@@ -18,13 +18,12 @@ import '../../presentation/views/auth/forgot_password/forgot_password_view.dart'
     as _i3;
 import '../../presentation/views/auth/login/login_view.dart' as _i1;
 import '../../presentation/views/auth/register/register_view.dart' as _i2;
-import '../../presentation/views/home/home_view.dart' as _i8;
 import '../../presentation/views/navbar/navbar_view.dart' as _i4;
-import '../../presentation/views/scheduled_events/view/scheduled_events_view.dart'
-    as _i9;
-import '../../presentation/views/settings/view/settings_view.dart' as _i10;
-import 'wrappers/home_wrapper.dart' as _i5;
-import 'wrappers/scheduled_events_wrapper.dart' as _i6;
+import '../../presentation/views/pending/pending.dart' as _i9;
+import '../../presentation/views/schedule/schedule_view.dart' as _i8;
+import '../../presentation/views/settings/settings_view.dart' as _i10;
+import 'wrappers/pending_wrapper.dart' as _i6;
+import 'wrappers/schedule_wrapper.dart' as _i5;
 import 'wrappers/settings_wrapper.dart' as _i7;
 
 class AppRouter extends _i11.RootStackRouter {
@@ -57,16 +56,16 @@ class AppRouter extends _i11.RootStackRouter {
         child: const _i4.NavbarView(),
       );
     },
-    HomeRouter.name: (routeData) {
+    ScheduleRouter.name: (routeData) {
       return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i11.WrappedRoute(child: _i5.HomeWrapper()),
+        child: _i11.WrappedRoute(child: _i5.ScheduleWrapper()),
       );
     },
-    ScheduledEventsRouter.name: (routeData) {
+    PendingRouter.name: (routeData) {
       return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i11.WrappedRoute(child: _i6.ScheduledEventsWrapper()),
+        child: _i11.WrappedRoute(child: _i6.PendingWrapper()),
       );
     },
     SettingsRouter.name: (routeData) {
@@ -75,16 +74,16 @@ class AppRouter extends _i11.RootStackRouter {
         child: _i11.WrappedRoute(child: _i7.SettingsWrapper()),
       );
     },
-    HomeRoute.name: (routeData) {
+    ScheduleRoute.name: (routeData) {
       return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i8.HomeView(),
+        child: const _i8.ScheduleView(),
       );
     },
-    ScheduledEventsRoute.name: (routeData) {
+    PendingRoute.name: (routeData) {
       return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i9.ScheduledEventsView(),
+        child: const _i9.PendingView(),
       );
     },
     SettingsRoute.name: (routeData) {
@@ -99,7 +98,7 @@ class AppRouter extends _i11.RootStackRouter {
   List<_i11.RouteConfig> get routes => [
         _i11.RouteConfig(
           LoginRoute.name,
-          path: '/',
+          path: '/login-view',
         ),
         _i11.RouteConfig(
           RegisterRoute.name,
@@ -111,41 +110,41 @@ class AppRouter extends _i11.RootStackRouter {
         ),
         _i11.RouteConfig(
           NavbarRouter.name,
-          path: '/navbar-view',
+          path: '/',
           children: [
             _i11.RouteConfig(
-              HomeRouter.name,
+              ScheduleRouter.name,
               path: '',
               parent: NavbarRouter.name,
               children: [
                 _i11.RouteConfig(
-                  HomeRoute.name,
+                  ScheduleRoute.name,
                   path: '',
-                  parent: HomeRouter.name,
+                  parent: ScheduleRouter.name,
                 ),
                 _i11.RouteConfig(
                   '*#redirect',
                   path: '*',
-                  parent: HomeRouter.name,
+                  parent: ScheduleRouter.name,
                   redirectTo: '',
                   fullMatch: true,
                 ),
               ],
             ),
             _i11.RouteConfig(
-              ScheduledEventsRouter.name,
-              path: 'scheduled-events-wrapper',
+              PendingRouter.name,
+              path: 'pending-wrapper',
               parent: NavbarRouter.name,
               children: [
                 _i11.RouteConfig(
-                  ScheduledEventsRoute.name,
+                  PendingRoute.name,
                   path: '',
-                  parent: ScheduledEventsRouter.name,
+                  parent: PendingRouter.name,
                 ),
                 _i11.RouteConfig(
                   '*#redirect',
                   path: '*',
-                  parent: ScheduledEventsRouter.name,
+                  parent: PendingRouter.name,
                   redirectTo: '',
                   fullMatch: true,
                 ),
@@ -173,8 +172,8 @@ class AppRouter extends _i11.RootStackRouter {
           ],
         ),
         _i11.RouteConfig(
-          '*#redirect',
-          path: '*',
+          '#redirect',
+          path: '',
           redirectTo: '',
           fullMatch: true,
         ),
@@ -187,7 +186,7 @@ class LoginRoute extends _i11.PageRouteInfo<void> {
   const LoginRoute()
       : super(
           LoginRoute.name,
-          path: '/',
+          path: '/login-view',
         );
 
   static const String name = 'LoginRoute';
@@ -223,7 +222,7 @@ class NavbarRouter extends _i11.PageRouteInfo<void> {
   const NavbarRouter({List<_i11.PageRouteInfo>? children})
       : super(
           NavbarRouter.name,
-          path: '/navbar-view',
+          path: '/',
           initialChildren: children,
         );
 
@@ -231,29 +230,29 @@ class NavbarRouter extends _i11.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.HomeWrapper]
-class HomeRouter extends _i11.PageRouteInfo<void> {
-  const HomeRouter({List<_i11.PageRouteInfo>? children})
+/// [_i5.ScheduleWrapper]
+class ScheduleRouter extends _i11.PageRouteInfo<void> {
+  const ScheduleRouter({List<_i11.PageRouteInfo>? children})
       : super(
-          HomeRouter.name,
+          ScheduleRouter.name,
           path: '',
           initialChildren: children,
         );
 
-  static const String name = 'HomeRouter';
+  static const String name = 'ScheduleRouter';
 }
 
 /// generated route for
-/// [_i6.ScheduledEventsWrapper]
-class ScheduledEventsRouter extends _i11.PageRouteInfo<void> {
-  const ScheduledEventsRouter({List<_i11.PageRouteInfo>? children})
+/// [_i6.PendingWrapper]
+class PendingRouter extends _i11.PageRouteInfo<void> {
+  const PendingRouter({List<_i11.PageRouteInfo>? children})
       : super(
-          ScheduledEventsRouter.name,
-          path: 'scheduled-events-wrapper',
+          PendingRouter.name,
+          path: 'pending-wrapper',
           initialChildren: children,
         );
 
-  static const String name = 'ScheduledEventsRouter';
+  static const String name = 'PendingRouter';
 }
 
 /// generated route for
@@ -270,27 +269,27 @@ class SettingsRouter extends _i11.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.HomeView]
-class HomeRoute extends _i11.PageRouteInfo<void> {
-  const HomeRoute()
+/// [_i8.ScheduleView]
+class ScheduleRoute extends _i11.PageRouteInfo<void> {
+  const ScheduleRoute()
       : super(
-          HomeRoute.name,
+          ScheduleRoute.name,
           path: '',
         );
 
-  static const String name = 'HomeRoute';
+  static const String name = 'ScheduleRoute';
 }
 
 /// generated route for
-/// [_i9.ScheduledEventsView]
-class ScheduledEventsRoute extends _i11.PageRouteInfo<void> {
-  const ScheduledEventsRoute()
+/// [_i9.PendingView]
+class PendingRoute extends _i11.PageRouteInfo<void> {
+  const PendingRoute()
       : super(
-          ScheduledEventsRoute.name,
+          PendingRoute.name,
           path: '',
         );
 
-  static const String name = 'ScheduledEventsRoute';
+  static const String name = 'PendingRoute';
 }
 
 /// generated route for

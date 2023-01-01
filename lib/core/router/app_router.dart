@@ -3,42 +3,40 @@ import 'package:auto_route/annotations.dart';
 import '../../presentation/views/auth/forgot_password/forgot_password_view.dart';
 import '../../presentation/views/auth/login/login_view.dart';
 import '../../presentation/views/auth/register/register_view.dart';
-import '../../presentation/views/home/home_view.dart';
 import '../../presentation/views/navbar/navbar_view.dart';
-import '../../presentation/views/scheduled_events/view/scheduled_events_view.dart';
-import '../../presentation/views/settings/view/settings_view.dart';
-import 'wrappers/home_wrapper.dart';
-import 'wrappers/scheduled_events_wrapper.dart';
+import '../../presentation/views/pending/pending.dart';
+import '../../presentation/views/schedule/schedule_view.dart';
+import '../../presentation/views/settings/settings_view.dart';
+import 'wrappers/pending_wrapper.dart';
+import 'wrappers/schedule_wrapper.dart';
 import 'wrappers/settings_wrapper.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: "View,Route",
   preferRelativeImports: true,
   routes: <AutoRoute>[
-    AutoRoute(
-      page: LoginView,
-      initial: true,
-    ),
+    AutoRoute(page: LoginView),
     AutoRoute(page: RegisterView),
     AutoRoute(page: ForgotPasswordView),
     AutoRoute(
       page: NavbarView,
       name: "NavbarRouter",
+      initial: true,
       children: [
         AutoRoute(
-          page: HomeWrapper,
-          name: "HomeRouter",
+          page: ScheduleWrapper,
+          name: "ScheduleRouter",
           initial: true,
           children: [
-            AutoRoute(page: HomeView, initial: true),
+            AutoRoute(page: ScheduleView, initial: true),
             RedirectRoute(path: '*', redirectTo: ''),
           ],
         ),
         AutoRoute(
-          page: ScheduledEventsWrapper,
-          name: "ScheduledEventsRouter",
+          page: PendingWrapper,
+          name: "PendingRouter",
           children: [
-            AutoRoute(page: ScheduledEventsView, initial: true),
+            AutoRoute(page: PendingView, initial: true),
             RedirectRoute(path: '*', redirectTo: ''),
           ],
         ),
@@ -52,7 +50,7 @@ import 'wrappers/settings_wrapper.dart';
         ),
       ],
     ),
-    RedirectRoute(path: '*', redirectTo: ''),
+    RedirectRoute(path: '', redirectTo: ''),
   ],
 )
 class $AppRouter {}

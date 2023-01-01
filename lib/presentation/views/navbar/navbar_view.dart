@@ -10,8 +10,8 @@ class NavbarView extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       routes: const [
-        HomeRouter(),
-        ScheduledEventsRouter(),
+        ScheduleRouter(),
+        PendingRouter(),
         SettingsRouter(),
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
@@ -21,12 +21,12 @@ class NavbarView extends StatelessWidget {
           onTap: tabsRouter.setActiveIndex,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
+              icon: Icon(Icons.event),
+              label: 'Schedule',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.event),
-              label: 'Scheduled Events',
+              icon: Icon(Icons.pending_actions),
+              label: 'Pending',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
