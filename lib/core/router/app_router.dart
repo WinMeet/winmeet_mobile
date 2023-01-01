@@ -1,15 +1,15 @@
 import 'package:auto_route/annotations.dart';
+
+import '../../presentation/views/auth/forgot_password/forgot_password_view.dart';
+import '../../presentation/views/auth/login/login_view.dart';
+import '../../presentation/views/auth/register/register_view.dart';
+import '../../presentation/views/home/home_view.dart';
+import '../../presentation/views/navbar/navbar_view.dart';
+import '../../presentation/views/scheduled_events/view/scheduled_events_view.dart';
+import '../../presentation/views/settings/view/settings_view.dart';
 import 'wrappers/home_wrapper.dart';
 import 'wrappers/scheduled_events_wrapper.dart';
 import 'wrappers/settings_wrapper.dart';
-import '../../feature/settings/view/settings_view.dart';
-
-import '../../feature/auth/forgot_password/view/forgot_password_view.dart';
-import '../../feature/auth/login/view/login_view.dart';
-import '../../feature/auth/register/view/register_view.dart';
-import '../../feature/home/view/home_view.dart';
-import '../../feature/navbar/view/navbar_view.dart';
-import '../../feature/scheduled_events/view/scheduled_events_view.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: "View,Route",

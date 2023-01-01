@@ -14,14 +14,15 @@
 import 'package:auto_route/auto_route.dart' as _i11;
 import 'package:flutter/material.dart' as _i12;
 
-import '../../feature/auth/forgot_password/view/forgot_password_view.dart'
+import '../../presentation/views/auth/forgot_password/forgot_password_view.dart'
     as _i3;
-import '../../feature/auth/login/view/login_view.dart' as _i1;
-import '../../feature/auth/register/view/register_view.dart' as _i2;
-import '../../feature/home/view/home_view.dart' as _i8;
-import '../../feature/navbar/view/navbar_view.dart' as _i4;
-import '../../feature/scheduled_events/view/scheduled_events_view.dart' as _i9;
-import '../../feature/settings/view/settings_view.dart' as _i10;
+import '../../presentation/views/auth/login/login_view.dart' as _i1;
+import '../../presentation/views/auth/register/register_view.dart' as _i2;
+import '../../presentation/views/home/home_view.dart' as _i8;
+import '../../presentation/views/navbar/navbar_view.dart' as _i4;
+import '../../presentation/views/scheduled_events/view/scheduled_events_view.dart'
+    as _i9;
+import '../../presentation/views/settings/view/settings_view.dart' as _i10;
 import 'wrappers/home_wrapper.dart' as _i5;
 import 'wrappers/scheduled_events_wrapper.dart' as _i6;
 import 'wrappers/settings_wrapper.dart' as _i7;

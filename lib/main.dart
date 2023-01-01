@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'core/constants/strings.dart';
 
+import 'core/constants/strings.dart';
 import 'core/router/app_router.gr.dart';
-import 'core/utility/app_bloc_observer.dart';
+import 'core/utility/bloc/app_bloc_observer.dart';
+import 'locator.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
 
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  initServices();
 
   runApp(WinMeetMobile());
 }
