@@ -12,7 +12,7 @@ import 'wrappers/schedule_wrapper.dart';
 import 'wrappers/settings_wrapper.dart';
 
 @MaterialAutoRouter(
-  replaceInRouteName: "View,Route",
+  replaceInRouteName: 'View,Route',
   preferRelativeImports: true,
   routes: <AutoRoute>[
     AutoRoute(page: LoginView),
@@ -20,12 +20,12 @@ import 'wrappers/settings_wrapper.dart';
     AutoRoute(page: ForgotPasswordView),
     AutoRoute(
       page: NavbarView,
-      name: "NavbarRouter",
+      name: 'NavbarRouter',
       initial: true,
       children: [
         AutoRoute(
           page: ScheduleWrapper,
-          name: "ScheduleRouter",
+          name: 'ScheduleRouter',
           initial: true,
           children: [
             AutoRoute(page: ScheduleView, initial: true),
@@ -34,7 +34,7 @@ import 'wrappers/settings_wrapper.dart';
         ),
         AutoRoute(
           page: PendingWrapper,
-          name: "PendingRouter",
+          name: 'PendingRouter',
           children: [
             AutoRoute(page: PendingView, initial: true),
             RedirectRoute(path: '*', redirectTo: ''),
@@ -42,7 +42,7 @@ import 'wrappers/settings_wrapper.dart';
         ),
         AutoRoute(
           page: SettingsWrapper,
-          name: "SettingsRouter",
+          name: 'SettingsRouter',
           children: [
             AutoRoute(page: SettingsView, initial: true),
             RedirectRoute(path: '*', redirectTo: ''),

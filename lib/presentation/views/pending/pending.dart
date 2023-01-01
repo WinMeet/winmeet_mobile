@@ -7,14 +7,14 @@ class PendingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Pending View"),
+        title: const Text('Pending View'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
           Center(
             child: Text(
-              "No Meetings Pending",
+              'No Meetings Pending',
             ),
           ),
         ],

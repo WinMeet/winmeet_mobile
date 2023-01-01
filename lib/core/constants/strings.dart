@@ -1,3 +1,3 @@
 class Strings {
-  static const String appName = "WinMeet";
+  static const String appName = 'WinMeet';
 }

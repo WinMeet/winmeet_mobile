@@ -7,7 +7,7 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Settings View"),
+        title: const Text('Settings View'),
       ),
     );
   }

@@ -14,7 +14,7 @@ class _ScheduleViewState extends State<ScheduleView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Schedule"),
+        title: const Text('Schedule'),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
@@ -26,7 +26,7 @@ class _ScheduleViewState extends State<ScheduleView> {
           Expanded(
             child: Center(
               child: Text(
-                "No Meetings Scheduled",
+                'No Meetings Scheduled',
               ),
             ),
           )
