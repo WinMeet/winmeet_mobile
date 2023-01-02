@@ -17,7 +17,10 @@ import 'wrappers/settings_wrapper.dart';
   replaceInRouteName: 'View,Route',
   preferRelativeImports: true,
   routes: <AutoRoute>[
-    AutoRoute(page: LoginView),
+    AutoRoute(
+      page: LoginView,
+      initial: true,
+    ),
     AutoRoute(page: RegisterView),
     AutoRoute(page: ForgotPasswordView),
     AutoRoute(page: CreateMeetingView),
@@ -25,7 +28,6 @@ import 'wrappers/settings_wrapper.dart';
     AutoRoute(
       page: NavbarView,
       name: 'NavbarRouter',
-      initial: true,
       children: [
         AutoRoute(
           page: ScheduleWrapper,

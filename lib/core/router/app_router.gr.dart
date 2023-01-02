@@ -114,7 +114,7 @@ class AppRouter extends _i13.RootStackRouter {
   List<_i13.RouteConfig> get routes => [
         _i13.RouteConfig(
           LoginRoute.name,
-          path: '/login-view',
+          path: '/',
         ),
         _i13.RouteConfig(
           RegisterRoute.name,
@@ -134,7 +134,7 @@ class AppRouter extends _i13.RootStackRouter {
         ),
         _i13.RouteConfig(
           NavbarRouter.name,
-          path: '/',
+          path: '/navbar-view',
           children: [
             _i13.RouteConfig(
               ScheduleRouter.name,
@@ -210,7 +210,7 @@ class LoginRoute extends _i13.PageRouteInfo<void> {
   const LoginRoute()
       : super(
           LoginRoute.name,
-          path: '/login-view',
+          path: '/',
         );
 
   static const String name = 'LoginRoute';
@@ -270,7 +270,7 @@ class NavbarRouter extends _i13.PageRouteInfo<void> {
   const NavbarRouter({List<_i13.PageRouteInfo>? children})
       : super(
           NavbarRouter.name,
-          path: '/',
+          path: '/navbar-view',
           initialChildren: children,
         );
 

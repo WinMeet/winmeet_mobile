@@ -7,7 +7,7 @@ class PendingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pending View'),
+        title: const Text('Pending'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

@@ -1,9 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../core/extensions/context_extensions.dart';
 
 import '../../../app/theme/theme_bloc.dart';
+import '../../../core/extensions/context_extensions.dart';
+import '../../../core/router/app_router.gr.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -32,6 +33,14 @@ class SettingsView extends StatelessWidget {
                 child: const _ThemeTileDialog(),
               ),
             ),
+            SizedBox(
+              height: context.mediumValue,
+            ),
+            Text(
+              'Account',
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(fontWeight: FontWeight.w700),
+            ),
+            const _LogoutTile(),
           ],
         ),
       ),
@@ -58,6 +67,7 @@ class _ThemeTileDialog extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 RadioListTile(
+                  activeColor: context.theme.primaryColor,
                   contentPadding: EdgeInsets.zero,
                   title: const Text('System Default'),
                   value: ThemeMode.system,
@@ -65,6 +75,7 @@ class _ThemeTileDialog extends StatelessWidget {
                   onChanged: (ThemeMode? theme) => context.read<ThemeBloc>().add(ThemeTileChanged(theme!)),
                 ),
                 RadioListTile(
+                  activeColor: context.theme.primaryColor,
                   contentPadding: EdgeInsets.zero,
                   title: const Text('Light'),
                   value: ThemeMode.light,
@@ -72,6 +83,7 @@ class _ThemeTileDialog extends StatelessWidget {
                   onChanged: (ThemeMode? theme) => context.read<ThemeBloc>().add(ThemeTileChanged(theme!)),
                 ),
                 RadioListTile(
+                  activeColor: context.theme.primaryColor,
                   contentPadding: EdgeInsets.zero,
                   title: const Text('Dark'),
                   value: ThemeMode.dark,
@@ -97,6 +109,68 @@ class _ThemeTileDialog extends StatelessWidget {
               ],
             );
           },
+        ),
+      ),
+    );
+  }
+}
+
+class _LogoutTile extends StatelessWidget {
+  const _LogoutTile();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      leading: const Icon(Icons.logout),
+      title: const Text('Logout'),
+      onTap: () => _settingsDialog(
+        context: context,
+        child: const _LogoutDialog(),
+      ),
+    );
+  }
+}
+
+class _LogoutDialog extends StatelessWidget {
+  const _LogoutDialog();
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Padding(
+        padding: context.paddingAllDefault,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Logout',
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            SizedBox(
+              height: context.mediumValue,
+            ),
+            const Text(
+              'Are you sure you want to logout?',
+            ),
+            SizedBox(
+              height: context.mediumValue,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () => context.router.pop(),
+                  child: const Text('CANCEL'),
+                ),
+                TextButton(
+                  onPressed: () => context.router.replace(const LoginRoute()),
+                  child: const Text('OK'),
+                )
+              ],
+            ),
+          ],
         ),
       ),
     );
