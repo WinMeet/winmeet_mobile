@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 
+import 'app/theme/theme_bloc.dart';
+import 'core/theme/theme_manager.dart';
 import 'data/api/auth/auth_api.dart';
 import 'data/repositories/auth/auth_repository.dart';
 import 'data/repositories/auth/base_auth_repository.dart';
@@ -14,6 +16,9 @@ void initServices() {
   //API
   getIt
     ..registerLazySingleton<AuthApi>(() => AuthApi())
+
+    // Services
+    ..registerLazySingleton(ThemeManager.new)
 
     //Repositories
     ..registerLazySingleton<BaseAuthRepository>(
@@ -37,5 +42,8 @@ void initServices() {
       () => ForgotPasswordBloc(
         authRepository: getIt(),
       ),
+    )
+    ..registerFactory(
+      ThemeBloc.new,
     );
 }
