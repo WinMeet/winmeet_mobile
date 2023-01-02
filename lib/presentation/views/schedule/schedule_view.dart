@@ -1,4 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import '../../../core/extensions/context_extensions.dart';
+import '../../../core/router/app_router.gr.dart';
 
 import '../../widgets/calendar/custom_table_calendar.dart';
 
@@ -17,8 +20,13 @@ class _ScheduleViewState extends State<ScheduleView> {
         title: const Text('Schedule'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.add),
+        backgroundColor: context.theme.primaryColor,
+        onPressed: () => context.router.push(
+          const CreateMeetingRoute(),
+        ),
+        child: const Icon(
+          Icons.add,
+        ),
       ),
       body: Column(
         children: const [
