@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/extensions/context_extensions.dart';
-import '../../../core/router/app_router.gr.dart';
+import '../../../app/router/app_router.gr.dart';
 import '../../../core/utility/calendar/calendar_utils.dart';
 import '../../widgets/input/text_input_field.dart';
 

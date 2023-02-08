@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/enums/form_status.dart';
 import '../../../../core/extensions/context_extensions.dart';
-import '../../../../core/router/app_router.gr.dart';
+import '../../../../app/router/app_router.gr.dart';
 import '../../../../locator.dart';
 import '../../../../logic/auth/forgot_password/forgot_password_bloc.dart';
 import '../../../widgets/button/custom_elevated_button.dart';
@@ -61,7 +61,7 @@ class _ForgotPasswordViewBody extends StatelessWidget {
               children: [
                 Text(
                   'Forgot Password',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(
                   height: context.mediumValue,

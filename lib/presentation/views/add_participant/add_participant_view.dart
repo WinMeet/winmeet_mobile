@@ -51,7 +51,7 @@ class _AddParticipantViewState extends State<AddParticipantView> {
             if (matches.isNotEmpty)
               Text(
                 'Matches: ',
-                style: context.textTheme.bodyText2,
+                style: context.textTheme.bodyMedium,
               ),
             ListView.separated(
               separatorBuilder: (context, index) {
@@ -85,7 +85,7 @@ class _AddParticipantViewState extends State<AddParticipantView> {
             if (participants.isNotEmpty)
               Text(
                 'Participants:',
-                style: context.textTheme.bodyText2,
+                style: context.textTheme.bodyMedium,
               ),
             Expanded(
                 child: ListView.separated(

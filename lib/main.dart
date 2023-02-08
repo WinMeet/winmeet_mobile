@@ -4,16 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'app/theme/theme_bloc.dart';
-import 'core/constants/strings.dart';
-import 'core/router/app_router.gr.dart';
-import 'core/theme/theme_manager.dart';
-import 'core/utility/bloc/app_bloc_observer.dart';
+import 'app/theme/bloc/theme_bloc.dart';
+import 'app/theme/app_theme.dart';
+import 'app/constants/strings.dart';
+import 'app/router/app_router.gr.dart';
+
+import 'core/utility/bloc/simple_bloc_observer.dart';
 import 'locator.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Bloc.observer = AppBlocObserver();
+  Bloc.observer = SimpleBlocObserver();
 
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getApplicationDocumentsDirectory(),
@@ -46,8 +47,8 @@ class WinMeetMobile extends StatelessWidget {
 
             //theme
             themeMode: themeState.theme,
-            theme: getIt<ThemeManager>().lightTheme,
-            darkTheme: getIt<ThemeManager>().darkTheme,
+            theme: getIt<AppTheme>().lightTheme,
+            darkTheme: getIt<AppTheme>().darkTheme,
 
             // routing
             routerDelegate: _appRouter.delegate(),

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/enums/form_status.dart';
 import '../../../../core/extensions/context_extensions.dart';
-import '../../../../core/router/app_router.gr.dart';
+import '../../../../app/router/app_router.gr.dart';
 import '../../../../locator.dart';
 import '../../../../logic/auth/login/login_bloc.dart';
 import '../../../widgets/button/custom_elevated_button.dart';
@@ -54,7 +54,7 @@ class _LoginViewBody extends StatelessWidget {
               children: [
                 Text(
                   'Login',
-                  style: context.theme.textTheme.headline4,
+                  style: context.theme.textTheme.headlineMedium,
                 ),
                 SizedBox(
                   height: context.highValue,

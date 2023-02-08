@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../core/enums/form_status.dart';
-import '../../../../core/exceptions/auth_exceptions.dart';
+import '../../../core/enums/form_status.dart';
+import '../../../app/exceptions/auth_exceptions.dart';
 import '../../../../core/utility/input_validator/input_validator.dart';
 import '../../../../data/repositories/auth/base_auth_repository.dart';
 

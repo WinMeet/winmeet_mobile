@@ -1,0 +1,8 @@
+{
+  "appName": "WinMeet",
+  "@appName": {
+    "description": "Name of the application",
+    "type": "text",
+    "placeholders": {}
+  }
+}

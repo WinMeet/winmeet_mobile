@@ -1,8 +1,6 @@
 name: winmeet_mobile
 description: A new Flutter project.
 
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
-
 version: 1.0.0+1
 
 environment:
@@ -12,10 +10,18 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Localization
+  flutter_localizations:
+    sdk: flutter
+
   # State management
   bloc: ^8.1.0
   flutter_bloc: ^8.1.1
   hydrated_bloc: ^9.0.0
+
+  # Networking
+  dio: ^4.0.6
+  pretty_dio_logger: ^1.1.1
 
   # Routing
   auto_route: ^5.0.4
@@ -25,17 +31,15 @@ dependencies:
 
   # Data class generation
   freezed_annotation: ^2.2.0
-  json_annotation: ^4.7.0
+  json_annotation: ^4.8.0
 
   # UI
   table_calendar: ^3.0.8
   cupertino_icons: ^1.0.2
-  flex_color_scheme: ^6.1.2
 
   # Utility
   intl: ^0.17.0
-  equatable: ^2.0.5
-  path_provider: ^2.0.11
+  path_provider: ^2.0.12
 
 dev_dependencies:
   flutter_test:
@@ -44,13 +48,14 @@ dev_dependencies:
   # Code gen
   freezed: ^2.3.2
   build_runner: ^2.3.3
-  json_serializable: ^6.5.4
+  json_serializable: ^6.6.1
   auto_route_generator: ^5.0.3
 
   # Linter
   flutter_lints: ^2.0.0
 
 flutter:
+  generate: true
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:

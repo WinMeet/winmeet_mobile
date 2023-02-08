@@ -1,3 +1,4 @@
+
 class RegisterWithEmailAndPasswordFailure implements Exception {
   const RegisterWithEmailAndPasswordFailure([this.message = 'An error occured while creating user.']);
 

@@ -2,9 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../app/theme/theme_bloc.dart';
+import '../../../app/theme/bloc/theme_bloc.dart';
 import '../../../core/extensions/context_extensions.dart';
-import '../../../core/router/app_router.gr.dart';
+import '../../../app/router/app_router.gr.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -22,7 +22,7 @@ class SettingsView extends StatelessWidget {
           children: [
             Text(
               'Display',
-              style: context.textTheme.bodyText1?.copyWith(fontWeight: FontWeight.w700),
+              style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
             ),
             ListTile(
               contentPadding: EdgeInsets.zero,
@@ -38,7 +38,7 @@ class SettingsView extends StatelessWidget {
             ),
             Text(
               'Account',
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(fontWeight: FontWeight.w700),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
             ),
             const _LogoutTile(),
           ],
@@ -64,7 +64,7 @@ class _ThemeTileDialog extends StatelessWidget {
               children: [
                 Text(
                   'Choose Theme',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 RadioListTile(
                   activeColor: context.theme.primaryColor,
@@ -72,7 +72,9 @@ class _ThemeTileDialog extends StatelessWidget {
                   title: const Text('System Default'),
                   value: ThemeMode.system,
                   groupValue: state.settingsValue ?? state.theme,
-                  onChanged: (ThemeMode? theme) => context.read<ThemeBloc>().add(ThemeTileChanged(theme!)),
+                  onChanged: (ThemeMode? theme) => context.read<ThemeBloc>().add(
+                        ThemeEvent.themeTileChanged(settingsValue: theme!),
+                      ),
                 ),
                 RadioListTile(
                   activeColor: context.theme.primaryColor,
@@ -80,7 +82,9 @@ class _ThemeTileDialog extends StatelessWidget {
                   title: const Text('Light'),
                   value: ThemeMode.light,
                   groupValue: state.settingsValue ?? state.theme,
-                  onChanged: (ThemeMode? theme) => context.read<ThemeBloc>().add(ThemeTileChanged(theme!)),
+                  onChanged: (ThemeMode? theme) => context.read<ThemeBloc>().add(
+                        ThemeEvent.themeTileChanged(settingsValue: theme!),
+                      ),
                 ),
                 RadioListTile(
                   activeColor: context.theme.primaryColor,
@@ -88,7 +92,9 @@ class _ThemeTileDialog extends StatelessWidget {
                   title: const Text('Dark'),
                   value: ThemeMode.dark,
                   groupValue: state.settingsValue ?? state.theme,
-                  onChanged: (ThemeMode? theme) => context.read<ThemeBloc>().add(ThemeTileChanged(theme!)),
+                  onChanged: (ThemeMode? theme) => context.read<ThemeBloc>().add(
+                        ThemeEvent.themeTileChanged(settingsValue: theme!),
+                      ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -99,7 +105,7 @@ class _ThemeTileDialog extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        context.read<ThemeBloc>().add(ThemeChanged());
+                        context.read<ThemeBloc>().add(const ThemeEvent.themeChanged());
                         context.router.pop();
                       },
                       child: const Text('OK'),
@@ -146,7 +152,7 @@ class _LogoutDialog extends StatelessWidget {
           children: [
             Text(
               'Logout',
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             SizedBox(
               height: context.mediumValue,

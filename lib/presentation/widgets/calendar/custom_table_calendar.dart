@@ -30,7 +30,7 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
         headerMargin: EdgeInsets.zero,
         headerPadding: EdgeInsets.zero,
         titleCentered: true,
-        titleTextStyle: context.theme.textTheme.headline5!,
+        titleTextStyle: context.theme.textTheme.headlineSmall!,
         formatButtonVisible: false,
       ),
 

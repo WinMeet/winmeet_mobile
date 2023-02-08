@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/extensions/context_extensions.dart';
-import '../../../core/router/app_router.gr.dart';
+import '../../../app/router/app_router.gr.dart';
 import '../../widgets/calendar/custom_table_calendar.dart';
 
 class ScheduleView extends StatefulWidget {

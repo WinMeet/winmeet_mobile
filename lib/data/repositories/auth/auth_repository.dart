@@ -1,4 +1,4 @@
-import '../../../core/exceptions/auth_exceptions.dart';
+import '../../../app/exceptions/auth_exceptions.dart';
 import '../../api/auth/auth_api.dart';
 import 'base_auth_repository.dart';
 
