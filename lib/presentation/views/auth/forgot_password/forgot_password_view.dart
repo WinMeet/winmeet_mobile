@@ -1,14 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/enums/form_status.dart';
-import '../../../../core/extensions/context_extensions.dart';
-import '../../../../app/router/app_router.gr.dart';
-import '../../../../locator.dart';
-import '../../../../logic/auth/forgot_password/forgot_password_bloc.dart';
-import '../../../widgets/button/custom_elevated_button.dart';
-import '../../../widgets/input/email_input_field.dart';
+import 'package:winmeet_mobile/app/router/app_router.gr.dart';
+import 'package:winmeet_mobile/core/enums/form_status.dart';
+import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
+import 'package:winmeet_mobile/locator.dart';
+import 'package:winmeet_mobile/logic/auth/forgot_password/forgot_password_bloc.dart';
+import 'package:winmeet_mobile/presentation/widgets/button/custom_elevated_button.dart';
+import 'package:winmeet_mobile/presentation/widgets/input/email_input_field.dart';
 
 class ForgotPasswordView extends StatelessWidget {
   const ForgotPasswordView({super.key});

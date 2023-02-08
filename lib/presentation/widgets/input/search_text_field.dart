@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class SearchTextField extends StatelessWidget {
   const SearchTextField({
-    super.key,
     required this.onChanged,
     required this.hintText,
+    super.key,
   });
 
   final void Function(String)? onChanged;

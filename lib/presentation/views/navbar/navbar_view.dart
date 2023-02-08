@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../../../app/router/app_router.gr.dart';
+import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 
 class NavbarView extends StatelessWidget {
   const NavbarView({super.key});

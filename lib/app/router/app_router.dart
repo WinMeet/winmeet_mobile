@@ -1,17 +1,16 @@
 import 'package:auto_route/annotations.dart';
-
-import '../../presentation/views/add_participant/add_participant_view.dart';
-import '../../presentation/views/auth/forgot_password/forgot_password_view.dart';
-import '../../presentation/views/auth/login/login_view.dart';
-import '../../presentation/views/auth/register/register_view.dart';
-import '../../presentation/views/create_meeting/create_meeting_view.dart';
-import '../../presentation/views/navbar/navbar_view.dart';
-import '../../presentation/views/pending/pending.dart';
-import '../../presentation/views/schedule/schedule_view.dart';
-import '../../presentation/views/settings/settings_view.dart';
-import 'wrappers/pending_wrapper.dart';
-import 'wrappers/schedule_wrapper.dart';
-import 'wrappers/settings_wrapper.dart';
+import 'package:winmeet_mobile/app/router/wrappers/pending_wrapper.dart';
+import 'package:winmeet_mobile/app/router/wrappers/schedule_wrapper.dart';
+import 'package:winmeet_mobile/app/router/wrappers/settings_wrapper.dart';
+import 'package:winmeet_mobile/presentation/views/add_participant/add_participant_view.dart';
+import 'package:winmeet_mobile/presentation/views/auth/forgot_password/forgot_password_view.dart';
+import 'package:winmeet_mobile/presentation/views/auth/login/login_view.dart';
+import 'package:winmeet_mobile/presentation/views/auth/register/register_view.dart';
+import 'package:winmeet_mobile/presentation/views/create_meeting/create_meeting_view.dart';
+import 'package:winmeet_mobile/presentation/views/navbar/navbar_view.dart';
+import 'package:winmeet_mobile/presentation/views/pending/pending.dart';
+import 'package:winmeet_mobile/presentation/views/schedule/schedule_view.dart';
+import 'package:winmeet_mobile/presentation/views/settings/settings_view.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'View,Route',

@@ -3,14 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-
-import 'app/theme/bloc/theme_bloc.dart';
-import 'app/theme/app_theme.dart';
-import 'app/constants/strings.dart';
-import 'app/router/app_router.gr.dart';
-
-import 'core/utility/bloc/simple_bloc_observer.dart';
-import 'locator.dart';
+import 'package:winmeet_mobile/app/constants/strings.dart';
+import 'package:winmeet_mobile/app/router/app_router.gr.dart';
+import 'package:winmeet_mobile/app/theme/app_theme.dart';
+import 'package:winmeet_mobile/app/theme/bloc/theme_bloc.dart';
+import 'package:winmeet_mobile/core/utility/bloc/simple_bloc_observer.dart';
+import 'package:winmeet_mobile/locator.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,9 +17,8 @@ Future<void> main() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getApplicationDocumentsDirectory(),
   );
-
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   initServices();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(WinMeetMobile());
 }

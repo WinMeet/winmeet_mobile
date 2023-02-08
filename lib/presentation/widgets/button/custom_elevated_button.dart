@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/enums/form_status.dart';
-import '../../../../core/extensions/context_extensions.dart';
+import 'package:winmeet_mobile/core/enums/form_status.dart';
+import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({
-    super.key,
     required this.buttonText,
     required this.onPressed,
     required this.status,
     required this.isValid,
+    super.key,
   });
 
   final String buttonText;

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class PasswordInputField extends StatelessWidget {
   const PasswordInputField({
-    super.key,
     required this.obscureText,
-    this.isValid,
     required this.labelText,
+    required this.textInputAction,
+    this.isValid,
     this.onPressed,
     this.onChanged,
-    required this.textInputAction,
+    super.key,
   });
   final TextInputAction textInputAction;
   final String labelText;

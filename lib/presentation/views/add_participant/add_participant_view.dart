@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../../core/extensions/context_extensions.dart';
-import '../../widgets/input/text_input_field.dart';
-import 'participants.dart';
+import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
+import 'package:winmeet_mobile/presentation/views/add_participant/participants.dart';
+import 'package:winmeet_mobile/presentation/widgets/input/text_input_field.dart';
 
 class AddParticipantView extends StatefulWidget {
   const AddParticipantView({super.key});
@@ -43,7 +42,7 @@ class _AddParticipantViewState extends State<AddParticipantView> {
           children: [
             TextInputField(
               labelText: 'Search or enter an email address',
-              onChanged: (term) => searchAllUsers(term),
+              onChanged: searchAllUsers,
             ),
             SizedBox(
               height: context.mediumValue,
@@ -88,28 +87,29 @@ class _AddParticipantViewState extends State<AddParticipantView> {
                 style: context.textTheme.bodyMedium,
               ),
             Expanded(
-                child: ListView.separated(
-              separatorBuilder: (context, index) {
-                return SizedBox(
-                  height: context.lowValue,
-                );
-              },
-              itemCount: participants.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 3,
-                  margin: EdgeInsets.zero,
-                  child: ListTile(
-                    title: Text(participants[index].email),
-                    trailing: const Icon(Icons.cancel),
-                    onTap: () {
-                      participants.remove(participants[index]);
-                      setState(() {});
-                    },
-                  ),
-                );
-              },
-            ))
+              child: ListView.separated(
+                separatorBuilder: (context, index) {
+                  return SizedBox(
+                    height: context.lowValue,
+                  );
+                },
+                itemCount: participants.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    elevation: 3,
+                    margin: EdgeInsets.zero,
+                    child: ListTile(
+                      title: Text(participants[index].email),
+                      trailing: const Icon(Icons.cancel),
+                      onTap: () {
+                        participants.remove(participants[index]);
+                        setState(() {});
+                      },
+                    ),
+                  );
+                },
+              ),
+            )
           ],
         ),
       ),

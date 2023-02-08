@@ -1,10 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../core/enums/form_status.dart';
-import '../../../app/exceptions/auth_exceptions.dart';
-import '../../../../core/utility/input_validator/input_validator.dart';
-import '../../../../data/repositories/auth/base_auth_repository.dart';
+import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
+import 'package:winmeet_mobile/core/enums/form_status.dart';
+import 'package:winmeet_mobile/core/utility/input_validator/input_validator.dart';
+import 'package:winmeet_mobile/data/repositories/auth/base_auth_repository.dart';
 
 part 'register_bloc.freezed.dart';
 part 'register_event.dart';
@@ -12,14 +11,15 @@ part 'register_state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   RegisterBloc({
-    required this.authRepository,
-  }) : super(const RegisterState()) {
+    required BaseAuthRepository authRepository,
+  })  : _authRepository = authRepository,
+        super(const RegisterState()) {
     on<_EmailChanged>(_onEmailChanged);
     on<_PasswordChanged>(_onPasswordChanged);
     on<_PasswordVisibilityChanged>(_onPasswordVisibilityChanged);
     on<_RegisterSubmitted>(_onRegisterSubmitted);
   }
-  final BaseAuthRepository authRepository;
+  final BaseAuthRepository _authRepository;
 
   void _onEmailChanged(_EmailChanged event, Emitter<RegisterState> emit) {
     InputValidator.checkEmailValidity(event.email)
@@ -40,7 +40,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   Future<void> _onRegisterSubmitted(_RegisterSubmitted event, Emitter<RegisterState> emit) async {
     emit(state.copyWith(status: FormStatus.submitting));
     try {
-      await authRepository.registerWithEmailAndPassword(
+      await _authRepository.registerWithEmailAndPassword(
         email: state.email,
         password: state.password,
       );

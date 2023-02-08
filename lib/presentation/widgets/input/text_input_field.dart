@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class TextInputField extends StatelessWidget {
   const TextInputField({
-    super.key,
     required this.labelText,
     this.errorText,
     this.textInputAction,
     this.isValidInput,
     this.onChanged,
     this.validator,
+    super.key,
   });
 
   final String labelText;

@@ -1,11 +1,11 @@
-import '../../../app/exceptions/auth_exceptions.dart';
-import '../../api/auth/auth_api.dart';
-import 'base_auth_repository.dart';
+import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
+import 'package:winmeet_mobile/data/api/auth/auth_api.dart';
+import 'package:winmeet_mobile/data/repositories/auth/base_auth_repository.dart';
 
 class AuthRepository implements BaseAuthRepository {
-  AuthRepository({required this.authApi});
+  AuthRepository({required AuthApi authApi}) : _authApi = authApi;
 
-  final AuthApi authApi;
+  final AuthApi _authApi;
 
   @override
   Future<void> registerWithEmailAndPassword({
@@ -13,7 +13,7 @@ class AuthRepository implements BaseAuthRepository {
     required String password,
   }) async {
     try {
-      await authApi.registerWithEmailAndPassword(
+      await _authApi.registerWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -28,7 +28,7 @@ class AuthRepository implements BaseAuthRepository {
     required String password,
   }) async {
     try {
-      await authApi.loginWithEmailAndPassword(
+      await _authApi.loginWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -40,7 +40,7 @@ class AuthRepository implements BaseAuthRepository {
   @override
   Future<void> sendPasswordResetEmail({required String email}) async {
     try {
-      await authApi.sendPasswordResetEmail(email: email);
+      await _authApi.sendPasswordResetEmail(email: email);
     } catch (_) {
       throw const PasswordResetFailure();
     }
@@ -49,7 +49,7 @@ class AuthRepository implements BaseAuthRepository {
   @override
   Future<void> signOut() async {
     try {
-      await authApi.signOut();
+      await _authApi.signOut();
     } catch (_) {
       throw const LogOutFailure();
     }

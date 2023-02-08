@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class EmailInputField extends StatelessWidget {
   const EmailInputField({
-    super.key,
     required this.textInputAction,
     this.isValidEmail,
     this.onChanged,
+    super.key,
   });
 
   final TextInputAction textInputAction;

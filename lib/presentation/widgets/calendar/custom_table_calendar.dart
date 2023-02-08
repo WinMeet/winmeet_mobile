@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../../core/extensions/context_extensions.dart';
-import '../../../core/utility/calendar/calendar_utils.dart';
+import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
+import 'package:winmeet_mobile/core/utility/calendar/calendar_utils.dart';
 
 class CustomTableCalendar extends StatefulWidget {
   const CustomTableCalendar({super.key});
@@ -17,7 +17,7 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
   DateTime _selectedDay = CalendarUtils.kToday;
   @override
   Widget build(BuildContext context) {
-    return TableCalendar(
+    return TableCalendar<dynamic>(
       firstDay: CalendarUtils.kFirstDay,
       lastDay: CalendarUtils.kLastDay,
       focusedDay: _focusedDay,
@@ -27,7 +27,6 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
         CalendarFormat.week: 'Week',
       },
       headerStyle: HeaderStyle(
-        headerMargin: EdgeInsets.zero,
         headerPadding: EdgeInsets.zero,
         titleCentered: true,
         titleTextStyle: context.theme.textTheme.headlineSmall!,

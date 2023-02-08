@@ -3,7 +3,7 @@ class AuthApi {
     required String email,
     required String password,
   }) async {
-    await Future.delayed(
+    await Future<void>.delayed(
       const Duration(seconds: 1),
     );
   }
@@ -12,7 +12,7 @@ class AuthApi {
     required String email,
     required String password,
   }) async {
-    await Future.delayed(
+    await Future<void>.delayed(
       const Duration(seconds: 1),
     );
   }
@@ -20,13 +20,13 @@ class AuthApi {
   Future<void> sendPasswordResetEmail({
     required String email,
   }) async {
-    await Future.delayed(
+    await Future<void>.delayed(
       const Duration(seconds: 1),
     );
   }
 
   Future<void> signOut() async {
-    await Future.delayed(
+    await Future<void>.delayed(
       const Duration(seconds: 1),
     );
   }

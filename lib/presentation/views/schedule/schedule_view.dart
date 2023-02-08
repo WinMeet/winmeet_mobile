@@ -1,9 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-
-import '../../../core/extensions/context_extensions.dart';
-import '../../../app/router/app_router.gr.dart';
-import '../../widgets/calendar/custom_table_calendar.dart';
+import 'package:winmeet_mobile/app/router/app_router.gr.dart';
+import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
+import 'package:winmeet_mobile/presentation/widgets/calendar/custom_table_calendar.dart';
 
 class ScheduleView extends StatefulWidget {
   const ScheduleView({super.key});

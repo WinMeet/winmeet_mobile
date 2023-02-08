@@ -1,9 +1,6 @@
 class SearchModel {
+  SearchModel({required this.email});
   String email;
-
-  SearchModel({
-    required this.email,
-  });
 }
 
 final List<SearchModel> allUsers = [

@@ -1,21 +1,22 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../core/enums/form_status.dart';
-import '../../../app/exceptions/auth_exceptions.dart';
-import '../../../../core/utility/input_validator/input_validator.dart';
-import '../../../../data/repositories/auth/base_auth_repository.dart';
+import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
+import 'package:winmeet_mobile/core/enums/form_status.dart';
+import 'package:winmeet_mobile/core/utility/input_validator/input_validator.dart';
+import 'package:winmeet_mobile/data/repositories/auth/base_auth_repository.dart';
 
 part 'forgot_password_bloc.freezed.dart';
 part 'forgot_password_event.dart';
 part 'forgot_password_state.dart';
 
 class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
-  ForgotPasswordBloc({required this.authRepository}) : super(const ForgotPasswordState()) {
+  ForgotPasswordBloc({required BaseAuthRepository authRepository})
+      : _authRepository = authRepository,
+        super(const ForgotPasswordState()) {
     on<_EmailChanged>(_onEmailChanged);
     on<_PasswordSubmitted>(_onPasswordSubmitted);
   }
-  final BaseAuthRepository authRepository;
+  final BaseAuthRepository _authRepository;
 
   void _onEmailChanged(_EmailChanged event, Emitter<ForgotPasswordState> emit) {
     InputValidator.checkEmailValidity(event.email)
@@ -29,7 +30,7 @@ class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> 
   ) async {
     emit(state.copyWith(status: FormStatus.submitting));
     try {
-      await authRepository.sendPasswordResetEmail(email: state.email);
+      await _authRepository.sendPasswordResetEmail(email: state.email);
       emit(state.copyWith(status: FormStatus.success));
       emit(state.copyWith(status: FormStatus.initial));
     } on PasswordResetFailure catch (e) {

@@ -1,15 +1,15 @@
 import 'package:get_it/get_it.dart';
 
-import 'app/theme/app_theme.dart';
-import 'app/theme/bloc/theme_bloc.dart';
+import 'package:winmeet_mobile/app/theme/app_theme.dart';
+import 'package:winmeet_mobile/app/theme/bloc/theme_bloc.dart';
 
-import 'core/network/network_client.dart';
-import 'data/api/auth/auth_api.dart';
-import 'data/repositories/auth/auth_repository.dart';
-import 'data/repositories/auth/base_auth_repository.dart';
-import 'logic/auth/forgot_password/forgot_password_bloc.dart';
-import 'logic/auth/login/login_bloc.dart';
-import 'logic/auth/register/register_bloc.dart';
+import 'package:winmeet_mobile/core/network/network_client.dart';
+import 'package:winmeet_mobile/data/api/auth/auth_api.dart';
+import 'package:winmeet_mobile/data/repositories/auth/auth_repository.dart';
+import 'package:winmeet_mobile/data/repositories/auth/base_auth_repository.dart';
+import 'package:winmeet_mobile/logic/auth/forgot_password/forgot_password_bloc.dart';
+import 'package:winmeet_mobile/logic/auth/login/login_bloc.dart';
+import 'package:winmeet_mobile/logic/auth/register/register_bloc.dart';
 
 // Global service locator
 final GetIt getIt = GetIt.instance;

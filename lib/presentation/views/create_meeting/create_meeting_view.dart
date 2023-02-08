@@ -1,11 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../../../core/extensions/context_extensions.dart';
-import '../../../app/router/app_router.gr.dart';
-import '../../../core/utility/calendar/calendar_utils.dart';
-import '../../widgets/input/text_input_field.dart';
+import 'package:winmeet_mobile/app/router/app_router.gr.dart';
+import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
+import 'package:winmeet_mobile/core/utility/calendar/calendar_utils.dart';
+import 'package:winmeet_mobile/presentation/widgets/input/text_input_field.dart';
 
 class CreateMeetingView extends StatefulWidget {
   const CreateMeetingView({super.key});
@@ -81,11 +80,11 @@ class _CreateMeetingViewState extends State<CreateMeetingView> {
               contentPadding: EdgeInsets.zero,
               leading: const Text('Starts'),
               onTap: () async {
-                final DateTime? date = await pickDate(context: context, initialTime: starts);
+                final date = await pickDate(context: context, initialTime: starts);
 
                 if (date == null) return;
 
-                final TimeOfDay? time = await pickTime(context: context, initialTime: date);
+                final time = await pickTime(context: context, initialTime: date);
                 if (time != null) {
                   setState(() {
                     starts = DateTime(date.year, date.month, date.day, time.hour, time.minute);
@@ -99,11 +98,11 @@ class _CreateMeetingViewState extends State<CreateMeetingView> {
               contentPadding: EdgeInsets.zero,
               leading: const Text('Ends'),
               onTap: () async {
-                final DateTime? date = await pickDate(context: context, initialTime: ends);
+                final date = await pickDate(context: context, initialTime: ends);
 
                 if (date == null) return;
 
-                final TimeOfDay? time = await pickTime(context: context, initialTime: ends);
+                final time = await pickTime(context: context, initialTime: ends);
                 if (time != null) {
                   setState(() {
                     ends = DateTime(date.year, date.month, date.day, time.hour, time.minute);

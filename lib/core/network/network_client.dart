@@ -5,6 +5,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 class NetworkClient {
   NetworkClient() {
     _dio = Dio();
+    // TODO: Configure NetworkClient
     // _dio.options.baseUrl = '';
     // _dio.options.connectTimeout = 10000;
     // _dio.options.sendTimeout = 10000;

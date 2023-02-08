@@ -1,23 +1,24 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../core/enums/form_status.dart';
-import '../../../app/exceptions/auth_exceptions.dart';
-import '../../../../core/utility/input_validator/input_validator.dart';
-import '../../../../data/repositories/auth/base_auth_repository.dart';
+import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
+import 'package:winmeet_mobile/core/enums/form_status.dart';
+import 'package:winmeet_mobile/core/utility/input_validator/input_validator.dart';
+import 'package:winmeet_mobile/data/repositories/auth/base_auth_repository.dart';
 
 part 'login_bloc.freezed.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc({required this.authRepository}) : super(const LoginState()) {
+  LoginBloc({required BaseAuthRepository authRepository})
+      : _authRepository = authRepository,
+        super(const LoginState()) {
     on<_EmailChanged>(_onEmailChanged);
     on<_PasswordChanged>(_onPasswordChanged);
     on<_PasswordVisibilityChanged>(_onPasswordVisibilityChanged);
     on<_LoginSubmitted>(_onLoginSubmitted);
   }
-  final BaseAuthRepository authRepository;
+  final BaseAuthRepository _authRepository;
 
   void _onEmailChanged(_EmailChanged event, Emitter<LoginState> emit) {
     InputValidator.checkEmailValidity(event.email)
@@ -38,7 +39,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Future<void> _onLoginSubmitted(_LoginSubmitted event, Emitter<LoginState> emit) async {
     emit(state.copyWith(status: FormStatus.submitting));
     try {
-      await authRepository.registerWithEmailAndPassword(email: state.email, password: state.password);
+      await _authRepository.registerWithEmailAndPassword(email: state.email, password: state.password);
       emit(state.copyWith(status: FormStatus.success));
       emit(state.copyWith(status: FormStatus.initial));
     } on LoginWithEmailAndPasswordFailure catch (e) {
