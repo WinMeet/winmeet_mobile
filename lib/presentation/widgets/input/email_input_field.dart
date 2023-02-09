@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class EmailInputField extends StatelessWidget {
   const EmailInputField({
     required this.textInputAction,
-    this.isValidEmail,
+    required this.isValid,
     this.onChanged,
     super.key,
   });
 
   final TextInputAction textInputAction;
-  final bool? isValidEmail;
+  final bool isValid;
   final void Function(String)? onChanged;
 
   @override
@@ -21,7 +21,7 @@ class EmailInputField extends StatelessWidget {
         border: const OutlineInputBorder(),
         prefixIcon: const Icon(Icons.email),
         labelText: 'Email',
-        errorText: (isValidEmail ?? true) ? null : 'Invalid email',
+        errorText: isValid ? 'Invalid email' : null,
       ),
       onChanged: onChanged,
     );

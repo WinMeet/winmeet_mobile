@@ -3,30 +3,32 @@ import 'package:flutter/material.dart';
 class PasswordInputField extends StatelessWidget {
   const PasswordInputField({
     required this.obscureText,
-    required this.labelText,
+    required this.isValid,
     required this.textInputAction,
-    this.isValid,
+    required this.labelText,
+    required this.errorText,
     this.onPressed,
     this.onChanged,
     super.key,
   });
   final TextInputAction textInputAction;
-  final String labelText;
   final bool obscureText;
-  final bool? isValid;
+  final bool isValid;
+  final String labelText;
+  final String errorText;
   final void Function()? onPressed;
   final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      textInputAction: TextInputAction.done,
+      textInputAction: textInputAction,
       obscureText: obscureText,
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
         prefixIcon: const Icon(Icons.password),
         labelText: labelText,
-        errorText: (isValid ?? true) ? null : 'Weak password',
+        errorText: isValid ? errorText : null,
         suffixIcon: IconButton(
           icon: obscureText ? const Icon(Icons.visibility_off) : const Icon(Icons.visibility),
           onPressed: onPressed,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
-import 'package:winmeet_mobile/core/utility/calendar/calendar_utils.dart';
+import 'package:winmeet_mobile/core/utils/calendar/calendar_utils.dart';
 
 class CustomTableCalendar extends StatefulWidget {
   const CustomTableCalendar({super.key});

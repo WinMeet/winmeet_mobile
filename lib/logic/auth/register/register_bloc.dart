@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:form_inputs/form_inputs.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
-import 'package:winmeet_mobile/core/enums/form_status.dart';
-import 'package:winmeet_mobile/core/utility/input_validator/input_validator.dart';
 import 'package:winmeet_mobile/data/repositories/auth/base_auth_repository.dart';
 
 part 'register_bloc.freezed.dart';
@@ -16,39 +15,77 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         super(const RegisterState()) {
     on<_EmailChanged>(_onEmailChanged);
     on<_PasswordChanged>(_onPasswordChanged);
+    on<_ConfirmPasswordChanged>(_onConfirmPasswordChanged);
     on<_PasswordVisibilityChanged>(_onPasswordVisibilityChanged);
-    on<_RegisterSubmitted>(_onRegisterSubmitted);
+    on<_FormSubmitted>(_onFormSubmitted);
   }
   final BaseAuthRepository _authRepository;
 
   void _onEmailChanged(_EmailChanged event, Emitter<RegisterState> emit) {
-    InputValidator.checkEmailValidity(event.email)
-        ? emit(state.copyWith(email: event.email, isValidEmail: true))
-        : emit(state.copyWith(email: event.email, isValidEmail: false));
+    final email = Email.dirty(event.email);
+    emit(state.copyWith(email: email, status: Formz.validate([email, state.password])));
   }
 
   void _onPasswordChanged(_PasswordChanged event, Emitter<RegisterState> emit) {
-    InputValidator.checkPasswordValidity(event.password)
-        ? emit(state.copyWith(password: event.password, isValidPassword: true))
-        : emit(state.copyWith(password: event.password, isValidPassword: false));
+    final password = Password.dirty(event.password);
+    final confirmPassword = ConfirmPassword.dirty(
+      password: password.value,
+      value: state.confirmPassword.value,
+    );
+    emit(
+      state.copyWith(
+        password: password,
+        status: Formz.validate([
+          state.email,
+          password,
+          confirmPassword,
+        ]),
+      ),
+    );
+  }
+
+  void _onConfirmPasswordChanged(_ConfirmPasswordChanged event, Emitter<RegisterState> emit) {
+    final confirmPassword = ConfirmPassword.dirty(
+      password: state.password.value,
+      value: event.confirmPassword,
+    );
+
+    emit(
+      state.copyWith(
+        confirmPassword: confirmPassword,
+        status: Formz.validate([
+          state.email,
+          state.password,
+          confirmPassword,
+        ]),
+      ),
+    );
   }
 
   void _onPasswordVisibilityChanged(_PasswordVisibilityChanged event, Emitter<RegisterState> emit) {
     emit(state.copyWith(isPasswordObscured: !state.isPasswordObscured));
   }
 
-  Future<void> _onRegisterSubmitted(_RegisterSubmitted event, Emitter<RegisterState> emit) async {
-    emit(state.copyWith(status: FormStatus.submitting));
+  Future<void> _onFormSubmitted(_FormSubmitted event, Emitter<RegisterState> emit) async {
+    if (!state.status.isValidated) return;
+    emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       await _authRepository.registerWithEmailAndPassword(
-        email: state.email,
-        password: state.password,
+        email: state.email.value,
+        password: state.password.value,
       );
-      emit(state.copyWith(status: FormStatus.success));
-      emit(state.copyWith(status: FormStatus.initial));
+      emit(
+        state.copyWith(
+          status: FormzStatus.submissionSuccess,
+        ),
+      );
     } on RegisterWithEmailAndPasswordFailure catch (e) {
-      emit(state.copyWith(errorMessage: e.message, status: FormStatus.failure));
-      emit(state.copyWith(status: FormStatus.initial));
+      emit(
+        state.copyWith(
+          status: FormzStatus.submissionFailure,
+          errorMessage: e.message,
+        ),
+      );
     }
   }
 }

@@ -7,7 +7,7 @@ import 'package:winmeet_mobile/app/constants/strings.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/theme/app_theme.dart';
 import 'package:winmeet_mobile/app/theme/bloc/theme_bloc.dart';
-import 'package:winmeet_mobile/core/utility/bloc/simple_bloc_observer.dart';
+import 'package:winmeet_mobile/core/utils/bloc/simple_bloc_observer.dart';
 import 'package:winmeet_mobile/locator.dart';
 
 Future<void> main() async {

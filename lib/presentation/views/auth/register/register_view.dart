@@ -1,9 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_inputs/form_inputs.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
-import 'package:winmeet_mobile/core/enums/form_status.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
+import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/locator.dart';
 import 'package:winmeet_mobile/logic/auth/register/register_bloc.dart';
 import 'package:winmeet_mobile/presentation/widgets/button/custom_elevated_button.dart';
@@ -30,110 +31,105 @@ class _RegisterViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<RegisterBloc, RegisterState>(
+      listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
-        if (state.status == FormStatus.failure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.errorMessage.toString()),
-            ),
-          );
-        } else if (state.status == FormStatus.success) {
+        if (state.status.isSubmissionSuccess) {
           context.router.replace(const LoginRoute());
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'Account successfully created.',
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              const SnackBar(
+                content: Text('Account created'),
               ),
-            ),
-          );
+            );
+        } else if (state.status.isSubmissionFailure) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Text(state.errorMessage ?? 'Authentication Failure'),
+              ),
+            );
         }
       },
       child: Padding(
         padding: context.paddingAllDefault,
-        child: Container(
-          alignment: Alignment.center,
+        child: Center(
           child: SingleChildScrollView(
-            reverse: true,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Register',
-                  style: context.theme.textTheme.headlineMedium,
-                ),
-                SizedBox(
-                  height: context.highValue,
+                  style: context.textTheme.headlineMedium,
                 ),
                 const Text(
                   'Enter your email and password to register',
-                ),
-                SizedBox(
-                  height: context.mediumValue,
                 ),
                 BlocBuilder<RegisterBloc, RegisterState>(
                   builder: (context, state) {
                     return EmailInputField(
                       textInputAction: TextInputAction.next,
-                      isValidEmail: state.isValidEmail,
-                      onChanged: (email) => context.read<RegisterBloc>().add(
-                            RegisterEvent.emailChanged(email),
-                          ),
+                      isValid: state.email.invalid,
+                      onChanged: (email) => context.read<RegisterBloc>().add(RegisterEvent.emailChanged(email)),
                     );
                   },
-                ),
-                SizedBox(
-                  height: context.mediumValue,
                 ),
                 BlocBuilder<RegisterBloc, RegisterState>(
                   builder: (context, state) {
                     return PasswordInputField(
-                      labelText: 'Password',
-                      obscureText: state.isPasswordObscured,
                       textInputAction: TextInputAction.next,
-                      isValid: state.isValidPassword,
-                      onPressed: () => context.read<RegisterBloc>().add(
-                            const RegisterEvent.passwordVisibilityChanged(),
-                          ),
-                      onChanged: (password) => context.read<RegisterBloc>().add(
-                            RegisterEvent.passwordChanged(password),
-                          ),
+                      obscureText: state.isPasswordObscured,
+                      isValid: state.password.invalid,
+                      labelText: 'Password',
+                      errorText: 'Weak Password',
+                      onChanged: (password) =>
+                          context.read<RegisterBloc>().add(RegisterEvent.passwordChanged(password)),
+                      onPressed: () =>
+                          context.read<RegisterBloc>().add(const RegisterEvent.passwordVisibilityChanged()),
                     );
                   },
                 ),
-                SizedBox(
-                  height: context.mediumValue,
+                BlocBuilder<RegisterBloc, RegisterState>(
+                  builder: (context, state) {
+                    return PasswordInputField(
+                      textInputAction: TextInputAction.done,
+                      obscureText: state.isPasswordObscured,
+                      isValid: state.confirmPassword.invalid,
+                      labelText: 'Confirm Password',
+                      errorText: 'Passwords do not match',
+                      onChanged: (password) =>
+                          context.read<RegisterBloc>().add(RegisterEvent.confirmPasswordChanged(password)),
+                      onPressed: () =>
+                          context.read<RegisterBloc>().add(const RegisterEvent.passwordVisibilityChanged()),
+                    );
+                  },
                 ),
                 BlocBuilder<RegisterBloc, RegisterState>(
                   builder: (context, state) {
                     return SizedBox(
-                      width: double.infinity,
+                      width: context.width,
                       child: CustomElevatedButton(
                         buttonText: 'Register',
-                        isValid: (state.isValidPassword ?? false) && (state.isValidEmail ?? false),
+                        isValid: state.status.isValidated,
+                        onPressed: () => context.read<RegisterBloc>().add(const RegisterEvent.formSubmitted()),
                         status: state.status,
-                        onPressed: () => context.read<RegisterBloc>().add(
-                              const RegisterEvent.registerSubmitted(),
-                            ),
                       ),
                     );
                   },
-                ),
-                SizedBox(
-                  height: context.highValue,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text('Already have an account?'),
                     TextButton(
+                      onPressed: () => context.router.replace(const LoginRoute()),
                       child: const Text('Login'),
-                      onPressed: () => context.router.replace(
-                        const LoginRoute(),
-                      ),
-                    ),
+                    )
                   ],
                 ),
-              ],
+              ].withSpaceBetween(height: context.mediumValue),
             ),
           ),
         ),

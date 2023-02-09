@@ -1,9 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_inputs/form_inputs.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
-import 'package:winmeet_mobile/core/enums/form_status.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
+import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/locator.dart';
 import 'package:winmeet_mobile/logic/auth/forgot_password/forgot_password_bloc.dart';
 import 'package:winmeet_mobile/presentation/widgets/button/custom_elevated_button.dart';
@@ -29,21 +30,22 @@ class _ForgotPasswordViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
+      listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
-        if (state.status == FormStatus.failure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                state.errorMessage.toString(),
-              ),
-            ),
-          );
-        } else if (state.status == FormStatus.success) {
+        if (state.status.isSubmissionSuccess) {
           context.router.replace(const LoginRoute());
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text(
                 'Password reset link sent to the email provided. (Check your spam.)',
+              ),
+            ),
+          );
+        } else if (state.status.isSubmissionFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                state.errorMessage.toString(),
               ),
             ),
           );
@@ -54,7 +56,6 @@ class _ForgotPasswordViewBody extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           child: SingleChildScrollView(
-            reverse: true,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -62,28 +63,19 @@ class _ForgotPasswordViewBody extends StatelessWidget {
                   'Forgot Password',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                SizedBox(
-                  height: context.mediumValue,
-                ),
                 const Text(
                   'Please provide your email and we will send you a link to reset your password',
-                ),
-                SizedBox(
-                  height: context.mediumValue,
                 ),
                 BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
                   builder: (context, state) {
                     return EmailInputField(
-                      textInputAction: TextInputAction.done,
-                      isValidEmail: state.isValidEmail,
+                      textInputAction: TextInputAction.next,
+                      isValid: state.email.invalid,
                       onChanged: (email) => context.read<ForgotPasswordBloc>().add(
                             ForgotPasswordEvent.emailChanged(email),
                           ),
                     );
                   },
-                ),
-                SizedBox(
-                  height: context.mediumValue,
                 ),
                 BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
                   builder: (context, state) {
@@ -91,17 +83,14 @@ class _ForgotPasswordViewBody extends StatelessWidget {
                       width: double.infinity,
                       child: CustomElevatedButton(
                         buttonText: 'Reset',
-                        isValid: state.isValidEmail ?? false,
-                        status: state.status,
+                        isValid: state.status.isValidated,
                         onPressed: () => context.read<ForgotPasswordBloc>().add(
-                              const ForgotPasswordEvent.passwordSubmitted(),
+                              const ForgotPasswordEvent.formSubmitted(),
                             ),
+                        status: state.status,
                       ),
                     );
                   },
-                ),
-                SizedBox(
-                  height: context.highValue,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -115,7 +104,7 @@ class _ForgotPasswordViewBody extends StatelessWidget {
                     ),
                   ],
                 ),
-              ],
+              ].withSpaceBetween(height: context.mediumValue),
             ),
           ),
         ),

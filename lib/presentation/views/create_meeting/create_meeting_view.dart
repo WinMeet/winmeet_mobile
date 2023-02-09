@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
-import 'package:winmeet_mobile/core/utility/calendar/calendar_utils.dart';
+import 'package:winmeet_mobile/core/utils/calendar/calendar_utils.dart';
 import 'package:winmeet_mobile/presentation/widgets/input/text_input_field.dart';
 
 class CreateMeetingView extends StatefulWidget {

@@ -1,5 +1,6 @@
 name: winmeet_mobile
 description: A new Flutter project.
+publish_to: none
 
 version: 1.0.0+1
 
@@ -40,6 +41,10 @@ dependencies:
   # Utility
   intl: ^0.17.0
   path_provider: ^2.0.12
+
+  # Packages
+  form_inputs:
+    path: packages/form_inputs
 
 dev_dependencies:
   flutter_test:
