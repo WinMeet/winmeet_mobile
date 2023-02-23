@@ -6,7 +6,7 @@ import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/locator.dart';
-import 'package:winmeet_mobile/logic/auth/register/register_bloc.dart';
+import 'package:winmeet_mobile/logic/auth/register/cubit/register_cubit.dart';
 import 'package:winmeet_mobile/presentation/widgets/button/custom_elevated_button.dart';
 import 'package:winmeet_mobile/presentation/widgets/input/email_input_field.dart';
 import 'package:winmeet_mobile/presentation/widgets/input/password_input_field.dart';
@@ -18,7 +18,7 @@ class RegisterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => getIt<RegisterBloc>(),
+        create: (context) => getIt<RegisterCubit>(),
         child: const _RegisterViewBody(),
       ),
     );
@@ -30,7 +30,7 @@ class _RegisterViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<RegisterBloc, RegisterState>(
+    return BlocListener<RegisterCubit, RegisterState>(
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status.isSubmissionSuccess) {
@@ -67,16 +67,16 @@ class _RegisterViewBody extends StatelessWidget {
                 const Text(
                   'Enter your email and password to register',
                 ),
-                BlocBuilder<RegisterBloc, RegisterState>(
+                BlocBuilder<RegisterCubit, RegisterState>(
                   builder: (context, state) {
                     return EmailInputField(
                       textInputAction: TextInputAction.next,
                       isValid: state.email.invalid,
-                      onChanged: (email) => context.read<RegisterBloc>().add(RegisterEvent.emailChanged(email)),
+                      onChanged: (email) => context.read<RegisterCubit>().emailChanged(email: email),
                     );
                   },
                 ),
-                BlocBuilder<RegisterBloc, RegisterState>(
+                BlocBuilder<RegisterCubit, RegisterState>(
                   builder: (context, state) {
                     return PasswordInputField(
                       textInputAction: TextInputAction.next,
@@ -84,14 +84,12 @@ class _RegisterViewBody extends StatelessWidget {
                       isValid: state.password.invalid,
                       labelText: 'Password',
                       errorText: 'Weak Password',
-                      onChanged: (password) =>
-                          context.read<RegisterBloc>().add(RegisterEvent.passwordChanged(password)),
-                      onPressed: () =>
-                          context.read<RegisterBloc>().add(const RegisterEvent.passwordVisibilityChanged()),
+                      onChanged: (password) => context.read<RegisterCubit>().passwordChanged(password: password),
+                      onPressed: () => context.read<RegisterCubit>().passwordVisibilityChanged(),
                     );
                   },
                 ),
-                BlocBuilder<RegisterBloc, RegisterState>(
+                BlocBuilder<RegisterCubit, RegisterState>(
                   builder: (context, state) {
                     return PasswordInputField(
                       textInputAction: TextInputAction.done,
@@ -99,21 +97,20 @@ class _RegisterViewBody extends StatelessWidget {
                       isValid: state.confirmPassword.invalid,
                       labelText: 'Confirm Password',
                       errorText: 'Passwords do not match',
-                      onChanged: (password) =>
-                          context.read<RegisterBloc>().add(RegisterEvent.confirmPasswordChanged(password)),
-                      onPressed: () =>
-                          context.read<RegisterBloc>().add(const RegisterEvent.passwordVisibilityChanged()),
+                      onChanged: (confirmPassword) =>
+                          context.read<RegisterCubit>().confirmPasswordChanged(confirmPassword: confirmPassword),
+                      onPressed: () => context.read<RegisterCubit>().passwordVisibilityChanged(),
                     );
                   },
                 ),
-                BlocBuilder<RegisterBloc, RegisterState>(
+                BlocBuilder<RegisterCubit, RegisterState>(
                   builder: (context, state) {
                     return SizedBox(
                       width: context.width,
                       child: CustomElevatedButton(
                         buttonText: 'Register',
                         isValid: state.status.isValidated,
-                        onPressed: () => context.read<RegisterBloc>().add(const RegisterEvent.formSubmitted()),
+                        onPressed: () => context.read<RegisterCubit>().formSubmitted(),
                         status: state.status,
                       ),
                     );

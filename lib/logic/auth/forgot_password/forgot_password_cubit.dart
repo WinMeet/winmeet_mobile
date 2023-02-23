@@ -4,28 +4,22 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
 import 'package:winmeet_mobile/data/repositories/auth/base_auth_repository.dart';
 
-part 'forgot_password_bloc.freezed.dart';
-part 'forgot_password_event.dart';
+part 'forgot_password_cubit.freezed.dart';
 part 'forgot_password_state.dart';
 
-class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
-  ForgotPasswordBloc({required BaseAuthRepository authRepository})
+class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
+  ForgotPasswordCubit({required BaseAuthRepository authRepository})
       : _authRepository = authRepository,
-        super(const ForgotPasswordState()) {
-    on<_EmailChanged>(_onEmailChanged);
-    on<_FormSubmitted>(_onFormSubmitted);
-  }
+        super(const ForgotPasswordState());
+
   final BaseAuthRepository _authRepository;
 
-  void _onEmailChanged(_EmailChanged event, Emitter<ForgotPasswordState> emit) {
-    final email = Email.dirty(event.email);
-    emit(state.copyWith(email: email, status: Formz.validate([email])));
+  void emailChanged({required String email}) {
+    final newEmail = Email.dirty(email);
+    emit(state.copyWith(email: newEmail, status: Formz.validate([newEmail])));
   }
 
-  Future<void> _onFormSubmitted(
-    _FormSubmitted event,
-    Emitter<ForgotPasswordState> emit,
-  ) async {
+  Future<void> formSubmitted() async {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       await _authRepository.sendPasswordResetEmail(email: state.email.value);

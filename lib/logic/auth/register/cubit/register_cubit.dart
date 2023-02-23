@@ -4,69 +4,62 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
 import 'package:winmeet_mobile/data/repositories/auth/base_auth_repository.dart';
 
-part 'register_bloc.freezed.dart';
-part 'register_event.dart';
+part 'register_cubit.freezed.dart';
 part 'register_state.dart';
 
-class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
-  RegisterBloc({
-    required BaseAuthRepository authRepository,
-  })  : _authRepository = authRepository,
-        super(const RegisterState()) {
-    on<_EmailChanged>(_onEmailChanged);
-    on<_PasswordChanged>(_onPasswordChanged);
-    on<_ConfirmPasswordChanged>(_onConfirmPasswordChanged);
-    on<_PasswordVisibilityChanged>(_onPasswordVisibilityChanged);
-    on<_FormSubmitted>(_onFormSubmitted);
-  }
+class RegisterCubit extends Cubit<RegisterState> {
+  RegisterCubit({required BaseAuthRepository authRepository})
+      : _authRepository = authRepository,
+        super(const RegisterState());
+
   final BaseAuthRepository _authRepository;
 
-  void _onEmailChanged(_EmailChanged event, Emitter<RegisterState> emit) {
-    final email = Email.dirty(event.email);
-    emit(state.copyWith(email: email, status: Formz.validate([email, state.password])));
+  void emailChanged({required String email}) {
+    final newEmail = Email.dirty(email);
+    emit(state.copyWith(email: newEmail, status: Formz.validate([newEmail, state.password])));
   }
 
-  void _onPasswordChanged(_PasswordChanged event, Emitter<RegisterState> emit) {
-    final password = Password.dirty(event.password);
+  void passwordChanged({required String password}) {
+    final newPassword = Password.dirty(password);
     final confirmPassword = ConfirmPassword.dirty(
-      password: password.value,
+      password: newPassword.value,
       value: state.confirmPassword.value,
     );
     emit(
       state.copyWith(
-        password: password,
+        password: newPassword,
         status: Formz.validate([
           state.email,
-          password,
+          newPassword,
           confirmPassword,
         ]),
       ),
     );
   }
 
-  void _onConfirmPasswordChanged(_ConfirmPasswordChanged event, Emitter<RegisterState> emit) {
-    final confirmPassword = ConfirmPassword.dirty(
+  void confirmPasswordChanged({required String confirmPassword}) {
+    final newConfirmPassword = ConfirmPassword.dirty(
       password: state.password.value,
-      value: event.confirmPassword,
+      value: confirmPassword,
     );
 
     emit(
       state.copyWith(
-        confirmPassword: confirmPassword,
+        confirmPassword: newConfirmPassword,
         status: Formz.validate([
           state.email,
           state.password,
-          confirmPassword,
+          newConfirmPassword,
         ]),
       ),
     );
   }
 
-  void _onPasswordVisibilityChanged(_PasswordVisibilityChanged event, Emitter<RegisterState> emit) {
+  void passwordVisibilityChanged() {
     emit(state.copyWith(isPasswordObscured: !state.isPasswordObscured));
   }
 
-  Future<void> _onFormSubmitted(_FormSubmitted event, Emitter<RegisterState> emit) async {
+  Future<void> formSubmitted() async {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
