@@ -1,4 +1,4 @@
-part of 'forgot_password_bloc.dart';
+part of 'forgot_password_cubit.dart';
 
 @freezed
 class ForgotPasswordState with _$ForgotPasswordState {

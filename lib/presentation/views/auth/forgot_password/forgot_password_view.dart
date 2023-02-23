@@ -6,7 +6,7 @@ import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/locator.dart';
-import 'package:winmeet_mobile/logic/auth/forgot_password/forgot_password_bloc.dart';
+import 'package:winmeet_mobile/logic/auth/forgot_password/forgot_password_cubit.dart';
 import 'package:winmeet_mobile/presentation/widgets/button/custom_elevated_button.dart';
 import 'package:winmeet_mobile/presentation/widgets/input/email_input_field.dart';
 
@@ -17,7 +17,7 @@ class ForgotPasswordView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => getIt<ForgotPasswordBloc>(),
+        create: (context) => getIt<ForgotPasswordCubit>(),
         child: const _ForgotPasswordViewBody(),
       ),
     );
@@ -29,7 +29,7 @@ class _ForgotPasswordViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
+    return BlocListener<ForgotPasswordCubit, ForgotPasswordState>(
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status.isSubmissionSuccess) {
@@ -66,27 +66,23 @@ class _ForgotPasswordViewBody extends StatelessWidget {
                 const Text(
                   'Please provide your email and we will send you a link to reset your password',
                 ),
-                BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
+                BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
                   builder: (context, state) {
                     return EmailInputField(
                       textInputAction: TextInputAction.next,
                       isValid: state.email.invalid,
-                      onChanged: (email) => context.read<ForgotPasswordBloc>().add(
-                            ForgotPasswordEvent.emailChanged(email),
-                          ),
+                      onChanged: (email) => context.read<ForgotPasswordCubit>().emailChanged(email: email),
                     );
                   },
                 ),
-                BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
+                BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
                   builder: (context, state) {
                     return SizedBox(
                       width: double.infinity,
                       child: CustomElevatedButton(
                         buttonText: 'Reset',
                         isValid: state.status.isValidated,
-                        onPressed: () => context.read<ForgotPasswordBloc>().add(
-                              const ForgotPasswordEvent.formSubmitted(),
-                            ),
+                        onPressed: () => context.read<ForgotPasswordCubit>().formSubmitted(),
                         status: state.status,
                       ),
                     );

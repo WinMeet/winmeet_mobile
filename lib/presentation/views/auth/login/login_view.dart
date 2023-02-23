@@ -6,7 +6,8 @@ import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/locator.dart';
-import 'package:winmeet_mobile/logic/auth/login/login_bloc.dart';
+import 'package:winmeet_mobile/logic/auth/login/login_cubit.dart';
+
 import 'package:winmeet_mobile/presentation/widgets/button/custom_elevated_button.dart';
 import 'package:winmeet_mobile/presentation/widgets/input/email_input_field.dart';
 import 'package:winmeet_mobile/presentation/widgets/input/password_input_field.dart';
@@ -18,7 +19,7 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocProvider(
-        create: (context) => getIt<LoginBloc>(),
+        create: (context) => getIt<LoginCubit>(),
         child: const _LoginViewBody(),
       ),
     );
@@ -30,7 +31,7 @@ class _LoginViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginBloc, LoginState>(
+    return BlocListener<LoginCubit, LoginState>(
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status.isSubmissionSuccess) {
@@ -58,18 +59,18 @@ class _LoginViewBody extends StatelessWidget {
                 const Text(
                   'Enter your email and password to login',
                 ),
-                BlocBuilder<LoginBloc, LoginState>(
+                BlocBuilder<LoginCubit, LoginState>(
                   builder: (context, state) {
                     return EmailInputField(
                       textInputAction: TextInputAction.next,
                       isValid: state.email.invalid,
-                      onChanged: (email) => context.read<LoginBloc>().add(LoginEvent.emailChanged(email)),
+                      onChanged: (email) => context.read<LoginCubit>().emailChanged(email: email),
                     );
                   },
                 ),
                 Column(
                   children: [
-                    BlocBuilder<LoginBloc, LoginState>(
+                    BlocBuilder<LoginCubit, LoginState>(
                       builder: (context, state) {
                         return PasswordInputField(
                           textInputAction: TextInputAction.done,
@@ -77,8 +78,8 @@ class _LoginViewBody extends StatelessWidget {
                           isValid: state.password.invalid,
                           labelText: 'Password',
                           errorText: 'Weak Password',
-                          onChanged: (password) => context.read<LoginBloc>().add(LoginEvent.passwordChanged(password)),
-                          onPressed: () => context.read<LoginBloc>().add(const LoginEvent.passwordVisibilityChanged()),
+                          onChanged: (password) => context.read<LoginCubit>().passwordChanged(password: password),
+                          onPressed: () => context.read<LoginCubit>().passwordVisibilityChanged(),
                         );
                       },
                     ),
@@ -89,14 +90,14 @@ class _LoginViewBody extends StatelessWidget {
                         child: const Text('Forgot Password?'),
                       ),
                     ),
-                    BlocBuilder<LoginBloc, LoginState>(
+                    BlocBuilder<LoginCubit, LoginState>(
                       builder: (context, state) {
                         return SizedBox(
                           width: context.width,
                           child: CustomElevatedButton(
                             buttonText: 'Login',
                             isValid: state.status.isValidated,
-                            onPressed: () => context.read<LoginBloc>().add(const LoginEvent.formSubmitted()),
+                            onPressed: () => context.read<LoginCubit>().formSubmitted(),
                             status: state.status,
                           ),
                         );
