@@ -5,7 +5,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:winmeet_mobile/app/constants/strings.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/theme/app_theme.dart';
 import 'package:winmeet_mobile/app/theme/bloc/theme_bloc.dart';
@@ -42,7 +41,6 @@ class WinMeetMobile extends StatelessWidget {
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, themeState) {
           return MaterialApp.router(
-            title: Strings.appName,
             debugShowCheckedModeBanner: false,
 
             //theme
