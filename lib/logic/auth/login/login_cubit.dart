@@ -1,12 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
 import 'package:winmeet_mobile/data/repositories/auth/base_auth_repository.dart';
 
 part 'login_cubit.freezed.dart';
 part 'login_state.dart';
 
+@injectable
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit({required BaseAuthRepository authRepository})
       : _authRepository = authRepository,

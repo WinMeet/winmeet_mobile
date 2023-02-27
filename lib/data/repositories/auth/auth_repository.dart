@@ -1,7 +1,9 @@
+import 'package:injectable/injectable.dart';
 import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
 import 'package:winmeet_mobile/data/api/auth/auth_api.dart';
 import 'package:winmeet_mobile/data/repositories/auth/base_auth_repository.dart';
 
+@Injectable(as: BaseAuthRepository)
 class AuthRepository implements BaseAuthRepository {
   AuthRepository({required AuthApi authApi}) : _authApi = authApi;
 

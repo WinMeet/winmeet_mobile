@@ -1,3 +1,6 @@
+import 'package:injectable/injectable.dart';
+
+@injectable
 class AuthApi {
   Future<void> registerWithEmailAndPassword({
     required String email,
