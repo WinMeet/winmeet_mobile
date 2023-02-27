@@ -9,7 +9,7 @@ import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/theme/app_theme.dart';
 import 'package:winmeet_mobile/app/theme/bloc/theme_bloc.dart';
 import 'package:winmeet_mobile/core/utils/bloc/simple_bloc_observer.dart';
-import 'package:winmeet_mobile/locator.dart';
+import 'package:winmeet_mobile/injection.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +19,8 @@ Future<void> main() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getApplicationDocumentsDirectory(),
   );
-  initServices();
+
+  configureDependencies();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(WinMeetMobile());
