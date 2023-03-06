@@ -2,16 +2,19 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:winmeet_mobile/core/config/app_config.dart';
 
-@lazySingleton
+import 'package:winmeet_mobile/injection.dart';
+
+@singleton
 class NetworkClient {
   NetworkClient() {
     _dio = Dio();
-    // TODO: Configure NetworkClient
-    // _dio.options.baseUrl = '';
-    // _dio.options.connectTimeout = 10000;
-    // _dio.options.sendTimeout = 10000;
-    // _dio.options.receiveTimeout = 10000;
+
+    _dio.options.baseUrl = getIt<AppConfig>().baseUrl;
+    _dio.options.connectTimeout = const Duration(seconds: 10);
+    _dio.options.sendTimeout = const Duration(seconds: 10);
+    _dio.options.receiveTimeout = const Duration(seconds: 10);
 
     if (kDebugMode) {
       _dio.interceptors.add(
