@@ -44,12 +44,12 @@ class WinMeetMobile extends StatelessWidget {
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
 
-            //theme
+            // Theme
             themeMode: themeState.theme,
             theme: getIt<AppTheme>().lightTheme,
             darkTheme: getIt<AppTheme>().darkTheme,
 
-            // routing
+            // Routing
             routerDelegate: _appRouter.delegate(),
             routeInformationParser: _appRouter.defaultRouteParser(),
           );
