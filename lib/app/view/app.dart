@@ -1,33 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-
-import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/theme/app_theme.dart';
 import 'package:winmeet_mobile/app/theme/bloc/theme_bloc.dart';
-import 'package:winmeet_mobile/core/utils/bloc/simple_bloc_observer.dart';
 import 'package:winmeet_mobile/injection.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash();
-  Bloc.observer = SimpleBlocObserver();
-
-  HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: await getApplicationDocumentsDirectory(),
-  );
-
-  configureDependencies();
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
-  runApp(WinMeetMobile());
-}
-
-class WinMeetMobile extends StatelessWidget {
-  WinMeetMobile({super.key});
+class App extends StatelessWidget {
+  App({super.key});
 
   final _appRouter = AppRouter();
 
