@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
-import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/presentation/widgets/calendar/custom_table_calendar.dart';
 
 class ScheduleView extends StatefulWidget {
@@ -19,7 +18,6 @@ class _ScheduleViewState extends State<ScheduleView> {
         title: const Text('Schedule'),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: context.theme.primaryColor,
         onPressed: () => context.router.push(
           const CreateMeetingRoute(),
         ),

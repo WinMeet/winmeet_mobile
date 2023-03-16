@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:winmeet_mobile/app/router/app_router.gr.dart';
-import 'package:winmeet_mobile/app/theme/bloc/theme_bloc.dart';
+import 'package:winmeet_mobile/app/theme/cubit/theme_cubit.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
+import 'package:winmeet_mobile/feature/auth/cubit/auth_cubit.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -55,7 +55,7 @@ class _ThemeTileDialog extends StatelessWidget {
     return Dialog(
       child: Padding(
         padding: context.paddingAllDefault,
-        child: BlocBuilder<ThemeBloc, ThemeState>(
+        child: BlocBuilder<ThemeCubit, ThemeState>(
           builder: (context, state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,34 +66,25 @@ class _ThemeTileDialog extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 RadioListTile(
-                  activeColor: context.theme.primaryColor,
                   contentPadding: EdgeInsets.zero,
                   title: const Text('System Default'),
                   value: ThemeMode.system,
                   groupValue: state.settingsValue ?? state.theme,
-                  onChanged: (ThemeMode? theme) => context.read<ThemeBloc>().add(
-                        ThemeEvent.themeTileChanged(settingsValue: theme!),
-                      ),
+                  onChanged: (ThemeMode? theme) => context.read<ThemeCubit>().modifyTheme(theme!),
                 ),
                 RadioListTile(
-                  activeColor: context.theme.primaryColor,
                   contentPadding: EdgeInsets.zero,
                   title: const Text('Light'),
                   value: ThemeMode.light,
                   groupValue: state.settingsValue ?? state.theme,
-                  onChanged: (ThemeMode? theme) => context.read<ThemeBloc>().add(
-                        ThemeEvent.themeTileChanged(settingsValue: theme!),
-                      ),
+                  onChanged: (ThemeMode? theme) => context.read<ThemeCubit>().modifyTheme(theme!),
                 ),
                 RadioListTile(
-                  activeColor: context.theme.primaryColor,
                   contentPadding: EdgeInsets.zero,
                   title: const Text('Dark'),
                   value: ThemeMode.dark,
                   groupValue: state.settingsValue ?? state.theme,
-                  onChanged: (ThemeMode? theme) => context.read<ThemeBloc>().add(
-                        ThemeEvent.themeTileChanged(settingsValue: theme!),
-                      ),
+                  onChanged: (ThemeMode? theme) => context.read<ThemeCubit>().modifyTheme(theme!),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -104,7 +95,7 @@ class _ThemeTileDialog extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
-                        context.read<ThemeBloc>().add(const ThemeEvent.themeChanged());
+                        context.read<ThemeCubit>().changeTheme();
                         context.router.pop();
                       },
                       child: const Text('OK'),
@@ -170,7 +161,7 @@ class _LogoutDialog extends StatelessWidget {
                   child: const Text('CANCEL'),
                 ),
                 TextButton(
-                  onPressed: () => context.router.replace(const LoginRoute()),
+                  onPressed: () => context.read<AuthCubit>().logout(),
                   child: const Text('OK'),
                 )
               ],
@@ -187,7 +178,7 @@ Future<dynamic> _settingsDialog({required BuildContext context, required Widget 
     context: context,
     builder: (_) {
       return BlocProvider.value(
-        value: context.read<ThemeBloc>(),
+        value: context.read<ThemeCubit>(),
         child: child,
       );
     },

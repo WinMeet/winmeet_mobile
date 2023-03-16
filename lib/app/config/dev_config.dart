@@ -5,5 +5,5 @@ import 'package:winmeet_mobile/core/config/app_config.dart';
 class DevConfig implements AppConfig {
   @override
   // TODO: implement baseUrl
-  String get baseUrl => '';
+  String get baseUrl => 'localhost:8080/api';
 }
