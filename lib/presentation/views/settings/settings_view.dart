@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/theme/bloc/theme_bloc.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
+import 'package:winmeet_mobile/feature/auth/cubit/auth_cubit.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -170,7 +170,7 @@ class _LogoutDialog extends StatelessWidget {
                   child: const Text('CANCEL'),
                 ),
                 TextButton(
-                  onPressed: () => context.router.replace(const LoginRoute()),
+                  onPressed: () => context.read<AuthCubit>().logout(),
                   child: const Text('OK'),
                 )
               ],

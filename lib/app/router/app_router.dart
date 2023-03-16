@@ -1,7 +1,6 @@
 import 'package:auto_route/annotations.dart';
-import 'package:winmeet_mobile/app/router/wrappers/pending_wrapper.dart';
-import 'package:winmeet_mobile/app/router/wrappers/schedule_wrapper.dart';
-import 'package:winmeet_mobile/app/router/wrappers/settings_wrapper.dart';
+import 'package:auto_route/empty_router_widgets.dart';
+import 'package:winmeet_mobile/feature/onboarding/presentation/view/onboarding_view.dart';
 import 'package:winmeet_mobile/presentation/views/add_participant/add_participant_view.dart';
 import 'package:winmeet_mobile/presentation/views/auth/forgot_password/forgot_password_view.dart';
 import 'package:winmeet_mobile/presentation/views/auth/login/login_view.dart';
@@ -14,22 +13,44 @@ import 'package:winmeet_mobile/presentation/views/settings/settings_view.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'View,Route',
-  preferRelativeImports: true,
-  routes: <AutoRoute>[
-    AutoRoute(
-      page: LoginView,
-      initial: true,
-    ),
+  routes: [
+    onboarding,
+    unauthenticated,
+    authenticated,
+  ],
+)
+class $AppRouter {}
+
+const onboarding = AutoRoute(
+  name: 'OnboardingRutes',
+  page: EmptyRouterPage,
+  children: [
+    AutoRoute(initial: true, page: OnboardingView),
+    RedirectRoute(path: '*', redirectTo: ''),
+  ],
+);
+
+const unauthenticated = AutoRoute(
+  name: 'UnauthenticatedRoutes',
+  page: EmptyRouterPage,
+  children: [
+    AutoRoute(initial: true, page: LoginView),
     AutoRoute(page: RegisterView),
     AutoRoute(page: ForgotPasswordView),
-    AutoRoute(page: CreateMeetingView),
-    AutoRoute(page: AddParticipantView),
+    RedirectRoute(path: '*', redirectTo: ''),
+  ],
+);
+
+const authenticated = AutoRoute(
+  name: 'AuthenticatedRoutes',
+  page: EmptyRouterPage,
+  children: [
     AutoRoute(
       page: NavbarView,
-      name: 'NavbarRouter',
+      initial: true,
       children: [
         AutoRoute(
-          page: ScheduleWrapper,
+          page: EmptyRouterPage,
           name: 'ScheduleRouter',
           initial: true,
           children: [
@@ -38,7 +59,7 @@ import 'package:winmeet_mobile/presentation/views/settings/settings_view.dart';
           ],
         ),
         AutoRoute(
-          page: PendingWrapper,
+          page: EmptyRouterPage,
           name: 'PendingRouter',
           children: [
             AutoRoute(page: PendingView, initial: true),
@@ -46,7 +67,7 @@ import 'package:winmeet_mobile/presentation/views/settings/settings_view.dart';
           ],
         ),
         AutoRoute(
-          page: SettingsWrapper,
+          page: EmptyRouterPage,
           name: 'SettingsRouter',
           children: [
             AutoRoute(page: SettingsView, initial: true),
@@ -55,7 +76,8 @@ import 'package:winmeet_mobile/presentation/views/settings/settings_view.dart';
         ),
       ],
     ),
-    RedirectRoute(path: '', redirectTo: ''),
+    AutoRoute(page: CreateMeetingView),
+    AutoRoute(page: AddParticipantView),
+    RedirectRoute(path: '*', redirectTo: ''),
   ],
-)
-class $AppRouter {}
+);

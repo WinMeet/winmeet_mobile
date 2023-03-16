@@ -34,7 +34,7 @@ class _LoginViewBody extends StatelessWidget {
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status.isSubmissionSuccess) {
-          context.router.replace(const NavbarRouter());
+          context.router.replace(const NavbarRoute());
         } else if (state.status.isSubmissionFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

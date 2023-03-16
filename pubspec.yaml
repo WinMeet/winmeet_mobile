@@ -41,8 +41,9 @@ dependencies:
 
   # Utility
   intl: ^0.17.0
+  flutter_svg: ^2.0.4
   path_provider: ^2.0.12
-
+  
   # Splash screen
   flutter_native_splash: ^2.2.18
 
@@ -71,22 +72,23 @@ flutter_icons:
   android: true
   ios: true
   remove_alpha_ios: true
-  image_path: "assets/icons/logo.png"
+  image_path: "assets/logo/logo.png"
   adaptive_icon_background: "#6200EE"
   # Padding 8%
-  adaptive_icon_foreground: "assets/icons/logo_foreground.png"
+  adaptive_icon_foreground: "assets/logo/logo_foreground.png"
 
 flutter_native_splash:
   android: true
   ios: true
   android12: true
   color: "#6200EE"
-  image: "assets/icons/logo.png"
+  image: "assets/logo/logo.png"
 
 flutter:
   generate: true
   uses-material-design: true
 
   assets:
-    - assets/icons/
+    - assets/logo/
+    - assets/svg/
     
