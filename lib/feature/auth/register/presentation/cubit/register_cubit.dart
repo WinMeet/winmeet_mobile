@@ -3,19 +3,20 @@ import 'package:form_inputs/form_inputs.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
-import 'package:winmeet_mobile/data/models/auth/register/register_request_model.dart';
-import 'package:winmeet_mobile/data/repositories/auth/base_auth_repository.dart';
+
+import 'package:winmeet_mobile/feature/auth/register/data/model/register_request_model.dart';
+import 'package:winmeet_mobile/feature/auth/register/data/repository/register_repository.dart';
 
 part 'register_cubit.freezed.dart';
 part 'register_state.dart';
 
 @injectable
 class RegisterCubit extends Cubit<RegisterState> {
-  RegisterCubit({required BaseAuthRepository authRepository})
-      : _authRepository = authRepository,
+  RegisterCubit({required RegisterRepository registerRepository})
+      : _registerRepository = registerRepository,
         super(const RegisterState());
 
-  final BaseAuthRepository _authRepository;
+  final RegisterRepository _registerRepository;
 
   void emailChanged({required String email}) {
     final newEmail = Email.dirty(email);
@@ -66,7 +67,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
-      await _authRepository.registerWithEmailAndPassword(
+      await _registerRepository.registerWithEmailAndPassword(
         registerRequestModel: RegisterRequestModel(
           email: state.email.value,
           password: state.password.value,

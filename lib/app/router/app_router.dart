@@ -1,10 +1,10 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/empty_router_widgets.dart';
+import 'package:winmeet_mobile/feature/auth/forgot_password/presentation/view/forgot_password_view.dart';
+import 'package:winmeet_mobile/feature/auth/login/presentation/view/login_view.dart';
+import 'package:winmeet_mobile/feature/auth/register/presentation/view/register_view.dart';
 import 'package:winmeet_mobile/feature/onboarding/presentation/view/onboarding_view.dart';
 import 'package:winmeet_mobile/presentation/views/add_participant/add_participant_view.dart';
-import 'package:winmeet_mobile/presentation/views/auth/forgot_password/forgot_password_view.dart';
-import 'package:winmeet_mobile/presentation/views/auth/login/login_view.dart';
-import 'package:winmeet_mobile/presentation/views/auth/register/register_view.dart';
 import 'package:winmeet_mobile/presentation/views/create_meeting/create_meeting_view.dart';
 import 'package:winmeet_mobile/presentation/views/navbar/navbar_view.dart';
 import 'package:winmeet_mobile/presentation/views/pending/pending.dart';

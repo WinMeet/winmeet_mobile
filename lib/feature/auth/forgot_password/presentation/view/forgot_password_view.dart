@@ -5,8 +5,8 @@ import 'package:form_inputs/form_inputs.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
+import 'package:winmeet_mobile/feature/auth/forgot_password/presentation/cubit/forgot_password_cubit.dart';
 import 'package:winmeet_mobile/injection.dart';
-import 'package:winmeet_mobile/logic/auth/forgot_password/forgot_password_cubit.dart';
 import 'package:winmeet_mobile/presentation/widgets/button/custom_elevated_button.dart';
 import 'package:winmeet_mobile/presentation/widgets/input/email_input_field.dart';
 
@@ -79,6 +79,7 @@ class _ForgotPasswordViewBody extends StatelessWidget {
                   builder: (context, state) {
                     return SizedBox(
                       width: double.infinity,
+                      height: context.highValue,
                       child: CustomElevatedButton(
                         buttonText: 'Reset',
                         isValid: state.status.isValidated,

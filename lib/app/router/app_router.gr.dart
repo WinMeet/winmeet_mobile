@@ -15,13 +15,14 @@ import 'package:auto_route/auto_route.dart' as _i12;
 import 'package:auto_route/empty_router_widgets.dart' as _i1;
 import 'package:flutter/material.dart' as _i13;
 
+import '../../feature/auth/forgot_password/presentation/view/forgot_password_view.dart'
+    as _i5;
+import '../../feature/auth/login/presentation/view/login_view.dart' as _i3;
+import '../../feature/auth/register/presentation/view/register_view.dart'
+    as _i4;
 import '../../feature/onboarding/presentation/view/onboarding_view.dart' as _i2;
 import '../../presentation/views/add_participant/add_participant_view.dart'
     as _i8;
-import '../../presentation/views/auth/forgot_password/forgot_password_view.dart'
-    as _i5;
-import '../../presentation/views/auth/login/login_view.dart' as _i3;
-import '../../presentation/views/auth/register/register_view.dart' as _i4;
 import '../../presentation/views/create_meeting/create_meeting_view.dart'
     as _i7;
 import '../../presentation/views/navbar/navbar_view.dart' as _i6;
