@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/theme/app_theme.dart';
-import 'package:winmeet_mobile/app/theme/bloc/theme_bloc.dart';
+import 'package:winmeet_mobile/app/theme/cubit/theme_cubit.dart';
 import 'package:winmeet_mobile/feature/auth/cubit/auth_cubit.dart';
 import 'package:winmeet_mobile/feature/onboarding/presentation/cubit/onboarding_cubit.dart';
 import 'package:winmeet_mobile/injection.dart';
@@ -23,8 +23,8 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (_) => getIt<OnboardingCubit>(),
         ),
-        BlocProvider<ThemeBloc>(
-          create: (_) => getIt<ThemeBloc>(),
+        BlocProvider<ThemeCubit>(
+          create: (_) => getIt<ThemeCubit>(),
         ),
       ],
       child: BlocBuilder<OnboardingCubit, OnboardingState>(
@@ -42,7 +42,7 @@ class App extends StatelessWidget {
                 routes.add(const OnboardingRutes());
               }
 
-              return BlocBuilder<ThemeBloc, ThemeState>(
+              return BlocBuilder<ThemeCubit, ThemeState>(
                 builder: (context, themeState) {
                   return MaterialApp.router(
                     debugShowCheckedModeBanner: false,

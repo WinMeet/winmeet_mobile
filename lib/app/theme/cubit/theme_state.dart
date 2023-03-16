@@ -1,8 +1,11 @@
-part of 'theme_bloc.dart';
+part of 'theme_cubit.dart';
 
 @freezed
 class ThemeState with _$ThemeState {
-  factory ThemeState({@Default(ThemeMode.system) ThemeMode theme, ThemeMode? settingsValue}) = _ThemeState;
+  factory ThemeState({
+    @Default(ThemeMode.system) ThemeMode theme,
+    ThemeMode? settingsValue,
+  }) = _ThemeState;
 
   const ThemeState._();
 
