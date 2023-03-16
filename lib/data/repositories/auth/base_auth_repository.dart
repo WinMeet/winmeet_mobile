@@ -1,12 +1,13 @@
+import 'package:winmeet_mobile/data/models/auth/login/login_request_model.dart';
+import 'package:winmeet_mobile/data/models/auth/register/register_request_model.dart';
+
 abstract class BaseAuthRepository {
   Future<void> registerWithEmailAndPassword({
-    required String email,
-    required String password,
+    required RegisterRequestModel registerRequestModel,
   });
 
   Future<void> loginWithEmailAndPassword({
-    required String email,
-    required String password,
+    required LoginRequestModel loginRequestModel,
   });
 
   Future<void> sendPasswordResetEmail({

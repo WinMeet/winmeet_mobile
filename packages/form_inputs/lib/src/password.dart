@@ -10,9 +10,8 @@ class Password extends FormzInput<String, PasswordInputError> {
   const Password.dirty([super.value = '']) : super.dirty();
   @override
   PasswordInputError? validator(String value) {
-    if (value.trim().length < 8) {
-      return PasswordInputError.weakPassword;
-    }
-    return null;
+    return RegExp(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$').hasMatch(value.trim())
+        ? null
+        : PasswordInputError.weakPassword;
   }
 }

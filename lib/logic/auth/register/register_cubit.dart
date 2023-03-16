@@ -3,6 +3,7 @@ import 'package:form_inputs/form_inputs.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
+import 'package:winmeet_mobile/data/models/auth/register/register_request_model.dart';
 import 'package:winmeet_mobile/data/repositories/auth/base_auth_repository.dart';
 
 part 'register_cubit.freezed.dart';
@@ -66,8 +67,10 @@ class RegisterCubit extends Cubit<RegisterState> {
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     try {
       await _authRepository.registerWithEmailAndPassword(
-        email: state.email.value,
-        password: state.password.value,
+        registerRequestModel: RegisterRequestModel(
+          email: state.email.value,
+          password: state.password.value,
+        ),
       );
       emit(
         state.copyWith(
