@@ -22,7 +22,6 @@ class NormalInputField extends StatelessWidget {
       textInputAction: textInputAction,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        border: const OutlineInputBorder(),
         prefixIcon: const Icon(Icons.person),
         labelText: labelText,
         errorText: isValid ? errorLabel : null,

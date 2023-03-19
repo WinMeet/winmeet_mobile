@@ -24,7 +24,6 @@ class TextInputField extends StatelessWidget {
       textInputAction: textInputAction,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        border: const OutlineInputBorder(),
         labelText: labelText,
         errorText: (isValidInput ?? true) ? null : errorText,
       ),

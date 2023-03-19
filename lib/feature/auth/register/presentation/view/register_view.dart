@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_heading.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/feature/auth/register/presentation/cubit/register_cubit.dart';
@@ -61,9 +62,8 @@ class _RegisterViewBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Register',
-                  style: context.textTheme.headlineMedium,
+                const WinMeetHeading(
+                  text: 'Register',
                 ),
                 const Text(
                   'Enter your name, email and password to register',
@@ -117,15 +117,11 @@ class _RegisterViewBody extends StatelessWidget {
                 ),
                 BlocBuilder<RegisterCubit, RegisterState>(
                   builder: (context, state) {
-                    return SizedBox(
-                      width: double.infinity,
-                      height: context.highValue,
-                      child: CustomElevatedButton(
-                        buttonText: 'Register',
-                        isValid: state.status.isValidated,
-                        onPressed: () => context.read<RegisterCubit>().formSubmitted(),
-                        status: state.status,
-                      ),
+                    return CustomElevatedButton(
+                      buttonText: 'Register',
+                      isValid: state.status.isValidated,
+                      onPressed: () => context.read<RegisterCubit>().formSubmitted(),
+                      status: state.status,
                     );
                   },
                 ),

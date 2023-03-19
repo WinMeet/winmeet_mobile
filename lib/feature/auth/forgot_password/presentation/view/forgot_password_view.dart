@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_heading.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/feature/auth/forgot_password/presentation/cubit/forgot_password_cubit.dart';
@@ -59,9 +60,8 @@ class _ForgotPasswordViewBody extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Forgot Password',
-                  style: Theme.of(context).textTheme.titleLarge,
+                const WinMeetHeading(
+                  text: 'Forgot Password',
                 ),
                 const Text(
                   'Please provide your email and we will send you a link to reset your password',
@@ -77,15 +77,11 @@ class _ForgotPasswordViewBody extends StatelessWidget {
                 ),
                 BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
                   builder: (context, state) {
-                    return SizedBox(
-                      width: double.infinity,
-                      height: context.highValue,
-                      child: CustomElevatedButton(
-                        buttonText: 'Reset',
-                        isValid: state.status.isValidated,
-                        onPressed: () => context.read<ForgotPasswordCubit>().formSubmitted(),
-                        status: state.status,
-                      ),
+                    return CustomElevatedButton(
+                      buttonText: 'Reset',
+                      isValid: state.status.isValidated,
+                      onPressed: () => context.read<ForgotPasswordCubit>().formSubmitted(),
+                      status: state.status,
                     );
                   },
                 ),

@@ -2,8 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
-import 'package:winmeet_mobile/app/theme/app_theme.dart';
+
 import 'package:winmeet_mobile/app/theme/cubit/theme_cubit.dart';
+import 'package:winmeet_mobile/app/theme/dark/dark_theme.dart';
+import 'package:winmeet_mobile/app/theme/light/light_theme.dart';
 import 'package:winmeet_mobile/feature/auth/cubit/auth_cubit.dart';
 import 'package:winmeet_mobile/feature/onboarding/presentation/cubit/onboarding_cubit.dart';
 import 'package:winmeet_mobile/injection.dart';
@@ -49,8 +51,8 @@ class App extends StatelessWidget {
 
                     // Theme
                     themeMode: themeState.theme,
-                    theme: getIt<AppTheme>().lightTheme,
-                    darkTheme: getIt<AppTheme>().darkTheme,
+                    theme: getIt<LightTheme>().theme,
+                    darkTheme: getIt<DarkTheme>().theme,
 
                     // Routing
                     routerDelegate: AutoRouterDelegate.declarative(_appRouter, routes: (_) => routes),

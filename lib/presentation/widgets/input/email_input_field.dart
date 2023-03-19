@@ -18,7 +18,6 @@ class EmailInputField extends StatelessWidget {
       textInputAction: textInputAction,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        border: const OutlineInputBorder(),
         prefixIcon: const Icon(Icons.email),
         labelText: 'Email',
         errorText: isValid ? 'Invalid email' : null,

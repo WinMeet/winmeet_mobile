@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_heading.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/feature/auth/login/presentation/cubit/login_cubit.dart';
@@ -51,9 +52,8 @@ class _LoginViewBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Login',
-                  style: context.textTheme.headlineMedium,
+                const WinMeetHeading(
+                  text: 'Login',
                 ),
                 const Text(
                   'Enter your email and password to login',
@@ -91,15 +91,11 @@ class _LoginViewBody extends StatelessWidget {
                     ),
                     BlocBuilder<LoginCubit, LoginState>(
                       builder: (context, state) {
-                        return SizedBox(
-                          width: double.infinity,
-                          height: context.highValue,
-                          child: CustomElevatedButton(
-                            buttonText: 'Login',
-                            isValid: state.status.isValidated,
-                            onPressed: () => context.read<LoginCubit>().formSubmitted(),
-                            status: state.status,
-                          ),
+                        return CustomElevatedButton(
+                          buttonText: 'Login',
+                          isValid: state.status.isValidated,
+                          onPressed: () => context.read<LoginCubit>().formSubmitted(),
+                          status: state.status,
                         );
                       },
                     ),
