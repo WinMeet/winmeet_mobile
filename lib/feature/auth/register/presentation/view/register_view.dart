@@ -9,6 +9,7 @@ import 'package:winmeet_mobile/feature/auth/register/presentation/cubit/register
 import 'package:winmeet_mobile/injection.dart';
 import 'package:winmeet_mobile/presentation/widgets/button/custom_elevated_button.dart';
 import 'package:winmeet_mobile/presentation/widgets/input/email_input_field.dart';
+import 'package:winmeet_mobile/presentation/widgets/input/normal_input_field.dart';
 import 'package:winmeet_mobile/presentation/widgets/input/password_input_field.dart';
 
 class RegisterView extends StatelessWidget {
@@ -65,7 +66,18 @@ class _RegisterViewBody extends StatelessWidget {
                   style: context.textTheme.headlineMedium,
                 ),
                 const Text(
-                  'Enter your email and password to register',
+                  'Enter your name, email and password to register',
+                ),
+                BlocBuilder<RegisterCubit, RegisterState>(
+                  builder: (context, state) {
+                    return NormalInputField(
+                      labelText: 'Name',
+                      errorLabel: 'Name cannot be empty',
+                      textInputAction: TextInputAction.next,
+                      isValid: state.name.invalid,
+                      onChanged: (name) => context.read<RegisterCubit>().nameChanged(name: name),
+                    );
+                  },
                 ),
                 BlocBuilder<RegisterCubit, RegisterState>(
                   builder: (context, state) {
