@@ -22,12 +22,12 @@ import '../../feature/auth/register/presentation/view/register_view.dart'
     as _i4;
 import '../../feature/navbar/navbar_view.dart' as _i6;
 import '../../feature/onboarding/presentation/view/onboarding_view.dart' as _i2;
+import '../../feature/pending/view/pending_view.dart' as _i10;
 import '../../feature/schedule/presentation/view/schedule_view.dart' as _i9;
 import '../../presentation/views/add_participant/add_participant_view.dart'
     as _i8;
 import '../../presentation/views/create_meeting/create_meeting_view.dart'
     as _i7;
-import '../../presentation/views/pending/pending.dart' as _i10;
 import '../../presentation/views/settings/settings_view.dart' as _i11;
 
 class AppRouter extends _i12.RootStackRouter {

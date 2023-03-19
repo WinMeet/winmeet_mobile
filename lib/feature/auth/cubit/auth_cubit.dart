@@ -7,7 +7,7 @@ part 'auth_cubit.freezed.dart';
 
 @injectable
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(const AuthState.unauthenticated());
+  AuthCubit() : super(const AuthState.authenticated());
 
   void logout() {
     emit(const AuthState.unauthenticated());

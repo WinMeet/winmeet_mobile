@@ -5,10 +5,11 @@ import 'package:winmeet_mobile/feature/auth/login/presentation/view/login_view.d
 import 'package:winmeet_mobile/feature/auth/register/presentation/view/register_view.dart';
 import 'package:winmeet_mobile/feature/navbar/navbar_view.dart';
 import 'package:winmeet_mobile/feature/onboarding/presentation/view/onboarding_view.dart';
+import 'package:winmeet_mobile/feature/pending/view/pending_view.dart';
 import 'package:winmeet_mobile/feature/schedule/presentation/view/schedule_view.dart';
 import 'package:winmeet_mobile/presentation/views/add_participant/add_participant_view.dart';
 import 'package:winmeet_mobile/presentation/views/create_meeting/create_meeting_view.dart';
-import 'package:winmeet_mobile/presentation/views/pending/pending.dart';
+
 import 'package:winmeet_mobile/presentation/views/settings/settings_view.dart';
 
 @MaterialAutoRouter(

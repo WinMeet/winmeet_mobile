@@ -9,6 +9,7 @@ abstract class BaseTheme {
       colorScheme: colorScheme,
     ).copyWith(
       useMaterial3: true,
+      appBarTheme: _appBarTheme,
       elevatedButtonTheme: _elevatedButtonTheme,
       floatingActionButtonTheme: _floatingActionTheme,
       inputDecorationTheme: _inputDecorationTheme,
@@ -16,30 +17,28 @@ abstract class BaseTheme {
     );
   }
 
-  ElevatedButtonThemeData get _elevatedButtonTheme {
-    return ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        minimumSize: const Size.fromHeight(56),
+  AppBarTheme get _appBarTheme => const AppBarTheme(
+        centerTitle: true,
+      );
+
+  ElevatedButtonThemeData get _elevatedButtonTheme => ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          minimumSize: const Size.fromHeight(56),
+          shape: RoundedRectangleBorder(
+            borderRadius: ThemeConstants.borderRadiusCircular,
+          ),
+        ),
+      );
+
+  FloatingActionButtonThemeData get _floatingActionTheme => FloatingActionButtonThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: ThemeConstants.borderRadiusCircular,
         ),
-      ),
-    );
-  }
+      );
 
-  FloatingActionButtonThemeData get _floatingActionTheme {
-    return FloatingActionButtonThemeData(
-      shape: RoundedRectangleBorder(
-        borderRadius: ThemeConstants.borderRadiusCircular,
-      ),
-    );
-  }
-
-  InputDecorationTheme get _inputDecorationTheme {
-    return InputDecorationTheme(
-      border: OutlineInputBorder(
-        borderRadius: ThemeConstants.borderRadiusCircular,
-      ),
-    );
-  }
+  InputDecorationTheme get _inputDecorationTheme => InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: ThemeConstants.borderRadiusCircular,
+        ),
+      );
 }
