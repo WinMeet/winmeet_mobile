@@ -25,7 +25,7 @@ class NormalInputField extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         labelText: labelText,
-        errorText: (isValid ?? true) ? null : errorLabel,
+        errorText: (isValid ?? true) ? errorLabel : null,
       ),
       onChanged: onChanged,
     );
