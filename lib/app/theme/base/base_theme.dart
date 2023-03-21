@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:winmeet_mobile/app/theme/constants/theme_constants.dart';
 
 abstract class BaseTheme {
-  ColorScheme get colorScheme;
+  Brightness get brightness;
 
   ThemeData get theme {
-    return ThemeData.from(
-      colorScheme: colorScheme,
-    ).copyWith(
+    return ThemeData(
       useMaterial3: true,
+      brightness: brightness,
       appBarTheme: _appBarTheme,
+      dialogTheme: _dialogTheme,
       elevatedButtonTheme: _elevatedButtonTheme,
       floatingActionButtonTheme: _floatingActionTheme,
       inputDecorationTheme: _inputDecorationTheme,
@@ -19,6 +19,12 @@ abstract class BaseTheme {
 
   AppBarTheme get _appBarTheme => const AppBarTheme(
         centerTitle: true,
+      );
+
+  DialogTheme get _dialogTheme => DialogTheme(
+        shape: RoundedRectangleBorder(
+          borderRadius: ThemeConstants.borderRadiusCircular,
+        ),
       );
 
   ElevatedButtonThemeData get _elevatedButtonTheme => ElevatedButtonThemeData(

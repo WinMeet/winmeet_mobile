@@ -131,6 +131,7 @@ class _CreateMeetingViewState extends State<CreateMeetingView> {
 
   Future<DateTime?> pickDate({required BuildContext context, required DateTime initialTime}) {
     return showDatePicker(
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
       context: context,
       initialDate: initialTime,
       firstDate: CalendarUtils.kToday,
@@ -140,6 +141,7 @@ class _CreateMeetingViewState extends State<CreateMeetingView> {
 
   Future<TimeOfDay?> pickTime({required BuildContext context, required DateTime initialTime}) {
     return showTimePicker(
+      initialEntryMode: TimePickerEntryMode.dialOnly,
       context: context,
       initialTime: TimeOfDay.fromDateTime(initialTime),
     );
