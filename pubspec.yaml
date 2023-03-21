@@ -38,6 +38,7 @@ dependencies:
   # UI
   table_calendar: ^3.0.8
   cupertino_icons: ^1.0.2
+  omni_datetime_picker: ^1.0.1
 
   # Utility
   intl: ^0.17.0

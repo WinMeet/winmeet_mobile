@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 class NormalInputField extends StatelessWidget {
   const NormalInputField({
     required this.labelText,
-    required this.errorLabel,
     required this.textInputAction,
-    required this.isValid,
+    this.isValid,
+    this.errorLabel,
+    this.prefixIcon,
     super.key,
     this.onChanged,
   });
-
+  final Icon? prefixIcon;
   final String labelText;
-  final String errorLabel;
+  final String? errorLabel;
   final TextInputAction textInputAction;
-  final bool isValid;
+  final bool? isValid;
   final void Function(String)? onChanged;
 
   @override
@@ -22,9 +23,9 @@ class NormalInputField extends StatelessWidget {
       textInputAction: textInputAction,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        prefixIcon: const Icon(Icons.person),
+        prefixIcon: prefixIcon,
         labelText: labelText,
-        errorText: isValid ? errorLabel : null,
+        errorText: (isValid ?? true) ? null : errorLabel,
       ),
       onChanged: onChanged,
     );

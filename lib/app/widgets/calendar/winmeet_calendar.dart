@@ -15,14 +15,14 @@ class WinMeetCalendar extends StatefulWidget {
 
 class _WinMeetCalendarState extends State<WinMeetCalendar> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  DateTime _focusedDay = CalendarUtils2.today;
+  DateTime _focusedDay = CalendarUtils.today;
 
   @override
   Widget build(BuildContext context) {
     return TableCalendar<dynamic>(
       focusedDay: _focusedDay,
-      firstDay: CalendarUtils2.firstDay,
-      lastDay: CalendarUtils2.lastDay,
+      firstDay: CalendarUtils.firstDay,
+      lastDay: CalendarUtils.lastDay,
       calendarFormat: _calendarFormat,
       startingDayOfWeek: StartingDayOfWeek.monday,
       availableCalendarFormats: const {

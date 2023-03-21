@@ -6,6 +6,7 @@ import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/widgets/text/winmeet_heading.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
+import 'package:winmeet_mobile/core/utils/snackbar/snackbar_utils.dart';
 import 'package:winmeet_mobile/feature/auth/register/presentation/cubit/register_cubit.dart';
 import 'package:winmeet_mobile/injection.dart';
 import 'package:winmeet_mobile/presentation/widgets/button/custom_elevated_button.dart';
@@ -37,21 +38,15 @@ class _RegisterViewBody extends StatelessWidget {
       listener: (context, state) {
         if (state.status.isSubmissionSuccess) {
           context.router.replace(const LoginRoute());
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              const SnackBar(
-                content: Text('Account created'),
-              ),
-            );
+          SnackbarUtils.showSnackbar(
+            context: context,
+            message: 'Account created',
+          );
         } else if (state.status.isSubmissionFailure) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage ?? 'Authentication Failure'),
-              ),
-            );
+          SnackbarUtils.showSnackbar(
+            context: context,
+            message: state.errorMessage ?? 'Authentication Failure',
+          );
         }
       },
       child: Padding(
@@ -73,6 +68,7 @@ class _RegisterViewBody extends StatelessWidget {
                     return NormalInputField(
                       labelText: 'Name',
                       errorLabel: 'Name cannot be empty',
+                      prefixIcon: const Icon(Icons.person),
                       textInputAction: TextInputAction.next,
                       isValid: state.name.invalid,
                       onChanged: (name) => context.read<RegisterCubit>().nameChanged(name: name),

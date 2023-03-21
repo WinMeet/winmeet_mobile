@@ -6,6 +6,7 @@ import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/widgets/text/winmeet_heading.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
+import 'package:winmeet_mobile/core/utils/snackbar/snackbar_utils.dart';
 import 'package:winmeet_mobile/feature/auth/login/presentation/cubit/login_cubit.dart';
 import 'package:winmeet_mobile/injection.dart';
 import 'package:winmeet_mobile/presentation/widgets/button/custom_elevated_button.dart';
@@ -37,10 +38,9 @@ class _LoginViewBody extends StatelessWidget {
         if (state.status.isSubmissionSuccess) {
           context.router.replace(const NavbarRoute());
         } else if (state.status.isSubmissionFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.errorMessage.toString()),
-            ),
+          SnackbarUtils.showSnackbar(
+            context: context,
+            message: state.errorMessage.toString(),
           );
         }
       },
