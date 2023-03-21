@@ -19,7 +19,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   final RegisterRepository _registerRepository;
 
   void nameChanged({required String name}) {
-    final newName = Name.dirty(name);
+    final newName = RequiredField.dirty(name);
     emit(
       state.copyWith(
         name: newName,
