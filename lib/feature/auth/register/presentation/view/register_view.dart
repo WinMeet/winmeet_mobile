@@ -80,6 +80,7 @@ class _RegisterViewBody extends StatelessWidget {
                     return EmailInputField(
                       textInputAction: TextInputAction.next,
                       isValid: state.email.invalid,
+                      labelText: 'Email',
                       onChanged: (email) => context.read<RegisterCubit>().emailChanged(email: email),
                     );
                   },

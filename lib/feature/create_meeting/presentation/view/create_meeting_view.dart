@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/core/utils/calendar/calendar_utils.dart';
@@ -191,6 +192,10 @@ class _Participants extends StatelessWidget {
             style: context.textTheme.bodyLarge,
           ),
           trailing: const Icon(Icons.add),
+          onTap: () async {
+            await context.router.push(AddParticipantsRoute(cubit: context.read<CreateMeetingCubit>()));
+            if (context.mounted) context.read<CreateMeetingCubit>().resetAddParticipantsVariables();
+          },
         ),
         SizedBox(
           height: context.veryHighValue2x,

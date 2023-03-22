@@ -1,5 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/empty_router_widgets.dart';
+import 'package:winmeet_mobile/feature/add_participants/presentation/view/add_participants_view.dart';
 import 'package:winmeet_mobile/feature/auth/forgot_password/presentation/view/forgot_password_view.dart';
 import 'package:winmeet_mobile/feature/auth/login/presentation/view/login_view.dart';
 import 'package:winmeet_mobile/feature/auth/register/presentation/view/register_view.dart';
@@ -8,7 +9,6 @@ import 'package:winmeet_mobile/feature/navbar/navbar_view.dart';
 import 'package:winmeet_mobile/feature/onboarding/presentation/view/onboarding_view.dart';
 import 'package:winmeet_mobile/feature/pending/view/pending_view.dart';
 import 'package:winmeet_mobile/feature/schedule/presentation/view/schedule_view.dart';
-import 'package:winmeet_mobile/presentation/views/add_participant/add_participant_view.dart';
 import 'package:winmeet_mobile/presentation/views/settings/settings_view.dart';
 
 @MaterialAutoRouter(
@@ -77,7 +77,7 @@ const authenticated = AutoRoute(
       ],
     ),
     AutoRoute(page: CreateMeetingView),
-    AutoRoute(page: AddParticipantView),
+    AutoRoute(page: AddParticipantsView),
     RedirectRoute(path: '*', redirectTo: ''),
   ],
 );
