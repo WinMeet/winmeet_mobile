@@ -185,6 +185,7 @@ class _Participants extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ListTile(
           leading: Text(
@@ -197,20 +198,23 @@ class _Participants extends StatelessWidget {
             if (context.mounted) context.read<CreateMeetingCubit>().resetAddParticipantsVariables();
           },
         ),
-        SizedBox(
-          height: context.veryHighValue2x,
-          child: SingleChildScrollView(
-            child: Wrap(
+        BlocBuilder<CreateMeetingCubit, CreateMeetingState>(
+          builder: (context, state) {
+            return Wrap(
               runSpacing: context.lowValue,
               spacing: context.lowValue,
               children: List.generate(
-                10,
-                (index) => const Chip(
-                  label: Text('cemo99@gmail.com'),
+                state.participants.length,
+                (index) => Chip(
+                  deleteButtonTooltipMessage: '',
+                  label: Text(state.participants[index].substring(0, 12)),
+                  onDeleted: () => context.read<CreateMeetingCubit>().removeParticipantFromParticipants(
+                        email: state.participants[index],
+                      ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ],
     );
