@@ -12,6 +12,7 @@ abstract class BaseTheme {
       dialogTheme: _dialogTheme,
       elevatedButtonTheme: _elevatedButtonTheme,
       floatingActionButtonTheme: _floatingActionTheme,
+      listTileTheme: _listTileTheme,
       inputDecorationTheme: _inputDecorationTheme,
       typography: Typography.material2021(),
     );
@@ -40,6 +41,10 @@ abstract class BaseTheme {
         shape: RoundedRectangleBorder(
           borderRadius: ThemeConstants.borderRadiusCircular,
         ),
+      );
+
+  ListTileThemeData get _listTileTheme => const ListTileThemeData(
+        contentPadding: EdgeInsets.zero,
       );
 
   InputDecorationTheme get _inputDecorationTheme => InputDecorationTheme(

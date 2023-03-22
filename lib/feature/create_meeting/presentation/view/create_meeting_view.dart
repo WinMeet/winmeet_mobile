@@ -51,7 +51,7 @@ class _CreateMeetingScaffold extends StatelessWidget {
                 labelText: 'Meeting Title',
                 errorLabel: 'This field cannot be empty',
                 textInputAction: TextInputAction.next,
-                isValid: true,
+                isValid: false,
               ),
               const NormalInputField(
                 labelText: 'Meeting Description',
@@ -97,8 +97,14 @@ class _DateTimePicker extends StatelessWidget {
   }
 
   Future<void> _onStartTimeSelected(BuildContext context, CreateMeetingState state) async {
-    final selectedStartTime =
-        await DateTimePickerUtils.pickDateTime(context: context, initialTime: state.startDateTime);
+    final selectedStartTime = await DateTimePickerUtils.pickDateTime(
+      context: context,
+      initialTime: state.startDateTime,
+      datePickerHelpText: 'Select Start Date',
+      timePickerHelpText: 'Select Start Time',
+      cancelText: 'Cancel',
+      confirmText: 'Confirm',
+    );
 
     if (context.mounted && selectedStartTime != null) {
       if (selectedStartTime.isAfter(state.endDateTime)) {
@@ -119,7 +125,14 @@ class _DateTimePicker extends StatelessWidget {
   }
 
   Future<void> _onEndTimeSelected(BuildContext context, CreateMeetingState state) async {
-    final selectedEndTime = await DateTimePickerUtils.pickDateTime(context: context, initialTime: state.endDateTime);
+    final selectedEndTime = await DateTimePickerUtils.pickDateTime(
+      context: context,
+      initialTime: state.endDateTime,
+      datePickerHelpText: 'Select End Date',
+      timePickerHelpText: 'Select End Time',
+      cancelText: 'Cancel',
+      confirmText: 'Confirm',
+    );
 
     if (context.mounted && selectedEndTime != null) {
       if (selectedEndTime.isBefore(state.startDateTime)) {
@@ -152,7 +165,6 @@ class _DateTimeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.zero,
       leading: Text(
         label,
         style: context.textTheme.bodyLarge,
@@ -174,7 +186,6 @@ class _Participants extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          contentPadding: EdgeInsets.zero,
           leading: Text(
             'Participants',
             style: context.textTheme.bodyLarge,
