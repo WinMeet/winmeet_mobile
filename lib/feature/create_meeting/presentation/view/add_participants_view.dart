@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:winmeet_mobile/app/widgets/input/email_input_field.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/feature/create_meeting/presentation/cubit/create_meeting_cubit.dart';
-import 'package:winmeet_mobile/presentation/widgets/input/email_input_field.dart';
 
 class AddParticipantsView extends StatefulWidget {
   const AddParticipantsView({required CreateMeetingCubit cubit, super.key}) : _cubit = cubit;

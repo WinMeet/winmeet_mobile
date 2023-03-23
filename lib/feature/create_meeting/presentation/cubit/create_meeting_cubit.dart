@@ -3,7 +3,7 @@ import 'package:form_inputs/form_inputs.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
-import 'package:winmeet_mobile/core/utils/calendar/calendar_utils.dart';
+import 'package:winmeet_mobile/app/utils/calendar/calendar_utils.dart';
 import 'package:winmeet_mobile/feature/create_meeting/data/model/create_meeting_request_model.dart';
 import 'package:winmeet_mobile/feature/create_meeting/data/repository/create_meeting_repository.dart';
 

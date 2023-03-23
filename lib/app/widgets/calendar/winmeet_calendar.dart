@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:winmeet_mobile/app/theme/constants/theme_constants.dart';
+import 'package:winmeet_mobile/app/utils/calendar/calendar_utils.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
-
-import 'package:winmeet_mobile/core/utils/calendar/calendar_utils.dart';
 
 class WinMeetCalendar extends StatefulWidget {
   const WinMeetCalendar({super.key});
