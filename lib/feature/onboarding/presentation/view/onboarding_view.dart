@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:winmeet_mobile/app/constants/assets.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_heading.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/feature/onboarding/data/model/onboarding_model.dart';
@@ -67,13 +68,9 @@ class OnboardingView extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(
-                width: context.width,
-                height: context.highValue,
-                child: ElevatedButton(
-                  onPressed: () => context.read<OnboardingCubit>().completeOnboarding(),
-                  child: const Text('Get Started'),
-                ),
+              ElevatedButton(
+                onPressed: () => context.read<OnboardingCubit>().completeOnboarding(),
+                child: const Text('Get Started'),
               ),
             ].withSpaceBetween(height: context.mediumValue),
           ),
@@ -97,10 +94,9 @@ class _OnboardingPage extends StatelessWidget {
         Expanded(
           child: SvgPicture.asset(item.imagePath),
         ),
-        Text(
-          item.title,
+        WinMeetHeading(
+          text: item.title,
           textAlign: TextAlign.center,
-          style: context.textTheme.headlineMedium,
         ),
         Text(
           item.description,

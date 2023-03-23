@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
+import 'package:winmeet_mobile/app/widgets/button/custom_elevated_button.dart';
+import 'package:winmeet_mobile/app/widgets/input/email_input_field.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_heading.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
+import 'package:winmeet_mobile/core/utils/snackbar/snackbar_utils.dart';
 import 'package:winmeet_mobile/feature/auth/forgot_password/presentation/cubit/forgot_password_cubit.dart';
 import 'package:winmeet_mobile/injection.dart';
-import 'package:winmeet_mobile/presentation/widgets/button/custom_elevated_button.dart';
-import 'package:winmeet_mobile/presentation/widgets/input/email_input_field.dart';
 
 class ForgotPasswordView extends StatelessWidget {
   const ForgotPasswordView({super.key});
@@ -34,20 +36,15 @@ class _ForgotPasswordViewBody extends StatelessWidget {
       listener: (context, state) {
         if (state.status.isSubmissionSuccess) {
           context.router.replace(const LoginRoute());
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'Password reset link sent to the email provided. (Check your spam.)',
-              ),
-            ),
+
+          SnackbarUtils.showSnackbar(
+            context: context,
+            message: 'Password reset link sent to the email provided. (Check your spam.)',
           );
         } else if (state.status.isSubmissionFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                state.errorMessage.toString(),
-              ),
-            ),
+          SnackbarUtils.showSnackbar(
+            context: context,
+            message: state.errorMessage.toString(),
           );
         }
       },
@@ -59,9 +56,8 @@ class _ForgotPasswordViewBody extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Forgot Password',
-                  style: Theme.of(context).textTheme.titleLarge,
+                const WinMeetHeading(
+                  text: 'Forgot Password',
                 ),
                 const Text(
                   'Please provide your email and we will send you a link to reset your password',
@@ -71,21 +67,18 @@ class _ForgotPasswordViewBody extends StatelessWidget {
                     return EmailInputField(
                       textInputAction: TextInputAction.next,
                       isValid: state.email.invalid,
+                      labelText: 'Email',
                       onChanged: (email) => context.read<ForgotPasswordCubit>().emailChanged(email: email),
                     );
                   },
                 ),
                 BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
                   builder: (context, state) {
-                    return SizedBox(
-                      width: double.infinity,
-                      height: context.highValue,
-                      child: CustomElevatedButton(
-                        buttonText: 'Reset',
-                        isValid: state.status.isValidated,
-                        onPressed: () => context.read<ForgotPasswordCubit>().formSubmitted(),
-                        status: state.status,
-                      ),
+                    return CustomElevatedButton(
+                      buttonText: 'Reset',
+                      isValid: state.status.isValidated,
+                      onPressed: () => context.read<ForgotPasswordCubit>().formSubmitted(),
+                      status: state.status,
                     );
                   },
                 ),

@@ -18,9 +18,36 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   final RegisterRepository _registerRepository;
 
+  void nameChanged({required String name}) {
+    final newName = InputField.dirty(value: name);
+    emit(
+      state.copyWith(
+        name: newName,
+        status: Formz.validate([
+          newName,
+          state.email,
+          state.password,
+          state.confirmPassword,
+        ]),
+      ),
+    );
+  }
+
   void emailChanged({required String email}) {
     final newEmail = Email.dirty(email);
-    emit(state.copyWith(email: newEmail, status: Formz.validate([newEmail, state.password])));
+    emit(
+      state.copyWith(
+        email: newEmail,
+        status: Formz.validate(
+          [
+            newEmail,
+            state.name,
+            state.password,
+            state.confirmPassword,
+          ],
+        ),
+      ),
+    );
   }
 
   void passwordChanged({required String password}) {
@@ -33,6 +60,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       state.copyWith(
         password: newPassword,
         status: Formz.validate([
+          state.name,
           state.email,
           newPassword,
           confirmPassword,
@@ -51,6 +79,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       state.copyWith(
         confirmPassword: newConfirmPassword,
         status: Formz.validate([
+          state.name,
           state.email,
           state.password,
           newConfirmPassword,
@@ -69,6 +98,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     try {
       await _registerRepository.registerWithEmailAndPassword(
         registerRequestModel: RegisterRequestModel(
+          name: state.name.value,
           email: state.email.value,
           password: state.password.value,
         ),

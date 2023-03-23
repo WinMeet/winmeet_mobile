@@ -20,14 +20,16 @@ import '../../feature/auth/forgot_password/presentation/view/forgot_password_vie
 import '../../feature/auth/login/presentation/view/login_view.dart' as _i3;
 import '../../feature/auth/register/presentation/view/register_view.dart'
     as _i4;
-import '../../feature/onboarding/presentation/view/onboarding_view.dart' as _i2;
-import '../../presentation/views/add_participant/add_participant_view.dart'
+import '../../feature/create_meeting/presentation/cubit/create_meeting_cubit.dart'
+    as _i14;
+import '../../feature/create_meeting/presentation/view/add_participants_view.dart'
     as _i8;
-import '../../presentation/views/create_meeting/create_meeting_view.dart'
+import '../../feature/create_meeting/presentation/view/create_meeting_view.dart'
     as _i7;
-import '../../presentation/views/navbar/navbar_view.dart' as _i6;
-import '../../presentation/views/pending/pending.dart' as _i10;
-import '../../presentation/views/schedule/schedule_view.dart' as _i9;
+import '../../feature/navbar/navbar_view.dart' as _i6;
+import '../../feature/onboarding/presentation/view/onboarding_view.dart' as _i2;
+import '../../feature/pending/view/pending_view.dart' as _i10;
+import '../../feature/schedule/presentation/view/schedule_view.dart' as _i9;
 import '../../presentation/views/settings/settings_view.dart' as _i11;
 
 class AppRouter extends _i12.RootStackRouter {
@@ -92,10 +94,14 @@ class AppRouter extends _i12.RootStackRouter {
         child: const _i7.CreateMeetingView(),
       );
     },
-    AddParticipantRoute.name: (routeData) {
+    AddParticipantsRoute.name: (routeData) {
+      final args = routeData.argsAs<AddParticipantsRouteArgs>();
       return _i12.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i8.AddParticipantView(),
+        child: _i8.AddParticipantsView(
+          cubit: args.cubit,
+          key: args.key,
+        ),
       );
     },
     ScheduleRouter.name: (routeData) {
@@ -258,8 +264,8 @@ class AppRouter extends _i12.RootStackRouter {
               parent: AuthenticatedRoutes.name,
             ),
             _i12.RouteConfig(
-              AddParticipantRoute.name,
-              path: 'add-participant-view',
+              AddParticipantsRoute.name,
+              path: 'add-participants-view',
               parent: AuthenticatedRoutes.name,
             ),
             _i12.RouteConfig(
@@ -399,15 +405,38 @@ class CreateMeetingRoute extends _i12.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i8.AddParticipantView]
-class AddParticipantRoute extends _i12.PageRouteInfo<void> {
-  const AddParticipantRoute()
-      : super(
-          AddParticipantRoute.name,
-          path: 'add-participant-view',
+/// [_i8.AddParticipantsView]
+class AddParticipantsRoute
+    extends _i12.PageRouteInfo<AddParticipantsRouteArgs> {
+  AddParticipantsRoute({
+    required _i14.CreateMeetingCubit cubit,
+    _i13.Key? key,
+  }) : super(
+          AddParticipantsRoute.name,
+          path: 'add-participants-view',
+          args: AddParticipantsRouteArgs(
+            cubit: cubit,
+            key: key,
+          ),
         );
 
-  static const String name = 'AddParticipantRoute';
+  static const String name = 'AddParticipantsRoute';
+}
+
+class AddParticipantsRouteArgs {
+  const AddParticipantsRouteArgs({
+    required this.cubit,
+    this.key,
+  });
+
+  final _i14.CreateMeetingCubit cubit;
+
+  final _i13.Key? key;
+
+  @override
+  String toString() {
+    return 'AddParticipantsRouteArgs{cubit: $cubit, key: $key}';
+  }
 }
 
 /// generated route for

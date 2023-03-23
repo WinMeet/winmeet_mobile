@@ -38,6 +38,7 @@ dependencies:
   # UI
   table_calendar: ^3.0.8
   cupertino_icons: ^1.0.2
+  omni_datetime_picker: ^1.0.1
 
   # Utility
   intl: ^0.17.0
@@ -73,7 +74,7 @@ flutter_icons:
   ios: true
   remove_alpha_ios: true
   image_path: "assets/logo/logo.png"
-  adaptive_icon_background: "#6200EE"
+  adaptive_icon_background: "#6750A4"
   # Padding 8%
   adaptive_icon_foreground: "assets/logo/logo_foreground.png"
 
@@ -81,7 +82,7 @@ flutter_native_splash:
   android: true
   ios: true
   android12: true
-  color: "#6200EE"
+  color: "#6750A4"
   image: "assets/logo/logo.png"
 
 flutter:

@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
+import 'package:winmeet_mobile/app/widgets/button/custom_elevated_button.dart';
+import 'package:winmeet_mobile/app/widgets/input/email_input_field.dart';
+import 'package:winmeet_mobile/app/widgets/input/normal_input_field.dart';
+import 'package:winmeet_mobile/app/widgets/input/password_input_field.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_heading.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
+import 'package:winmeet_mobile/core/utils/snackbar/snackbar_utils.dart';
 import 'package:winmeet_mobile/feature/auth/register/presentation/cubit/register_cubit.dart';
 import 'package:winmeet_mobile/injection.dart';
-import 'package:winmeet_mobile/presentation/widgets/button/custom_elevated_button.dart';
-import 'package:winmeet_mobile/presentation/widgets/input/email_input_field.dart';
-import 'package:winmeet_mobile/presentation/widgets/input/password_input_field.dart';
 
 class RegisterView extends StatelessWidget {
   const RegisterView({super.key});
@@ -35,21 +38,15 @@ class _RegisterViewBody extends StatelessWidget {
       listener: (context, state) {
         if (state.status.isSubmissionSuccess) {
           context.router.replace(const LoginRoute());
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              const SnackBar(
-                content: Text('Account created'),
-              ),
-            );
+          SnackbarUtils.showSnackbar(
+            context: context,
+            message: 'Account created',
+          );
         } else if (state.status.isSubmissionFailure) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage ?? 'Authentication Failure'),
-              ),
-            );
+          SnackbarUtils.showSnackbar(
+            context: context,
+            message: state.errorMessage ?? 'Authentication Failure',
+          );
         }
       },
       child: Padding(
@@ -60,18 +57,30 @@ class _RegisterViewBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Register',
-                  style: context.textTheme.headlineMedium,
+                const WinMeetHeading(
+                  text: 'Register',
                 ),
                 const Text(
-                  'Enter your email and password to register',
+                  'Enter your name, email and password to register',
+                ),
+                BlocBuilder<RegisterCubit, RegisterState>(
+                  builder: (context, state) {
+                    return NormalInputField(
+                      labelText: 'Name',
+                      errorLabel: 'Name cannot be empty',
+                      prefixIcon: const Icon(Icons.person),
+                      textInputAction: TextInputAction.next,
+                      isValid: state.name.invalid,
+                      onChanged: (name) => context.read<RegisterCubit>().nameChanged(name: name),
+                    );
+                  },
                 ),
                 BlocBuilder<RegisterCubit, RegisterState>(
                   builder: (context, state) {
                     return EmailInputField(
                       textInputAction: TextInputAction.next,
                       isValid: state.email.invalid,
+                      labelText: 'Email',
                       onChanged: (email) => context.read<RegisterCubit>().emailChanged(email: email),
                     );
                   },
@@ -105,15 +114,11 @@ class _RegisterViewBody extends StatelessWidget {
                 ),
                 BlocBuilder<RegisterCubit, RegisterState>(
                   builder: (context, state) {
-                    return SizedBox(
-                      width: double.infinity,
-                      height: context.highValue,
-                      child: CustomElevatedButton(
-                        buttonText: 'Register',
-                        isValid: state.status.isValidated,
-                        onPressed: () => context.read<RegisterCubit>().formSubmitted(),
-                        status: state.status,
-                      ),
+                    return CustomElevatedButton(
+                      buttonText: 'Register',
+                      isValid: state.status.isValidated,
+                      onPressed: () => context.read<RegisterCubit>().formSubmitted(),
+                      status: state.status,
                     );
                   },
                 ),

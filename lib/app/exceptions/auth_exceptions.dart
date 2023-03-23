@@ -1,4 +1,3 @@
-
 class RegisterWithEmailAndPasswordFailure implements Exception {
   const RegisterWithEmailAndPasswordFailure([this.message = 'An error occured while creating user.']);
 
@@ -19,6 +18,12 @@ class PasswordResetFailure implements Exception {
 
 class LogOutFailure implements Exception {
   const LogOutFailure([this.message = 'An error occured while logout.']);
+
+  final String message;
+}
+
+class CreateMeetingFailure implements Exception {
+  const CreateMeetingFailure([this.message = 'An error occured while creating meeting.']);
 
   final String message;
 }

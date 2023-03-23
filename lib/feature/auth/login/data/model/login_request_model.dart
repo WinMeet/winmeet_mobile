@@ -10,7 +10,5 @@ class LoginRequestModel with _$LoginRequestModel {
     required String password,
   }) = _LoginRequestModel;
 
-  const LoginRequestModel._();
-
   factory LoginRequestModel.fromJson(Map<String, dynamic> json) => _$LoginRequestModelFromJson(json);
 }
