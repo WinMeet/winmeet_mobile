@@ -15,8 +15,6 @@ import 'package:auto_route/auto_route.dart' as _i12;
 import 'package:auto_route/empty_router_widgets.dart' as _i1;
 import 'package:flutter/material.dart' as _i13;
 
-import '../../feature/add_participants/presentation/view/add_participants_view.dart'
-    as _i8;
 import '../../feature/auth/forgot_password/presentation/view/forgot_password_view.dart'
     as _i5;
 import '../../feature/auth/login/presentation/view/login_view.dart' as _i3;
@@ -24,6 +22,8 @@ import '../../feature/auth/register/presentation/view/register_view.dart'
     as _i4;
 import '../../feature/create_meeting/presentation/cubit/create_meeting_cubit.dart'
     as _i14;
+import '../../feature/create_meeting/presentation/view/add_participants_view.dart'
+    as _i8;
 import '../../feature/create_meeting/presentation/view/create_meeting_view.dart'
     as _i7;
 import '../../feature/navbar/navbar_view.dart' as _i6;

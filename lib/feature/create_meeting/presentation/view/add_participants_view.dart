@@ -110,7 +110,7 @@ class _ParticipantList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CreateMeetingCubit, CreateMeetingState>(
       builder: (context, state) {
-        if (state.participants.isNotEmpty) {
+        if (state.participants.value.isNotEmpty) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -123,16 +123,16 @@ class _ParticipantList extends StatelessWidget {
                 separatorBuilder: (context, index) => SizedBox(
                   height: context.lowValue,
                 ),
-                itemCount: state.participants.length,
+                itemCount: state.participants.value.length,
                 itemBuilder: (context, index) {
                   return _AddParticipantsCard(
                     child: _AddParticipantListTile(
-                      title: state.participants[index],
+                      title: state.participants.value[index],
                       trailing: IconButton(
                         icon: const Icon(Icons.close),
                         onPressed: () => context
                             .read<CreateMeetingCubit>()
-                            .removeParticipantFromParticipants(email: state.participants[index]),
+                            .removeParticipantFromParticipants(email: state.participants.value[index]),
                       ),
                     ),
                   );

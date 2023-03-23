@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_inputs/form_inputs.dart';
 import 'package:intl/intl.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
@@ -9,6 +10,7 @@ import 'package:winmeet_mobile/core/utils/calendar/calendar_utils.dart';
 import 'package:winmeet_mobile/core/utils/date_time_picker/date_time_picker_utils.dart';
 import 'package:winmeet_mobile/core/utils/snackbar/snackbar_utils.dart';
 import 'package:winmeet_mobile/feature/create_meeting/presentation/cubit/create_meeting_cubit.dart';
+import 'package:winmeet_mobile/injection.dart';
 import 'package:winmeet_mobile/presentation/widgets/input/normal_input_field.dart';
 
 class CreateMeetingView extends StatelessWidget {
@@ -17,7 +19,7 @@ class CreateMeetingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CreateMeetingCubit(),
+      create: (context) => getIt<CreateMeetingCubit>(),
       child: const _CreateMeetingScaffold(),
     );
   }
@@ -37,9 +39,29 @@ class _CreateMeetingScaffold extends StatelessWidget {
           icon: const Icon(Icons.close),
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.done),
+          BlocConsumer<CreateMeetingCubit, CreateMeetingState>(
+            listener: (context, state) {
+              if (state.status.isSubmissionSuccess) {
+                context.router.pop();
+                SnackbarUtils.showSnackbar(
+                  context: context,
+                  message: 'Meeting has been scheduled and emails have been sent out to all participants.',
+                );
+              } else if (state.status.isSubmissionFailure) {
+                SnackbarUtils.showSnackbar(
+                  context: context,
+                  message: state.errorMessage ?? 'An error occured while creating meeting.',
+                );
+              }
+            },
+            builder: (context, state) {
+              return IconButton(
+                onPressed: state.status.isValid || state.status.isSubmissionFailure
+                    ? () => context.read<CreateMeetingCubit>().createMeeting()
+                    : null,
+                icon: const Icon(Icons.done),
+              );
+            },
           ),
         ],
       ),
@@ -48,11 +70,16 @@ class _CreateMeetingScaffold extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const NormalInputField(
-                labelText: 'Meeting Title',
-                errorLabel: 'This field cannot be empty',
-                textInputAction: TextInputAction.next,
-                isValid: false,
+              BlocBuilder<CreateMeetingCubit, CreateMeetingState>(
+                builder: (context, state) {
+                  return NormalInputField(
+                    labelText: 'Meeting Title',
+                    errorLabel: 'Title cannot be empty',
+                    textInputAction: TextInputAction.next,
+                    isValid: state.title.invalid,
+                    onChanged: (title) => context.read<CreateMeetingCubit>().titleChanged(title: title),
+                  );
+                },
               ),
               const NormalInputField(
                 labelText: 'Meeting Description',
@@ -204,12 +231,12 @@ class _Participants extends StatelessWidget {
               runSpacing: context.lowValue,
               spacing: context.lowValue,
               children: List.generate(
-                state.participants.length,
+                state.participants.value.length,
                 (index) => Chip(
                   deleteButtonTooltipMessage: '',
-                  label: Text(state.participants[index].substring(0, 12)),
+                  label: Text(state.participants.value[index].substring(0, 12)),
                   onDeleted: () => context.read<CreateMeetingCubit>().removeParticipantFromParticipants(
-                        email: state.participants[index],
+                        email: state.participants.value[index],
                       ),
                 ),
               ),
