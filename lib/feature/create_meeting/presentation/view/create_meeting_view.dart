@@ -81,13 +81,24 @@ class _CreateMeetingScaffold extends StatelessWidget {
                   );
                 },
               ),
-              const NormalInputField(
-                labelText: 'Meeting Description',
-                textInputAction: TextInputAction.next,
+              BlocBuilder<CreateMeetingCubit, CreateMeetingState>(
+                builder: (context, state) {
+                  return NormalInputField(
+                    labelText: 'Meeting Description',
+                    textInputAction: TextInputAction.next,
+                    onChanged: (description) =>
+                        context.read<CreateMeetingCubit>().descriptionChanged(description: description),
+                  );
+                },
               ),
-              const NormalInputField(
-                labelText: 'Location',
-                textInputAction: TextInputAction.next,
+              BlocBuilder<CreateMeetingCubit, CreateMeetingState>(
+                builder: (context, state) {
+                  return NormalInputField(
+                    labelText: 'Location',
+                    textInputAction: TextInputAction.next,
+                    onChanged: (location) => context.read<CreateMeetingCubit>().locationChanged(location: location),
+                  );
+                },
               ),
               const _DateTimePicker(),
               const _Participants(),
@@ -234,7 +245,7 @@ class _Participants extends StatelessWidget {
                 state.participants.value.length,
                 (index) => Chip(
                   deleteButtonTooltipMessage: '',
-                  label: Text(state.participants.value[index].substring(0, 12)),
+                  label: Text(state.participants.value[index]),
                   onDeleted: () => context.read<CreateMeetingCubit>().removeParticipantFromParticipants(
                         email: state.participants.value[index],
                       ),

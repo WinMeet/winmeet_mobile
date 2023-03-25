@@ -21,7 +21,7 @@ dependencies:
   hydrated_bloc: ^9.0.0
 
   # Networking
-  dio: ^5.0.0
+  dio: ^5.0.3
   pretty_dio_logger: ^1.1.1
 
   # Routing
@@ -65,7 +65,6 @@ dev_dependencies:
 
   # Linter
   very_good_analysis: ^4.0.0
-
   # Launcher Icons
   flutter_launcher_icons: ^0.12.0
 

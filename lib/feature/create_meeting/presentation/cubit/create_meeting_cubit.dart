@@ -27,8 +27,8 @@ class CreateMeetingCubit extends Cubit<CreateMeetingState> {
           eventName: state.title.value,
           eventDescription: state.description.value,
           location: state.location.value,
-          eventStartDate: state.startDateTime.toString(),
-          eventFinishDate: state.endDateTime.toString(),
+          eventStartDate: state.startDateTime.toIso8601String(),
+          eventEndDate: state.endDateTime.toIso8601String(),
           participants: state.participants.value,
         ),
       );
@@ -57,6 +57,40 @@ class CreateMeetingCubit extends Cubit<CreateMeetingState> {
           newTitle,
           state.description,
           state.location,
+          state.participants,
+          state.participants,
+        ]),
+      ),
+    );
+  }
+
+  void descriptionChanged({required String description}) {
+    final newDescription = InputField.dirty(value: description);
+
+    emit(
+      state.copyWith(
+        description: newDescription,
+        status: Formz.validate([
+          newDescription,
+          state.title,
+          state.location,
+          state.participants,
+          state.participants,
+        ]),
+      ),
+    );
+  }
+
+  void locationChanged({required String location}) {
+    final newLocation = InputField.dirty(value: location);
+
+    emit(
+      state.copyWith(
+        location: newLocation,
+        status: Formz.validate([
+          newLocation,
+          state.title,
+          state.description,
           state.participants,
           state.participants,
         ]),
