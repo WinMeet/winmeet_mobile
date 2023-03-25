@@ -7,7 +7,6 @@ class LoginState with _$LoginState {
     required EmailFormInput email,
     required PasswordFormInput password,
     required bool isPasswordObscured,
-    String? errorMessage,
   }) = _LoginState;
 
   factory LoginState.initial() => const LoginState(

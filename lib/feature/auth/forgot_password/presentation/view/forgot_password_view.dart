@@ -44,7 +44,7 @@ class _ForgotPasswordViewBody extends StatelessWidget {
         } else if (state.status.isSubmissionFailure) {
           SnackbarUtils.showSnackbar(
             context: context,
-            message: state.errorMessage.toString(),
+            message: 'An error occured while sending the password reset email.',
           );
         }
       },

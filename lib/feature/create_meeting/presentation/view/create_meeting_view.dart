@@ -5,10 +5,10 @@ import 'package:form_inputs/form_inputs.dart';
 import 'package:intl/intl.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/utils/calendar/calendar_utils.dart';
-import 'package:winmeet_mobile/app/utils/date_time_picker/date_time_picker_utils.dart';
 import 'package:winmeet_mobile/app/widgets/input/text_input_field.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
+import 'package:winmeet_mobile/core/utils/date_time_picker/date_time_picker_utils.dart';
 import 'package:winmeet_mobile/core/utils/snackbar/snackbar_utils.dart';
 import 'package:winmeet_mobile/feature/create_meeting/presentation/cubit/create_meeting_cubit.dart';
 import 'package:winmeet_mobile/injection.dart';
@@ -50,7 +50,7 @@ class _CreateMeetingScaffold extends StatelessWidget {
               } else if (state.status.isSubmissionFailure) {
                 SnackbarUtils.showSnackbar(
                   context: context,
-                  message: state.errorMessage ?? 'An error occured while creating meeting.',
+                  message: 'An error occured while creating meeting.',
                 );
               }
             },
@@ -139,6 +139,8 @@ class _DateTimePicker extends StatelessWidget {
     final selectedStartTime = await DateTimePickerUtils.pickDateTime(
       context: context,
       initialTime: state.startDateTime,
+      firstDate: CalendarUtils.today,
+      lastDate: CalendarUtils.lastDay,
       datePickerHelpText: 'Select Start Date',
       timePickerHelpText: 'Select Start Time',
       cancelText: 'Cancel',
@@ -167,6 +169,8 @@ class _DateTimePicker extends StatelessWidget {
     final selectedEndTime = await DateTimePickerUtils.pickDateTime(
       context: context,
       initialTime: state.endDateTime,
+      firstDate: CalendarUtils.today,
+      lastDate: CalendarUtils.lastDay,
       datePickerHelpText: 'Select End Date',
       timePickerHelpText: 'Select End Time',
       cancelText: 'Cancel',

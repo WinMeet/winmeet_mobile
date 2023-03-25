@@ -45,7 +45,7 @@ class _RegisterViewBody extends StatelessWidget {
         } else if (state.status.isSubmissionFailure) {
           SnackbarUtils.showSnackbar(
             context: context,
-            message: state.errorMessage ?? 'Authentication Failure',
+            message: 'An error occured while creating user.',
           );
         }
       },

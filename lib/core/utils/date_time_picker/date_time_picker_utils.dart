@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
 
-import 'package:winmeet_mobile/app/utils/calendar/calendar_utils.dart';
+import 'package:flutter/material.dart';
 
 class DateTimePickerUtils {
   static Future<DateTime?> pickDateTime({
     required BuildContext context,
     required DateTime initialTime,
+    required DateTime firstDate,
+    required DateTime lastDate,
     String? datePickerHelpText,
     String? cancelText,
     String? confirmText,
@@ -14,6 +15,8 @@ class DateTimePickerUtils {
     final pickedDate = await _pickDate(
       context: context,
       initialTime: initialTime,
+      firstDate: firstDate,
+      lastDate: lastDate,
       helpText: datePickerHelpText,
       cancelText: cancelText,
       confirmText: confirmText,
@@ -44,6 +47,8 @@ class DateTimePickerUtils {
   static Future<DateTime?> _pickDate({
     required BuildContext context,
     required DateTime initialTime,
+    required DateTime firstDate,
+    required DateTime lastDate,
     String? helpText,
     String? cancelText,
     String? confirmText,
@@ -51,8 +56,8 @@ class DateTimePickerUtils {
     return showDatePicker(
       context: context,
       initialDate: initialTime,
-      firstDate: CalendarUtils.today,
-      lastDate: CalendarUtils.lastDay,
+      firstDate: firstDate,
+      lastDate: lastDate,
       initialEntryMode: DatePickerEntryMode.calendarOnly,
       helpText: helpText,
       cancelText: cancelText,

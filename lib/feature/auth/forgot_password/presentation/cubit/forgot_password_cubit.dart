@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
 import 'package:winmeet_mobile/feature/auth/forgot_password/data/repository/forgot_password_repository.dart';
 
 part 'forgot_password_cubit.freezed.dart';
@@ -26,8 +25,8 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
     try {
       await _forgotPasswordRepository.sendPasswordResetEmail(email: state.email.value);
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
-    } on PasswordResetFailure catch (e) {
-      emit(state.copyWith(errorMessage: e.message, status: FormzStatus.submissionFailure));
+    } on Exception {
+      emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
   }
 }

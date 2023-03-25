@@ -9,7 +9,6 @@ class RegisterState with _$RegisterState {
     required PasswordFormInput password,
     required ConfirmPasswordFormInput confirmPassword,
     required bool isPasswordObscured,
-    String? errorMessage,
   }) = _RegisterState;
 
   factory RegisterState.initial() => const RegisterState(

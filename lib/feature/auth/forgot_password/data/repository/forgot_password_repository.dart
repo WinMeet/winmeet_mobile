@@ -1,5 +1,6 @@
+import 'dart:developer';
+
 import 'package:injectable/injectable.dart';
-import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
 import 'package:winmeet_mobile/feature/auth/forgot_password/data/api/forgot_password_api.dart';
 
 @injectable
@@ -11,8 +12,9 @@ class ForgotPasswordRepository {
   Future<void> sendPasswordResetEmail({required String email}) async {
     try {
       await _forgotPasswordApi.sendPasswordResetEmail(email: email);
-    } catch (_) {
-      throw const PasswordResetFailure();
+    } catch (e) {
+      log(e.toString());
+      throw Exception(e);
     }
   }
 }
