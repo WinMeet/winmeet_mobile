@@ -30,7 +30,7 @@ import '../../feature/navbar/navbar_view.dart' as _i6;
 import '../../feature/onboarding/presentation/view/onboarding_view.dart' as _i2;
 import '../../feature/pending/view/pending_view.dart' as _i10;
 import '../../feature/schedule/presentation/view/schedule_view.dart' as _i9;
-import '../../presentation/views/settings/settings_view.dart' as _i11;
+import '../../feature/settings/presentation/view/settings_view.dart' as _i11;
 
 class AppRouter extends _i12.RootStackRouter {
   AppRouter([_i13.GlobalKey<_i13.NavigatorState>? navigatorKey])

@@ -5,8 +5,8 @@ import 'package:form_inputs/form_inputs.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/widgets/button/custom_elevated_button.dart';
 import 'package:winmeet_mobile/app/widgets/input/email_input_field.dart';
-import 'package:winmeet_mobile/app/widgets/input/normal_input_field.dart';
 import 'package:winmeet_mobile/app/widgets/input/password_input_field.dart';
+import 'package:winmeet_mobile/app/widgets/input/text_input_field.dart';
 import 'package:winmeet_mobile/app/widgets/text/winmeet_heading.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
@@ -65,7 +65,7 @@ class _RegisterViewBody extends StatelessWidget {
                 ),
                 BlocBuilder<RegisterCubit, RegisterState>(
                   builder: (context, state) {
-                    return NormalInputField(
+                    return TextInputField(
                       labelText: 'Name',
                       errorLabel: 'Name cannot be empty',
                       prefixIcon: const Icon(Icons.person),

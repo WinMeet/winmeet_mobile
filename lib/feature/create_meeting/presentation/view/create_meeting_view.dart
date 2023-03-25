@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/utils/calendar/calendar_utils.dart';
 import 'package:winmeet_mobile/app/utils/date_time_picker/date_time_picker_utils.dart';
-import 'package:winmeet_mobile/app/widgets/input/normal_input_field.dart';
+import 'package:winmeet_mobile/app/widgets/input/text_input_field.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/core/utils/snackbar/snackbar_utils.dart';
@@ -72,7 +72,7 @@ class _CreateMeetingScaffold extends StatelessWidget {
             children: [
               BlocBuilder<CreateMeetingCubit, CreateMeetingState>(
                 builder: (context, state) {
-                  return NormalInputField(
+                  return TextInputField(
                     labelText: 'Meeting Title',
                     errorLabel: 'Title cannot be empty',
                     textInputAction: TextInputAction.next,
@@ -83,7 +83,7 @@ class _CreateMeetingScaffold extends StatelessWidget {
               ),
               BlocBuilder<CreateMeetingCubit, CreateMeetingState>(
                 builder: (context, state) {
-                  return NormalInputField(
+                  return TextInputField(
                     labelText: 'Meeting Description',
                     textInputAction: TextInputAction.next,
                     onChanged: (description) =>
@@ -93,7 +93,7 @@ class _CreateMeetingScaffold extends StatelessWidget {
               ),
               BlocBuilder<CreateMeetingCubit, CreateMeetingState>(
                 builder: (context, state) {
-                  return NormalInputField(
+                  return TextInputField(
                     labelText: 'Location',
                     textInputAction: TextInputAction.next,
                     onChanged: (location) => context.read<CreateMeetingCubit>().locationChanged(location: location),
