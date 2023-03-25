@@ -4,7 +4,7 @@ part of 'forgot_password_cubit.dart';
 class ForgotPasswordState with _$ForgotPasswordState {
   const factory ForgotPasswordState({
     @Default(FormzStatus.pure) FormzStatus status,
-    @Default(Email.pure()) Email email,
+    @Default(EmailFormInput.pure()) EmailFormInput email,
     String? errorMessage,
   }) = _ForgotPasswordState;
 }
