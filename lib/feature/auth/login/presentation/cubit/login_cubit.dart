@@ -13,7 +13,7 @@ part 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit({required LoginRepository loginRepository})
       : _loginRepository = loginRepository,
-        super(const LoginState());
+        super(LoginState.initial());
 
   final LoginRepository _loginRepository;
 
