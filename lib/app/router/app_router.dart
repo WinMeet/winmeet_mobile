@@ -9,7 +9,7 @@ import 'package:winmeet_mobile/feature/navbar/navbar_view.dart';
 import 'package:winmeet_mobile/feature/onboarding/presentation/view/onboarding_view.dart';
 import 'package:winmeet_mobile/feature/pending/view/pending_view.dart';
 import 'package:winmeet_mobile/feature/schedule/presentation/view/schedule_view.dart';
-import 'package:winmeet_mobile/presentation/views/settings/settings_view.dart';
+import 'package:winmeet_mobile/feature/settings/presentation/view/settings_view.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'View,Route',

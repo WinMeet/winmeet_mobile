@@ -1,22 +1,22 @@
+
 import 'package:flutter/material.dart';
 
 class TextInputField extends StatelessWidget {
   const TextInputField({
     required this.labelText,
-    this.errorText,
-    this.textInputAction,
-    this.isValidInput,
-    this.onChanged,
-    this.validator,
+    required this.textInputAction,
+    this.isValid,
+    this.errorLabel,
+    this.prefixIcon,
     super.key,
+    this.onChanged,
   });
-
+  final Icon? prefixIcon;
   final String labelText;
-  final String? errorText;
-  final TextInputAction? textInputAction;
-  final bool? isValidInput;
+  final String? errorLabel;
+  final TextInputAction textInputAction;
+  final bool? isValid;
   final void Function(String)? onChanged;
-  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +24,11 @@ class TextInputField extends StatelessWidget {
       textInputAction: textInputAction,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
+        prefixIcon: prefixIcon,
         labelText: labelText,
-        errorText: (isValidInput ?? true) ? null : errorText,
+        errorText: (isValid ?? true) ? errorLabel : null,
       ),
       onChanged: onChanged,
-      validator: validator,
     );
   }
 }

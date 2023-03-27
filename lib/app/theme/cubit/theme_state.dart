@@ -3,9 +3,11 @@ part of 'theme_cubit.dart';
 @freezed
 class ThemeState with _$ThemeState {
   factory ThemeState({
-    @Default(ThemeMode.system) ThemeMode theme,
+    required ThemeMode theme,
     ThemeMode? settingsValue,
   }) = _ThemeState;
+
+  factory ThemeState.initial() => ThemeState(theme: ThemeMode.system);
 
   const ThemeState._();
 

@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
 import 'package:winmeet_mobile/app/utils/calendar/calendar_utils.dart';
 import 'package:winmeet_mobile/feature/create_meeting/data/model/create_meeting_request_model.dart';
 import 'package:winmeet_mobile/feature/create_meeting/data/repository/create_meeting_repository.dart';
@@ -27,8 +26,8 @@ class CreateMeetingCubit extends Cubit<CreateMeetingState> {
           eventName: state.title.value,
           eventDescription: state.description.value,
           location: state.location.value,
-          eventStartDate: state.startDateTime.toString(),
-          eventFinishDate: state.endDateTime.toString(),
+          eventStartDate: state.startDateTime.toIso8601String(),
+          eventEndDate: state.endDateTime.toIso8601String(),
           participants: state.participants.value,
         ),
       );
@@ -37,18 +36,13 @@ class CreateMeetingCubit extends Cubit<CreateMeetingState> {
           status: FormzStatus.submissionSuccess,
         ),
       );
-    } on CreateMeetingFailure catch (e) {
-      emit(
-        state.copyWith(
-          status: FormzStatus.submissionFailure,
-          errorMessage: e.message,
-        ),
-      );
+    } on Exception {
+      emit(state.copyWith(status: FormzStatus.submissionFailure));
     }
   }
 
   void titleChanged({required String title}) {
-    final newTitle = InputField.dirty(value: title);
+    final newTitle = InputFormField.dirty(value: title);
 
     emit(
       state.copyWith(
@@ -57,6 +51,40 @@ class CreateMeetingCubit extends Cubit<CreateMeetingState> {
           newTitle,
           state.description,
           state.location,
+          state.participants,
+          state.participants,
+        ]),
+      ),
+    );
+  }
+
+  void descriptionChanged({required String description}) {
+    final newDescription = InputFormField.dirty(value: description);
+
+    emit(
+      state.copyWith(
+        description: newDescription,
+        status: Formz.validate([
+          newDescription,
+          state.title,
+          state.location,
+          state.participants,
+          state.participants,
+        ]),
+      ),
+    );
+  }
+
+  void locationChanged({required String location}) {
+    final newLocation = InputFormField.dirty(value: location);
+
+    emit(
+      state.copyWith(
+        location: newLocation,
+        status: Formz.validate([
+          newLocation,
+          state.title,
+          state.description,
           state.participants,
           state.participants,
         ]),
@@ -77,12 +105,12 @@ class CreateMeetingCubit extends Cubit<CreateMeetingState> {
   }
 
   void emailChanged({required String email}) {
-    final newEmail = Email.dirty(email);
+    final newEmail = EmailFormInput.dirty(email);
     emit(state.copyWith(email: newEmail, status: Formz.validate([newEmail])));
   }
 
   void resetAddParticipantsVariables() {
-    emit(state.copyWith(email: const Email.pure()));
+    emit(state.copyWith(email: const EmailFormInput.pure()));
   }
 
   bool addParticipantToParticipants({required String email}) {
@@ -92,10 +120,10 @@ class CreateMeetingCubit extends Cubit<CreateMeetingState> {
 
       emit(
         state.copyWith(
-          participants: ListFormValidator<String>.dirty(newParticipants),
+          participants: ListFormInput<String>.dirty(newParticipants),
           status: Formz.validate([
             state.title,
-            ListFormValidator<String>.dirty(newParticipants),
+            ListFormInput<String>.dirty(newParticipants),
             state.description,
             state.location,
           ]),
@@ -103,7 +131,7 @@ class CreateMeetingCubit extends Cubit<CreateMeetingState> {
       );
       emit(
         state.copyWith(
-          email: const Email.pure(),
+          email: const EmailFormInput.pure(),
         ),
       );
       return true;
@@ -117,10 +145,10 @@ class CreateMeetingCubit extends Cubit<CreateMeetingState> {
 
     emit(
       state.copyWith(
-        participants: ListFormValidator<String>.dirty(newParticipants),
+        participants: ListFormInput<String>.dirty(newParticipants),
         status: Formz.validate([
           state.title,
-          ListFormValidator<String>.dirty(newParticipants),
+          ListFormInput<String>.dirty(newParticipants),
           state.description,
           state.location,
         ]),

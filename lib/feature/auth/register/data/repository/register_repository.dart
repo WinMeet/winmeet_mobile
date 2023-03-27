@@ -1,5 +1,6 @@
+import 'dart:developer';
+
 import 'package:injectable/injectable.dart';
-import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
 import 'package:winmeet_mobile/feature/auth/register/data/api/register_api.dart';
 import 'package:winmeet_mobile/feature/auth/register/data/model/register_request_model.dart';
 
@@ -14,8 +15,9 @@ class RegisterRepository {
   }) async {
     try {
       await _registerApi.registerWithEmailAndPassword(registerRequestModel: registerRequestModel);
-    } catch (_) {
-      throw const RegisterWithEmailAndPasswordFailure();
+    } catch (e) {
+      log(e.toString());
+      throw Exception(e);
     }
   }
 }

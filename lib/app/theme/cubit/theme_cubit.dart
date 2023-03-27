@@ -8,7 +8,7 @@ part 'theme_cubit.freezed.dart';
 
 @injectable
 class ThemeCubit extends HydratedCubit<ThemeState> {
-  ThemeCubit() : super(ThemeState());
+  ThemeCubit() : super(ThemeState.initial());
 
   void changeTheme() {
     emit(state.copyWith(theme: state.settingsValue!));

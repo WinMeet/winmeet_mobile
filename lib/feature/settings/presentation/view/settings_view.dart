@@ -1,8 +1,12 @@
+// ignore_for_file: inference_failure_on_function_invocation
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winmeet_mobile/app/theme/cubit/theme_cubit.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
+import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
+
 import 'package:winmeet_mobile/feature/auth/cubit/auth_cubit.dart';
 
 class SettingsView extends StatelessWidget {
@@ -21,34 +25,31 @@ class SettingsView extends StatelessWidget {
           children: [
             Text(
               'Display',
-              style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
+              style: context.textTheme.titleLarge,
             ),
             ListTile(
-              contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.brightness_medium),
               title: const Text('Theme'),
-              onTap: () => _settingsDialog(
-                context: context,
-                child: const _ThemeTileDialog(),
-              ),
-            ),
-            SizedBox(
-              height: context.mediumValue,
+              onTap: () => showDialog(context: context, builder: (context) => const _ThemeDialog()),
             ),
             Text(
               'Account',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w700),
+              style: context.textTheme.titleLarge,
             ),
-            const _LogoutTile(),
-          ],
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Logout'),
+              onTap: () => showDialog(context: context, builder: (context) => const _LogoutDialog()),
+            )
+          ].withSpaceBetween(height: context.lowValue),
         ),
       ),
     );
   }
 }
 
-class _ThemeTileDialog extends StatelessWidget {
-  const _ThemeTileDialog();
+class _ThemeDialog extends StatelessWidget {
+  const _ThemeDialog();
 
   @override
   Widget build(BuildContext context) {
@@ -111,23 +112,6 @@ class _ThemeTileDialog extends StatelessWidget {
   }
 }
 
-class _LogoutTile extends StatelessWidget {
-  const _LogoutTile();
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: const Icon(Icons.logout),
-      title: const Text('Logout'),
-      onTap: () => _settingsDialog(
-        context: context,
-        child: const _LogoutDialog(),
-      ),
-    );
-  }
-}
-
 class _LogoutDialog extends StatelessWidget {
   const _LogoutDialog();
 
@@ -171,16 +155,4 @@ class _LogoutDialog extends StatelessWidget {
       ),
     );
   }
-}
-
-Future<dynamic> _settingsDialog({required BuildContext context, required Widget child}) {
-  return showDialog(
-    context: context,
-    builder: (_) {
-      return BlocProvider.value(
-        value: context.read<ThemeCubit>(),
-        child: child,
-      );
-    },
-  );
 }

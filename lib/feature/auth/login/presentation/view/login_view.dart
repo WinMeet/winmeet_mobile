@@ -40,7 +40,7 @@ class _LoginViewBody extends StatelessWidget {
         } else if (state.status.isSubmissionFailure) {
           SnackbarUtils.showSnackbar(
             context: context,
-            message: state.errorMessage.toString(),
+            message: 'An error occurred while logging in.',
           );
         }
       },

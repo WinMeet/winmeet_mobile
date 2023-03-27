@@ -3,8 +3,12 @@ part of 'forgot_password_cubit.dart';
 @freezed
 class ForgotPasswordState with _$ForgotPasswordState {
   const factory ForgotPasswordState({
-    @Default(FormzStatus.pure) FormzStatus status,
-    @Default(Email.pure()) Email email,
-    String? errorMessage,
+    required FormzStatus status,
+    required EmailFormInput email,
   }) = _ForgotPasswordState;
+
+  factory ForgotPasswordState.initial() => const ForgotPasswordState(
+        status: FormzStatus.pure,
+        email: EmailFormInput.pure(),
+      );
 }

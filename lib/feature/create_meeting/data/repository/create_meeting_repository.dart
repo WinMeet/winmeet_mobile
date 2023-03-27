@@ -1,5 +1,6 @@
+import 'dart:developer';
+
 import 'package:injectable/injectable.dart';
-import 'package:winmeet_mobile/app/exceptions/auth_exceptions.dart';
 import 'package:winmeet_mobile/feature/create_meeting/data/api/create_meeting_api.dart';
 import 'package:winmeet_mobile/feature/create_meeting/data/model/create_meeting_request_model.dart';
 
@@ -12,8 +13,9 @@ class CreateMeetingRepository {
   Future<void> createMeeting({required CreateMeetingRequestModel createMeetingRequestModel}) async {
     try {
       await _createMeetingApi.createMeeting(createMeetingRequestModel: createMeetingRequestModel);
-    } catch (_) {
-      throw const CreateMeetingFailure();
+    } catch (e) {
+      log(e.toString());
+      throw Exception(e);
     }
   }
 }
