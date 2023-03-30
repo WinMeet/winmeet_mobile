@@ -4,9 +4,19 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:winmeet_mobile/app/theme/constants/theme_constants.dart';
 import 'package:winmeet_mobile/app/utils/calendar/calendar_utils.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
+import 'package:winmeet_mobile/feature/schedule/data/model/event_model.dart';
 
 class WinMeetCalendar extends StatefulWidget {
-  const WinMeetCalendar({super.key});
+  const WinMeetCalendar({
+    required this.eventLoader,
+    required this.onFocusedDayChanged,
+    required this.focusedDay,
+    super.key,
+  });
+
+  final List<EventModel> Function(DateTime) eventLoader;
+  final void Function(DateTime) onFocusedDayChanged;
+  final DateTime focusedDay;
 
   @override
   State<WinMeetCalendar> createState() => _WinMeetCalendarState();
@@ -14,7 +24,13 @@ class WinMeetCalendar extends StatefulWidget {
 
 class _WinMeetCalendarState extends State<WinMeetCalendar> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
-  DateTime _focusedDay = CalendarUtils.today;
+  late DateTime _focusedDay;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusedDay = widget.focusedDay;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,23 +44,31 @@ class _WinMeetCalendarState extends State<WinMeetCalendar> {
         CalendarFormat.month: 'Month',
         CalendarFormat.week: 'Week',
       },
+
       // Styling
       calendarStyle: CalendarStyle(
         canMarkersOverflow: false,
-        tablePadding: context.paddingAllLow,
+        markersMaxCount: 1,
 
         defaultTextStyle: context.textTheme.bodyMedium!,
         weekendTextStyle: context.textTheme.bodyMedium!,
         todayTextStyle: context.textTheme.bodyMedium!,
 
         // Specify all of the decorations that you use because of the bug related with the package
+        markerDecoration: BoxDecoration(
+          color: context.theme.colorScheme.inversePrimary,
+          borderRadius: ThemeConstants.borderRadiusCircular,
+        ),
         selectedDecoration: BoxDecoration(
-          color: context.theme.primaryColor,
+          color: context.theme.colorScheme.primary,
           borderRadius: ThemeConstants.borderRadiusCircular,
         ),
         todayDecoration: BoxDecoration(
-          color: context.theme.disabledColor,
           borderRadius: ThemeConstants.borderRadiusCircular,
+          border: Border.all(
+            color: context.theme.colorScheme.primary,
+            width: 2,
+          ),
         ),
         weekendDecoration: BoxDecoration(
           borderRadius: ThemeConstants.borderRadiusCircular,
@@ -79,14 +103,17 @@ class _WinMeetCalendarState extends State<WinMeetCalendar> {
 
       selectedDayPredicate: (day) => isSameDay(_focusedDay, day),
       onDaySelected: (selectedDay, focusedDay) {
-        if (!isSameDay(_focusedDay, selectedDay)) setState(() => _focusedDay = selectedDay);
+        if (!isSameDay(_focusedDay, selectedDay)) {
+          setState(() {
+            _focusedDay = selectedDay;
+          });
+          widget.onFocusedDayChanged(selectedDay);
+        }
       },
       onFormatChanged: (format) {
         if (_calendarFormat != format) setState(() => _calendarFormat = format);
       },
-      eventLoader: (day) {
-        return <dynamic>[];
-      },
+      eventLoader: (day) => widget.eventLoader(day),
     );
   }
 }

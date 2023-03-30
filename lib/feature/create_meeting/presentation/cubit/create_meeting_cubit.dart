@@ -20,25 +20,22 @@ class CreateMeetingCubit extends Cubit<CreateMeetingState> {
   Future<void> createMeeting() async {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    try {
-      await _createMeetingRepository.createMeeting(
-        createMeetingRequestModel: CreateMeetingRequestModel(
-          eventName: state.title.value,
-          eventDescription: state.description.value,
-          location: state.location.value,
-          eventStartDate: state.startDateTime.toIso8601String(),
-          eventEndDate: state.endDateTime.toIso8601String(),
-          participants: state.participants.value,
-        ),
-      );
-      emit(
-        state.copyWith(
-          status: FormzStatus.submissionSuccess,
-        ),
-      );
-    } on Exception {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
-    }
+
+    final response = await _createMeetingRepository.createMeeting(
+      createMeetingRequestModel: CreateMeetingRequestModel(
+        eventName: state.title.value,
+        eventDescription: state.description.value,
+        location: state.location.value,
+        eventStartDate: state.startDateTime.toIso8601String(),
+        eventEndDate: state.endDateTime.toIso8601String(),
+        participants: state.participants.value,
+      ),
+    );
+
+    response.fold(
+      (failure) => emit(state.copyWith(status: FormzStatus.submissionFailure)),
+      (success) => emit(state.copyWith(status: FormzStatus.submissionSuccess)),
+    );
   }
 
   void titleChanged({required String title}) {

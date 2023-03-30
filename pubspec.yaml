@@ -35,6 +35,9 @@ dependencies:
   freezed_annotation: ^2.2.0
   json_annotation: ^4.8.0
 
+  # Functional programming
+  dartz: ^0.10.1
+
   # UI
   table_calendar: ^3.0.8
   cupertino_icons: ^1.0.2

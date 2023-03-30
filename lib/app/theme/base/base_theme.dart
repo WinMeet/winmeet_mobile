@@ -9,6 +9,13 @@ abstract class BaseTheme {
       useMaterial3: true,
       brightness: brightness,
       appBarTheme: _appBarTheme,
+      cardTheme: CardTheme(
+        elevation: 4,
+        margin: EdgeInsets.zero,
+        shape: OutlineInputBorder(
+          borderRadius: ThemeConstants.borderRadiusCircular,
+        ),
+      ),
       dialogTheme: _dialogTheme,
       elevatedButtonTheme: _elevatedButtonTheme,
       floatingActionButtonTheme: _floatingActionTheme,

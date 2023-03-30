@@ -85,7 +85,7 @@ class _SearchResult extends StatelessWidget {
     return BlocBuilder<CreateMeetingCubit, CreateMeetingState>(
       builder: (context, state) {
         if (state.email.valid) {
-          return _AddParticipantsCard(
+          return Card(
             child: _AddParticipantListTile(
               title: state.email.value,
               onTap: () {
@@ -124,7 +124,7 @@ class _ParticipantList extends StatelessWidget {
                 ),
                 itemCount: state.participants.value.length,
                 itemBuilder: (context, index) {
-                  return _AddParticipantsCard(
+                  return Card(
                     child: _AddParticipantListTile(
                       title: state.participants.value[index],
                       trailing: IconButton(
@@ -142,26 +142,6 @@ class _ParticipantList extends StatelessWidget {
         }
         return const SizedBox.shrink();
       },
-    );
-  }
-}
-
-class _AddParticipantsCard extends StatelessWidget {
-  const _AddParticipantsCard({
-    required this.child,
-  });
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      margin: EdgeInsets.zero,
-      shape: OutlineInputBorder(
-        borderSide: BorderSide(color: context.theme.dividerColor),
-      ),
-      child: child,
     );
   }
 }
