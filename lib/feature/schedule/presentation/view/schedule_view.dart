@@ -55,19 +55,23 @@ class _ScheduleViewScaffold extends StatelessWidget {
               body: SafeArea(
                 child: Column(
                   children: [
-                    WinMeetCalendar(
-                      focusedDay: context.read<ScheduleCubit>().state.focusedDay,
-                      eventLoader: (day) => context.read<ScheduleCubit>().getByDay(day),
-                      onFocusedDayChanged: (day) => context.read<ScheduleCubit>().updateFocusedDay(day),
-                    ),
-                    Center(
-                      child: SizedBox(
-                        width: context.dynamicWidth(.2),
-                        child: Divider(
-                          color: context.theme.disabledColor,
-                          thickness: 4,
+                    Column(
+                      children: [
+                        WinMeetCalendar(
+                          focusedDay: context.read<ScheduleCubit>().state.focusedDay,
+                          eventLoader: (day) => context.read<ScheduleCubit>().getByDay(day),
+                          onFocusedDayChanged: (day) => context.read<ScheduleCubit>().updateFocusedDay(day),
                         ),
-                      ),
+                        Center(
+                          child: SizedBox(
+                            width: context.dynamicWidth(.2),
+                            child: Divider(
+                              color: context.theme.disabledColor,
+                              thickness: 4,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     if (selectedDayEvents.isEmpty)
                       Expanded(
@@ -95,7 +99,7 @@ class _ScheduleViewScaffold extends StatelessWidget {
                     else
                       Expanded(
                         child: Padding(
-                          padding: context.paddingAllLow,
+                          padding: context.paddingHorizontalDefault,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -106,7 +110,7 @@ class _ScheduleViewScaffold extends StatelessWidget {
                               Expanded(
                                 child: ListView.separated(
                                   separatorBuilder: (context, index) => SizedBox(
-                                    height: context.lowValue,
+                                    height: context.mediumValue,
                                   ),
                                   itemCount: selectedDayEvents.length,
                                   itemBuilder: (context, index) {
@@ -141,11 +145,11 @@ class _ScheduleViewScaffold extends StatelessWidget {
                                   },
                                 ),
                               ),
-                            ].withSpaceBetween(height: context.lowValue),
+                            ].withSpaceBetween(height: context.mediumValue),
                           ),
                         ),
                       ),
-                  ].withSpaceBetween(height: context.lowValue),
+                  ].withSpaceBetween(height: context.mediumValue),
                 ),
               ),
             );
