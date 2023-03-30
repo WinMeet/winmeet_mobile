@@ -56,17 +56,17 @@ class _WinMeetCalendarState extends State<WinMeetCalendar> {
 
         // Specify all of the decorations that you use because of the bug related with the package
         markerDecoration: BoxDecoration(
-          color: context.theme.colorScheme.inversePrimary,
+          color: context.theme.disabledColor,
           borderRadius: ThemeConstants.borderRadiusCircular,
         ),
         selectedDecoration: BoxDecoration(
-          color: context.theme.colorScheme.primary,
+          color: context.theme.colorScheme.inversePrimary,
           borderRadius: ThemeConstants.borderRadiusCircular,
         ),
         todayDecoration: BoxDecoration(
           borderRadius: ThemeConstants.borderRadiusCircular,
           border: Border.all(
-            color: context.theme.colorScheme.primary,
+            color: context.theme.colorScheme.inversePrimary,
             width: 2,
           ),
         ),
