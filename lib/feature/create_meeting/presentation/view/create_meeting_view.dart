@@ -11,22 +11,27 @@ import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/core/utils/date_time_picker/date_time_picker_utils.dart';
 import 'package:winmeet_mobile/core/utils/snackbar/snackbar_utils.dart';
 import 'package:winmeet_mobile/feature/create_meeting/presentation/cubit/create_meeting_cubit.dart';
+import 'package:winmeet_mobile/feature/schedule/presentation/cubit/schedule_cubit.dart';
 import 'package:winmeet_mobile/injection.dart';
 
 class CreateMeetingView extends StatelessWidget {
-  const CreateMeetingView({super.key});
+  const CreateMeetingView({required ScheduleCubit cubit, super.key}) : _cubit = cubit;
+
+  final ScheduleCubit _cubit;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => getIt<CreateMeetingCubit>(),
-      child: const _CreateMeetingScaffold(),
+      child: _CreateMeetingScaffold(cubit: _cubit),
     );
   }
 }
 
 class _CreateMeetingScaffold extends StatelessWidget {
-  const _CreateMeetingScaffold();
+  const _CreateMeetingScaffold({required ScheduleCubit cubit}) : _cubit = cubit;
+
+  final ScheduleCubit _cubit;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +62,10 @@ class _CreateMeetingScaffold extends StatelessWidget {
             builder: (context, state) {
               return IconButton(
                 onPressed: state.status.isValid || state.status.isSubmissionFailure
-                    ? () => context.read<CreateMeetingCubit>().createMeeting()
+                    ? () async {
+                        await context.read<CreateMeetingCubit>().createMeeting();
+                        await _cubit.getAllMeetings();
+                      }
                     : null,
                 icon: const Icon(Icons.done),
               );

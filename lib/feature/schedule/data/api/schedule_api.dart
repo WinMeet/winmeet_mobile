@@ -14,7 +14,7 @@ class ScheduleApi {
     try {
       final response = await _networkClient.get<Map<String, dynamic>>(Endpoints.getAllMeetings);
 
-      final model = response.data?['data'] as List?;
+      final model = response.data?['eventData'] as List?;
       if (model == null) {
         throw Exception('Null data getAllMeetings()');
       } else {

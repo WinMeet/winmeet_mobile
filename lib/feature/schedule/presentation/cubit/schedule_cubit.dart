@@ -23,14 +23,10 @@ class ScheduleCubit extends Cubit<ScheduleState> {
     emit(state.copyWith(status: PageStatus.loading));
 
     final response = await _scheduleRepository.getAllMeetings();
-    // TODO: remove
-    await Future.delayed(const Duration(seconds: 1));
 
     response.fold(
-      // TODO:  emit(state.copyWith(status: PageStatus.failure))
-      (failure) => emit(state.copyWith(status: PageStatus.success, allEvents: ScheduleState.initial().allEvents)),
-      // TODO: replace with (success) => emit(state.copyWith(events: success)
-      (success) => emit(state.copyWith(status: PageStatus.success, allEvents: ScheduleState.initial().allEvents)),
+      (failure) => emit(state.copyWith(status: PageStatus.failure)),
+      (success) => emit(state.copyWith(status: PageStatus.success, allEvents: success)),
     );
   }
 

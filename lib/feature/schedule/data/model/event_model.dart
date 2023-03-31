@@ -7,7 +7,7 @@ part 'event_model.g.dart';
 class EventModel with _$EventModel {
   const factory EventModel({
     String? eventName,
-    String? description,
+    String? eventDescription,
     String? location,
     DateTime? eventStartDate,
     DateTime? eventEndDate,

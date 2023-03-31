@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:injectable/injectable.dart';
 import 'package:winmeet_mobile/app/constants/endpoints.dart';
 import 'package:winmeet_mobile/core/network/network_client.dart';
@@ -14,14 +12,10 @@ class CreateMeetingApi {
 
   Future<void> createMeeting({required CreateMeetingRequestModel createMeetingRequestModel}) async {
     try {
-      final response = await _networkClient.post<CreateMeetingRequestModel>(
+      await _networkClient.post<Map<String, dynamic>>(
         Endpoints.createMeeting,
         data: createMeetingRequestModel.toJson(),
       );
-
-      if (response.statusCode == HttpStatus.created) {
-        return;
-      }
     } catch (e) {
       throw Exception(e);
     }

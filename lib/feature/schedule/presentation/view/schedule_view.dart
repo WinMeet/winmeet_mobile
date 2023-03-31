@@ -49,7 +49,7 @@ class _ScheduleViewScaffold extends StatelessWidget {
 
             return Scaffold(
               floatingActionButton: FloatingActionButton(
-                onPressed: () => context.router.push(const CreateMeetingRoute()),
+                onPressed: () => context.router.push(CreateMeetingRoute(cubit: context.read<ScheduleCubit>())),
                 child: const Icon(Icons.add),
               ),
               body: SafeArea(
@@ -62,15 +62,15 @@ class _ScheduleViewScaffold extends StatelessWidget {
                           eventLoader: (day) => context.read<ScheduleCubit>().getByDay(day),
                           onFocusedDayChanged: (day) => context.read<ScheduleCubit>().updateFocusedDay(day),
                         ),
-                        Center(
-                          child: SizedBox(
-                            width: context.dynamicWidth(.2),
-                            child: Divider(
-                              color: context.theme.disabledColor,
-                              thickness: 4,
-                            ),
-                          ),
-                        ),
+                        // Center(
+                        //   child: SizedBox(
+                        //     width: context.dynamicWidth(.2),
+                        //     child: Divider(
+                        //       color: context.theme.disabledColor,
+                        //       thickness: 4,
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                     if (selectedDayEvents.isEmpty)
@@ -79,16 +79,16 @@ class _ScheduleViewScaffold extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: context.paddingAllLow,
+                              padding: context.paddingHorizontalDefault,
                               child: Text(
-                                DateFormat('EEEE, MMMM d').format(state.focusedDay),
+                                DateFormat('EEEE, MMMM d').format(state.focusedDay.toLocal()),
                                 style: context.textTheme.titleLarge,
                               ),
                             ),
                             const Spacer(),
                             Center(
                               child: Text(
-                                'No Meeting Scheduled',
+                                'No Meetings Scheduled',
                                 style: context.textTheme.bodyLarge,
                               ),
                             ),
@@ -104,7 +104,7 @@ class _ScheduleViewScaffold extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                DateFormat('EEEE, MMMM d').format(state.focusedDay),
+                                DateFormat('EEEE, MMMM d').format(state.focusedDay.toLocal()),
                                 style: context.textTheme.titleLarge,
                               ),
                               Expanded(
@@ -120,7 +120,7 @@ class _ScheduleViewScaffold extends StatelessWidget {
                                         onTap: () {},
                                         title: Text(selectedDayEvents[index].eventName ?? ''),
                                         subtitle: Text(
-                                          selectedDayEvents[index].description ?? '',
+                                          selectedDayEvents[index].eventDescription ?? '',
                                           maxLines: 1,
                                         ),
                                         trailing: Column(
@@ -131,12 +131,13 @@ class _ScheduleViewScaffold extends StatelessWidget {
                                               selectedDayEvents[index].eventStartDate == null
                                                   ? 'Unknown'
                                                   : DateFormat('h:mm a')
-                                                      .format(selectedDayEvents[index].eventStartDate!),
+                                                      .format(selectedDayEvents[index].eventStartDate!.toLocal()),
                                             ),
                                             Text(
                                               selectedDayEvents[index].eventEndDate == null
                                                   ? 'Unknown'
-                                                  : DateFormat('h:mm a').format(selectedDayEvents[index].eventEndDate!),
+                                                  : DateFormat('h:mm a')
+                                                      .format(selectedDayEvents[index].eventEndDate!.toLocal()),
                                             ),
                                           ],
                                         ),
