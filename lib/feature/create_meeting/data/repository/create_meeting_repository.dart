@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:winmeet_mobile/core/model/failure/failure_model.dart';
 import 'package:winmeet_mobile/feature/create_meeting/data/api/create_meeting_api.dart';
 import 'package:winmeet_mobile/feature/create_meeting/data/model/create_meeting_request_model.dart';
 
@@ -10,12 +12,15 @@ class CreateMeetingRepository {
 
   final CreateMeetingApi _createMeetingApi;
 
-  Future<void> createMeeting({required CreateMeetingRequestModel createMeetingRequestModel}) async {
+  Future<Either<FailureModel, void>> createMeeting({
+    required CreateMeetingRequestModel createMeetingRequestModel,
+  }) async {
     try {
-      await _createMeetingApi.createMeeting(createMeetingRequestModel: createMeetingRequestModel);
+      final response = await _createMeetingApi.createMeeting(createMeetingRequestModel: createMeetingRequestModel);
+      return right(response);
     } catch (e) {
       log(e.toString());
-      throw Exception(e);
+      return left(const FailureModel());
     }
   }
 }

@@ -14,7 +14,7 @@ class DotsIndicator extends StatelessWidget {
     return Container(
       width: context.lowValue,
       decoration: BoxDecoration(
-        color: isSelected ? context.theme.primaryColor : context.theme.disabledColor,
+        color: isSelected ? context.theme.colorScheme.primary : context.theme.disabledColor,
         shape: BoxShape.circle,
       ),
     );
