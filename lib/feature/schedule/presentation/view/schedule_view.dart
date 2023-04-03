@@ -1,12 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/widgets/calendar/winmeet_calendar.dart';
 import 'package:winmeet_mobile/core/enums/page_status.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
+import 'package:winmeet_mobile/core/utils/date_format/date_format_utils.dart';
 import 'package:winmeet_mobile/feature/schedule/presentation/cubit/schedule_cubit.dart';
 import 'package:winmeet_mobile/injection.dart';
 
@@ -81,7 +81,7 @@ class _ScheduleViewScaffold extends StatelessWidget {
                             Padding(
                               padding: context.paddingHorizontalDefault,
                               child: Text(
-                                DateFormat('EEEE, MMMM d').format(state.focusedDay.toLocal()),
+                                DateFormatUtils.getDayMonthDay(state.focusedDay),
                                 style: context.textTheme.titleLarge,
                               ),
                             ),
@@ -104,7 +104,7 @@ class _ScheduleViewScaffold extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                DateFormat('EEEE, MMMM d').format(state.focusedDay.toLocal()),
+                                DateFormatUtils.getDayMonthDay(state.focusedDay),
                                 style: context.textTheme.titleLarge,
                               ),
                               Expanded(
@@ -130,14 +130,16 @@ class _ScheduleViewScaffold extends StatelessWidget {
                                             Text(
                                               selectedDayEvents[index].eventStartDate == null
                                                   ? 'Unknown'
-                                                  : DateFormat('h:mm a')
-                                                      .format(selectedDayEvents[index].eventStartDate!.toLocal()),
+                                                  : DateFormatUtils.get12HourFormat(
+                                                      selectedDayEvents[index].eventStartDate!,
+                                                    ),
                                             ),
                                             Text(
                                               selectedDayEvents[index].eventEndDate == null
                                                   ? 'Unknown'
-                                                  : DateFormat('h:mm a')
-                                                      .format(selectedDayEvents[index].eventEndDate!.toLocal()),
+                                                  : DateFormatUtils.get12HourFormat(
+                                                      selectedDayEvents[index].eventEndDate!,
+                                                    ),
                                             ),
                                           ],
                                         ),

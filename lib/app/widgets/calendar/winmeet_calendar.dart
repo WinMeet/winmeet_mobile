@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:winmeet_mobile/app/theme/constants/theme_constants.dart';
 import 'package:winmeet_mobile/app/utils/calendar/calendar_utils.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
+import 'package:winmeet_mobile/core/utils/date_format/date_format_utils.dart';
 import 'package:winmeet_mobile/feature/schedule/data/model/event_model.dart';
 
 class WinMeetCalendar extends StatefulWidget {
@@ -94,10 +94,8 @@ class _WinMeetCalendarState extends State<WinMeetCalendar> {
       ),
 
       calendarBuilders: CalendarBuilders(
-        headerTitleBuilder: (context, day) {
-          final monthName = DateFormat('MMMM').format(day.toLocal());
-          final year = DateFormat('y').format(day.toLocal());
-          return AppBar(title: Text('$monthName $year'));
+        headerTitleBuilder: (context, date) {
+          return AppBar(title: Text(DateFormatUtils.getMonthYear(date)));
         },
       ),
 

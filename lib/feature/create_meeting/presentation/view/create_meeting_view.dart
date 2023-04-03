@@ -2,12 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
-import 'package:intl/intl.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/utils/calendar/calendar_utils.dart';
 import 'package:winmeet_mobile/app/widgets/input/text_input_field.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
+import 'package:winmeet_mobile/core/utils/date_format/date_format_utils.dart';
 import 'package:winmeet_mobile/core/utils/date_time_picker/date_time_picker_utils.dart';
 import 'package:winmeet_mobile/core/utils/snackbar/snackbar_utils.dart';
 import 'package:winmeet_mobile/feature/create_meeting/presentation/cubit/create_meeting_cubit.dart';
@@ -221,7 +221,7 @@ class _DateTimeTile extends StatelessWidget {
         style: context.textTheme.bodyLarge,
       ),
       trailing: Text(
-        DateFormat.yMMMd().add_jm().format(dateTime),
+        DateFormatUtils.getMonthDayYearHour(dateTime),
         style: context.textTheme.bodyLarge,
       ),
       onTap: onTap,
