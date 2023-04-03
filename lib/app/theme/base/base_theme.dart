@@ -9,13 +9,8 @@ abstract class BaseTheme {
       useMaterial3: true,
       brightness: brightness,
       appBarTheme: _appBarTheme,
-      cardTheme: CardTheme(
-        elevation: 4,
-        margin: EdgeInsets.zero,
-        shape: OutlineInputBorder(
-          borderRadius: ThemeConstants.borderRadiusCircular,
-        ),
-      ),
+      bottomSheetTheme: _bottomSheetTheme,
+      cardTheme: _cardTheme,
       dialogTheme: _dialogTheme,
       elevatedButtonTheme: _elevatedButtonTheme,
       floatingActionButtonTheme: _floatingActionTheme,
@@ -27,6 +22,23 @@ abstract class BaseTheme {
 
   AppBarTheme get _appBarTheme => const AppBarTheme(
         centerTitle: true,
+      );
+
+  BottomSheetThemeData get _bottomSheetTheme => BottomSheetThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: ThemeConstants.radiusCircular,
+            topRight: ThemeConstants.radiusCircular,
+          ),
+        ),
+      );
+
+  CardTheme get _cardTheme => CardTheme(
+        elevation: 4,
+        margin: EdgeInsets.zero,
+        shape: OutlineInputBorder(
+          borderRadius: ThemeConstants.borderRadiusCircular,
+        ),
       );
 
   DialogTheme get _dialogTheme => DialogTheme(

@@ -117,7 +117,73 @@ class _ScheduleViewScaffold extends StatelessWidget {
                                     return Card(
                                       child: ListTile(
                                         contentPadding: context.paddingAllLow,
-                                        onTap: () {},
+                                        onTap: () {
+                                          showModalBottomSheet(
+                                            context: context,
+                                            builder: (context) => Padding(
+                                              padding: context.paddingAllDefault,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Center(
+                                                    child: SizedBox(
+                                                      width: context.dynamicWidth(0.2),
+                                                      child: const Divider(
+                                                        thickness: 4,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    'Title: ${selectedDayEvents[index].eventName}',
+                                                    style: context.textTheme.titleLarge,
+                                                  ),
+                                                  Text(
+                                                    'Description: ${selectedDayEvents[index].eventDescription ?? 'No description'}',
+                                                    style: context.textTheme.bodyLarge,
+                                                  ),
+                                                  Text(
+                                                    'When : ${DateFormatUtils.get12HourFormat(selectedDayEvents[index].eventStartDate ?? DateTime.now())} -  ${DateFormatUtils.get12HourFormat(selectedDayEvents[index].eventEndDate ?? DateTime.now())}',
+                                                  ),
+                                                  const Text('Participants : '),
+                                                  Expanded(
+                                                    child: ListView.separated(
+                                                      separatorBuilder: (context, index) => SizedBox(
+                                                        width: context.lowValue,
+                                                      ),
+                                                      scrollDirection: Axis.horizontal,
+                                                      itemCount: selectedDayEvents[index].participants?.length ?? 0,
+                                                      itemBuilder: (context, participantIndex) {
+                                                        return Text(
+                                                          selectedDayEvents[index].participants![participantIndex],
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                  const Spacer(),
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                    children: [
+                                                      TextButton.icon(
+                                                        onPressed: () {},
+                                                        icon: const Icon(
+                                                          Icons.edit,
+                                                        ),
+                                                        label: const Text('Edit'),
+                                                      ),
+                                                      TextButton.icon(
+                                                        onPressed: () {},
+                                                        icon: const Icon(
+                                                          Icons.delete,
+                                                        ),
+                                                        label: const Text('Delete'),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ].withSpaceBetween(height: context.mediumValue),
+                                              ),
+                                            ),
+                                          );
+                                        },
                                         title: Text(selectedDayEvents[index].eventName ?? ''),
                                         subtitle: Text(
                                           selectedDayEvents[index].eventDescription ?? '',
