@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:injectable/injectable.dart';
 import 'package:winmeet_mobile/app/constants/endpoints.dart';
 import 'package:winmeet_mobile/core/network/network_client.dart';
@@ -19,6 +21,17 @@ class ScheduleApi {
         throw Exception('Null data getAllMeetings()');
       } else {
         return model.map((e) => EventModel.fromJson(e as Map<String, dynamic>)).toList();
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<void> deleteMeeting(String id) async {
+    try {
+      final response = await _networkClient.delete<Map<String, dynamic>>(Endpoints.deleteMeeting + id);
+      if (response.statusCode == HttpStatus.notFound) {
+        throw Exception('Delete failed');
       }
     } catch (e) {
       throw Exception(e);
