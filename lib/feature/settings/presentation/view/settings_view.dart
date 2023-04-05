@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winmeet_mobile/app/theme/cubit/theme_cubit.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_title_large.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 
@@ -23,19 +24,13 @@ class SettingsView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Display',
-              style: context.textTheme.titleLarge,
-            ),
+            const WinMeetTitleLarge(text: 'Display'),
             ListTile(
               leading: const Icon(Icons.brightness_medium),
               title: const Text('Theme'),
               onTap: () => showDialog(context: context, builder: (context) => const _ThemeDialog()),
             ),
-            Text(
-              'Account',
-              style: context.textTheme.titleLarge,
-            ),
+            const WinMeetTitleLarge(text: 'Account'),
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Logout'),

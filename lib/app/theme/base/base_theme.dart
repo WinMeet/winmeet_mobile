@@ -12,6 +12,7 @@ abstract class BaseTheme {
       bottomSheetTheme: _bottomSheetTheme,
       cardTheme: _cardTheme,
       dialogTheme: _dialogTheme,
+      dividerTheme: _dividerTheme,
       elevatedButtonTheme: _elevatedButtonTheme,
       floatingActionButtonTheme: _floatingActionTheme,
       listTileTheme: _listTileTheme,
@@ -45,6 +46,10 @@ abstract class BaseTheme {
         shape: RoundedRectangleBorder(
           borderRadius: ThemeConstants.borderRadiusCircular,
         ),
+      );
+
+  DividerThemeData get _dividerTheme => const DividerThemeData(
+        thickness: 4,
       );
 
   ElevatedButtonThemeData get _elevatedButtonTheme => ElevatedButtonThemeData(

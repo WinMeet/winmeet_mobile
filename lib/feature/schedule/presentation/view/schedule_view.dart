@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/widgets/calendar/winmeet_calendar.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_title_large.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_title_medium.dart';
 import 'package:winmeet_mobile/core/enums/page_status.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/core/utils/date_format/date_format_utils.dart';
+import 'package:winmeet_mobile/feature/schedule/data/model/event_model.dart';
 import 'package:winmeet_mobile/feature/schedule/presentation/cubit/schedule_cubit.dart';
 import 'package:winmeet_mobile/injection.dart';
 
@@ -62,15 +65,6 @@ class _ScheduleViewScaffold extends StatelessWidget {
                           eventLoader: (day) => context.read<ScheduleCubit>().getByDay(day),
                           onFocusedDayChanged: (day) => context.read<ScheduleCubit>().updateFocusedDay(day),
                         ),
-                        // Center(
-                        //   child: SizedBox(
-                        //     width: context.dynamicWidth(.2),
-                        //     child: Divider(
-                        //       color: context.theme.disabledColor,
-                        //       thickness: 4,
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                     if (selectedDayEvents.isEmpty)
@@ -80,10 +74,7 @@ class _ScheduleViewScaffold extends StatelessWidget {
                           children: [
                             Padding(
                               padding: context.paddingHorizontalDefault,
-                              child: Text(
-                                DateFormatUtils.getDayMonthDay(state.focusedDay),
-                                style: context.textTheme.titleLarge,
-                              ),
+                              child: WinMeetTitleLarge(text: DateFormatUtils.getDayMonthDay(state.focusedDay)),
                             ),
                             const Spacer(),
                             Center(
@@ -103,10 +94,7 @@ class _ScheduleViewScaffold extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                DateFormatUtils.getDayMonthDay(state.focusedDay),
-                                style: context.textTheme.titleLarge,
-                              ),
+                              WinMeetTitleLarge(text: DateFormatUtils.getDayMonthDay(state.focusedDay)),
                               Expanded(
                                 child: ListView.separated(
                                   separatorBuilder: (context, index) => SizedBox(
@@ -114,79 +102,20 @@ class _ScheduleViewScaffold extends StatelessWidget {
                                   ),
                                   itemCount: selectedDayEvents.length,
                                   itemBuilder: (context, index) {
+                                    final event = selectedDayEvents[index];
                                     return Card(
                                       child: ListTile(
                                         contentPadding: context.paddingAllLow,
                                         onTap: () {
-                                          showModalBottomSheet(
+                                          showModalBottomSheet<dynamic>(
                                             context: context,
-                                            builder: (context) => Padding(
-                                              padding: context.paddingAllDefault,
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Center(
-                                                    child: SizedBox(
-                                                      width: context.dynamicWidth(0.2),
-                                                      child: const Divider(
-                                                        thickness: 4,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'Title: ${selectedDayEvents[index].eventName}',
-                                                    style: context.textTheme.titleLarge,
-                                                  ),
-                                                  Text(
-                                                    'Description: ${selectedDayEvents[index].eventDescription ?? 'No description'}',
-                                                    style: context.textTheme.bodyLarge,
-                                                  ),
-                                                  Text(
-                                                    'When : ${DateFormatUtils.get12HourFormat(selectedDayEvents[index].eventStartDate ?? DateTime.now())} -  ${DateFormatUtils.get12HourFormat(selectedDayEvents[index].eventEndDate ?? DateTime.now())}',
-                                                  ),
-                                                  const Text('Participants : '),
-                                                  Expanded(
-                                                    child: ListView.separated(
-                                                      separatorBuilder: (context, index) => SizedBox(
-                                                        width: context.lowValue,
-                                                      ),
-                                                      scrollDirection: Axis.horizontal,
-                                                      itemCount: selectedDayEvents[index].participants?.length ?? 0,
-                                                      itemBuilder: (context, participantIndex) {
-                                                        return Text(
-                                                          selectedDayEvents[index].participants![participantIndex],
-                                                        );
-                                                      },
-                                                    ),
-                                                  ),
-                                                  const Spacer(),
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                    children: [
-                                                      TextButton.icon(
-                                                        onPressed: () {},
-                                                        icon: const Icon(
-                                                          Icons.edit,
-                                                        ),
-                                                        label: const Text('Edit'),
-                                                      ),
-                                                      TextButton.icon(
-                                                        onPressed: () {},
-                                                        icon: const Icon(
-                                                          Icons.delete,
-                                                        ),
-                                                        label: const Text('Delete'),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ].withSpaceBetween(height: context.mediumValue),
-                                              ),
-                                            ),
+                                            isScrollControlled: true,
+                                            builder: (context) => _MeetingDetails(event: event),
                                           );
                                         },
-                                        title: Text(selectedDayEvents[index].eventName ?? ''),
+                                        title: Text(selectedDayEvents[index].eventName),
                                         subtitle: Text(
-                                          selectedDayEvents[index].eventDescription ?? '',
+                                          selectedDayEvents[index].eventDescription,
                                           maxLines: 1,
                                         ),
                                         trailing: Column(
@@ -194,18 +123,14 @@ class _ScheduleViewScaffold extends StatelessWidget {
                                           crossAxisAlignment: CrossAxisAlignment.end,
                                           children: [
                                             Text(
-                                              selectedDayEvents[index].eventStartDate == null
-                                                  ? 'Unknown'
-                                                  : DateFormatUtils.get12HourFormat(
-                                                      selectedDayEvents[index].eventStartDate!,
-                                                    ),
+                                              DateFormatUtils.get12HourFormat(
+                                                selectedDayEvents[index].eventStartDate,
+                                              ),
                                             ),
                                             Text(
-                                              selectedDayEvents[index].eventEndDate == null
-                                                  ? 'Unknown'
-                                                  : DateFormatUtils.get12HourFormat(
-                                                      selectedDayEvents[index].eventEndDate!,
-                                                    ),
+                                              DateFormatUtils.get12HourFormat(
+                                                selectedDayEvents[index].eventEndDate,
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -224,6 +149,89 @@ class _ScheduleViewScaffold extends StatelessWidget {
             );
         }
       },
+    );
+  }
+}
+
+class _MeetingDetails extends StatelessWidget {
+  const _MeetingDetails({required this.event});
+
+  final EventModel event;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: context.paddingAllDefault,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Center(
+            child: SizedBox(
+              width: context.dynamicWidth(0.2),
+              child: const Divider(),
+            ),
+          ),
+          WinMeetTitleLarge(text: event.eventName),
+          if (event.eventDescription.isNotEmpty) ...[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const WinMeetTitleMedium(text: 'Description'),
+                Text(event.eventDescription),
+              ],
+            ),
+          ],
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const WinMeetTitleMedium(text: 'When'),
+              Text(
+                '${DateFormatUtils.getMonthDayYearHour(event.eventStartDate)} - ${DateFormatUtils.getMonthDayYearHour(event.eventEndDate)}',
+              ),
+            ],
+          ),
+          if (event.location.isNotEmpty) ...[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const WinMeetTitleMedium(text: 'Location'),
+                Text(event.location),
+              ],
+            ),
+          ],
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const WinMeetTitleMedium(text: 'Participants'),
+              SizedBox(
+                height: context.highValue,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: event.participants.length,
+                  separatorBuilder: (context, index) => SizedBox(width: context.lowValue),
+                  itemBuilder: (context, participantsIndex) => Text(event.participants[participantsIndex]),
+                ),
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              TextButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.delete),
+                label: const Text('Delete'),
+              ),
+              TextButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.edit),
+                label: const Text('Edit'),
+              ),
+            ],
+          ),
+        ].withSpaceBetween(height: context.mediumValue),
+      ),
     );
   }
 }
