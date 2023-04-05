@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/widgets/calendar/winmeet_calendar.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_body_large.dart';
 import 'package:winmeet_mobile/app/widgets/text/winmeet_title_large.dart';
 import 'package:winmeet_mobile/app/widgets/text/winmeet_title_medium.dart';
 import 'package:winmeet_mobile/core/enums/page_status.dart';
@@ -109,10 +110,9 @@ class _EmptyState extends StatelessWidget {
             child: WinMeetTitleLarge(text: DateFormatUtils.getDayMonthDay(focusedDay)),
           ),
           const Spacer(),
-          Center(
-            child: Text(
-              'No Meetings Scheduled',
-              style: context.textTheme.bodyLarge,
+          const Center(
+            child: WinMeetBodyLarge(
+              text: 'No Meetings Scheduled',
             ),
           ),
           const Spacer(),
@@ -228,7 +228,7 @@ class _MeetingDetails extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const WinMeetTitleMedium(text: 'When'),
+              const WinMeetBodyLarge(text: 'When'),
               Text(
                 '${DateFormatUtils.getMonthDayYearHour(event.eventStartDate)} - ${DateFormatUtils.getMonthDayYearHour(event.eventEndDate)}',
               ),

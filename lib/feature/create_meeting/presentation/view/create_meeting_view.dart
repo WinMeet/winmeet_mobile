@@ -5,6 +5,7 @@ import 'package:form_inputs/form_inputs.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/utils/calendar/calendar_utils.dart';
 import 'package:winmeet_mobile/app/widgets/input/text_input_field.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_body_large.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/core/utils/date_format/date_format_utils.dart';
@@ -73,9 +74,9 @@ class _CreateMeetingScaffold extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: context.paddingAllDefault,
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: context.paddingAllDefault,
           child: Column(
             children: [
               BlocBuilder<CreateMeetingCubit, CreateMeetingState>(
@@ -216,13 +217,11 @@ class _DateTimeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Text(
-        label,
-        style: context.textTheme.bodyLarge,
+      leading: WinMeetBodyLarge(
+        text: label,
       ),
-      trailing: Text(
-        DateFormatUtils.getMonthDayYearHour(dateTime),
-        style: context.textTheme.bodyLarge,
+      trailing: WinMeetBodyLarge(
+        text: DateFormatUtils.getMonthDayYearHour(dateTime),
       ),
       onTap: onTap,
     );
@@ -238,9 +237,8 @@ class _Participants extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ListTile(
-          leading: Text(
-            'Participants',
-            style: context.textTheme.bodyLarge,
+          leading: const WinMeetBodyLarge(
+            text: 'Participants',
           ),
           trailing: const Icon(Icons.add),
           onTap: () async {
