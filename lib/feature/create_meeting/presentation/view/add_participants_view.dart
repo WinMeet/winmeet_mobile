@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winmeet_mobile/app/widgets/input/email_input_field.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_body_large.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/feature/create_meeting/presentation/cubit/create_meeting_cubit.dart';
@@ -113,14 +114,13 @@ class _ParticipantList extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Participants',
-                style: context.textTheme.bodyLarge,
+              const WinMeetBodyLarge(
+                text: 'Participants',
               ),
               ListView.separated(
                 shrinkWrap: true,
                 separatorBuilder: (context, index) => SizedBox(
-                  height: context.lowValue,
+                  height: context.mediumValue,
                 ),
                 itemCount: state.participants.value.length,
                 itemBuilder: (context, index) {

@@ -21,7 +21,7 @@ import '../../feature/auth/login/presentation/view/login_view.dart' as _i3;
 import '../../feature/auth/register/presentation/view/register_view.dart'
     as _i4;
 import '../../feature/create_meeting/presentation/cubit/create_meeting_cubit.dart'
-    as _i14;
+    as _i15;
 import '../../feature/create_meeting/presentation/view/add_participants_view.dart'
     as _i8;
 import '../../feature/create_meeting/presentation/view/create_meeting_view.dart'
@@ -29,6 +29,7 @@ import '../../feature/create_meeting/presentation/view/create_meeting_view.dart'
 import '../../feature/navbar/navbar_view.dart' as _i6;
 import '../../feature/onboarding/presentation/view/onboarding_view.dart' as _i2;
 import '../../feature/pending/view/pending_view.dart' as _i10;
+import '../../feature/schedule/presentation/cubit/schedule_cubit.dart' as _i14;
 import '../../feature/schedule/presentation/view/schedule_view.dart' as _i9;
 import '../../feature/settings/presentation/view/settings_view.dart' as _i11;
 
@@ -89,9 +90,13 @@ class AppRouter extends _i12.RootStackRouter {
       );
     },
     CreateMeetingRoute.name: (routeData) {
+      final args = routeData.argsAs<CreateMeetingRouteArgs>();
       return _i12.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i7.CreateMeetingView(),
+        child: _i7.CreateMeetingView(
+          cubit: args.cubit,
+          key: args.key,
+        ),
       );
     },
     AddParticipantsRoute.name: (routeData) {
@@ -394,14 +399,36 @@ class NavbarRoute extends _i12.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.CreateMeetingView]
-class CreateMeetingRoute extends _i12.PageRouteInfo<void> {
-  const CreateMeetingRoute()
-      : super(
+class CreateMeetingRoute extends _i12.PageRouteInfo<CreateMeetingRouteArgs> {
+  CreateMeetingRoute({
+    required _i14.ScheduleCubit cubit,
+    _i13.Key? key,
+  }) : super(
           CreateMeetingRoute.name,
           path: 'create-meeting-view',
+          args: CreateMeetingRouteArgs(
+            cubit: cubit,
+            key: key,
+          ),
         );
 
   static const String name = 'CreateMeetingRoute';
+}
+
+class CreateMeetingRouteArgs {
+  const CreateMeetingRouteArgs({
+    required this.cubit,
+    this.key,
+  });
+
+  final _i14.ScheduleCubit cubit;
+
+  final _i13.Key? key;
+
+  @override
+  String toString() {
+    return 'CreateMeetingRouteArgs{cubit: $cubit, key: $key}';
+  }
 }
 
 /// generated route for
@@ -409,7 +436,7 @@ class CreateMeetingRoute extends _i12.PageRouteInfo<void> {
 class AddParticipantsRoute
     extends _i12.PageRouteInfo<AddParticipantsRouteArgs> {
   AddParticipantsRoute({
-    required _i14.CreateMeetingCubit cubit,
+    required _i15.CreateMeetingCubit cubit,
     _i13.Key? key,
   }) : super(
           AddParticipantsRoute.name,
@@ -429,7 +456,7 @@ class AddParticipantsRouteArgs {
     this.key,
   });
 
-  final _i14.CreateMeetingCubit cubit;
+  final _i15.CreateMeetingCubit cubit;
 
   final _i13.Key? key;
 

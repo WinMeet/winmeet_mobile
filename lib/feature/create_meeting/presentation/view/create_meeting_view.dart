@@ -2,31 +2,37 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
-import 'package:intl/intl.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/utils/calendar/calendar_utils.dart';
 import 'package:winmeet_mobile/app/widgets/input/text_input_field.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_body_large.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
+import 'package:winmeet_mobile/core/utils/date_format/date_format_utils.dart';
 import 'package:winmeet_mobile/core/utils/date_time_picker/date_time_picker_utils.dart';
 import 'package:winmeet_mobile/core/utils/snackbar/snackbar_utils.dart';
 import 'package:winmeet_mobile/feature/create_meeting/presentation/cubit/create_meeting_cubit.dart';
+import 'package:winmeet_mobile/feature/schedule/presentation/cubit/schedule_cubit.dart';
 import 'package:winmeet_mobile/injection.dart';
 
 class CreateMeetingView extends StatelessWidget {
-  const CreateMeetingView({super.key});
+  const CreateMeetingView({required ScheduleCubit cubit, super.key}) : _cubit = cubit;
+
+  final ScheduleCubit _cubit;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => getIt<CreateMeetingCubit>(),
-      child: const _CreateMeetingScaffold(),
+      child: _CreateMeetingScaffold(cubit: _cubit),
     );
   }
 }
 
 class _CreateMeetingScaffold extends StatelessWidget {
-  const _CreateMeetingScaffold();
+  const _CreateMeetingScaffold({required ScheduleCubit cubit}) : _cubit = cubit;
+
+  final ScheduleCubit _cubit;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +63,10 @@ class _CreateMeetingScaffold extends StatelessWidget {
             builder: (context, state) {
               return IconButton(
                 onPressed: state.status.isValid || state.status.isSubmissionFailure
-                    ? () => context.read<CreateMeetingCubit>().createMeeting()
+                    ? () async {
+                        await context.read<CreateMeetingCubit>().createMeeting();
+                        await _cubit.getAllMeetings();
+                      }
                     : null,
                 icon: const Icon(Icons.done),
               );
@@ -65,9 +74,9 @@ class _CreateMeetingScaffold extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: context.paddingAllDefault,
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: context.paddingAllDefault,
           child: Column(
             children: [
               BlocBuilder<CreateMeetingCubit, CreateMeetingState>(
@@ -208,13 +217,11 @@ class _DateTimeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Text(
-        label,
-        style: context.textTheme.bodyLarge,
+      leading: WinMeetBodyLarge(
+        text: label,
       ),
-      trailing: Text(
-        DateFormat.yMMMd().add_jm().format(dateTime),
-        style: context.textTheme.bodyLarge,
+      trailing: WinMeetBodyLarge(
+        text: DateFormatUtils.getMonthDayYearHour(dateTime),
       ),
       onTap: onTap,
     );
@@ -230,9 +237,8 @@ class _Participants extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ListTile(
-          leading: Text(
-            'Participants',
-            style: context.textTheme.bodyLarge,
+          leading: const WinMeetBodyLarge(
+            text: 'Participants',
           ),
           trailing: const Icon(Icons.add),
           onTap: () async {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_title_large.dart';
 
 class PendingView extends StatelessWidget {
   const PendingView({super.key});
@@ -13,8 +14,8 @@ class PendingView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
           Center(
-            child: Text(
-              'No Meetings Pending',
+            child: WinMeetTitleLarge(
+              text: 'No Meetings Pending',
             ),
           ),
         ],

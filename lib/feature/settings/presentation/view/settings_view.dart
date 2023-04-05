@@ -4,9 +4,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winmeet_mobile/app/theme/cubit/theme_cubit.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_title_large.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_title_medium.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
-
 import 'package:winmeet_mobile/feature/auth/cubit/auth_cubit.dart';
 
 class SettingsView extends StatelessWidget {
@@ -23,19 +24,13 @@ class SettingsView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Display',
-              style: context.textTheme.titleLarge,
-            ),
+            const WinMeetTitleLarge(text: 'Display'),
             ListTile(
               leading: const Icon(Icons.brightness_medium),
               title: const Text('Theme'),
               onTap: () => showDialog(context: context, builder: (context) => const _ThemeDialog()),
             ),
-            Text(
-              'Account',
-              style: context.textTheme.titleLarge,
-            ),
+            const WinMeetTitleLarge(text: 'Account'),
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Logout'),
@@ -62,9 +57,8 @@ class _ThemeDialog extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  'Choose Theme',
-                  style: Theme.of(context).textTheme.bodyLarge,
+                const WinMeetTitleMedium(
+                  text: 'Choose Theme',
                 ),
                 RadioListTile(
                   contentPadding: EdgeInsets.zero,
@@ -124,18 +118,11 @@ class _LogoutDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              'Logout',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            SizedBox(
-              height: context.mediumValue,
+            const WinMeetTitleMedium(
+              text: 'Logout',
             ),
             const Text(
               'Are you sure you want to logout?',
-            ),
-            SizedBox(
-              height: context.mediumValue,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -150,7 +137,7 @@ class _LogoutDialog extends StatelessWidget {
                 )
               ],
             ),
-          ],
+          ].withSpaceBetween(height: context.mediumValue),
         ),
       ),
     );

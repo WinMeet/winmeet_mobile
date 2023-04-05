@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:winmeet_mobile/app/constants/assets.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_body_large.dart';
 import 'package:winmeet_mobile/app/widgets/text/winmeet_heading.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/feature/onboarding/data/model/onboarding_model.dart';
 import 'package:winmeet_mobile/feature/onboarding/presentation/cubit/onboarding_cubit.dart';
-
 import 'package:winmeet_mobile/feature/onboarding/presentation/widgets/dots_indicator.dart';
 
 class OnboardingView extends StatelessWidget {
@@ -98,10 +98,9 @@ class _OnboardingPage extends StatelessWidget {
           text: item.title,
           textAlign: TextAlign.center,
         ),
-        Text(
-          item.description,
+        WinMeetBodyLarge(
+          text: item.description,
           textAlign: TextAlign.center,
-          style: context.textTheme.bodyLarge,
         ),
       ].withSpaceBetween(height: context.mediumValue),
     );

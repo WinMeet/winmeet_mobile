@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 
-class WinMeetHeading extends StatelessWidget {
-  const WinMeetHeading({
+class WinMeetTitleMedium extends StatelessWidget {
+  const WinMeetTitleMedium({
     required this.text,
-    this.textAlign,
     super.key,
+    this.textAlign,
   });
 
   final String text;
@@ -16,7 +16,7 @@ class WinMeetHeading extends StatelessWidget {
     return Text(
       text,
       textAlign: textAlign,
-      style: context.textTheme.headlineMedium,
+      style: context.textTheme.titleMedium,
     );
   }
 }

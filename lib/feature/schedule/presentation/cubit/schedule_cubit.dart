@@ -23,15 +23,21 @@ class ScheduleCubit extends Cubit<ScheduleState> {
     emit(state.copyWith(status: PageStatus.loading));
 
     final response = await _scheduleRepository.getAllMeetings();
-    // TODO: remove
-    await Future.delayed(const Duration(seconds: 1));
 
     response.fold(
-      // TODO:  emit(state.copyWith(status: PageStatus.failure))
-      (failure) => emit(state.copyWith(status: PageStatus.success, allEvents: ScheduleState.initial().allEvents)),
-      // TODO: replace with (success) => emit(state.copyWith(events: success)
-      (success) => emit(state.copyWith(status: PageStatus.success, allEvents: ScheduleState.initial().allEvents)),
+      (failure) => emit(state.copyWith(status: PageStatus.failure)),
+      (success) => emit(state.copyWith(status: PageStatus.success, allEvents: success)),
     );
+  }
+
+  Future<void> deleteMeeting(String id) async {
+    final response = await _scheduleRepository.deleteMeeting(id);
+
+    response.fold((failure) => emit(state.copyWith(status: PageStatus.failure)), (success) {
+      final events = state.allEvents;
+      final newEvents = events.where((event) => event.id != id).toList();
+      emit(state.copyWith(status: PageStatus.success, allEvents: newEvents));
+    });
   }
 
   List<EventModel> getByDay(DateTime date) {

@@ -21,4 +21,14 @@ class ScheduleRepository {
       return left(const FailureModel());
     }
   }
+
+  Future<Either<FailureModel, void>> deleteMeeting(String id) async {
+    try {
+      final response = await _scheduleApi.deleteMeeting(id);
+      return right(response);
+    } catch (e) {
+      log(e.toString());
+      return left(const FailureModel());
+    }
+  }
 }

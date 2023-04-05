@@ -9,14 +9,10 @@ abstract class BaseTheme {
       useMaterial3: true,
       brightness: brightness,
       appBarTheme: _appBarTheme,
-      cardTheme: CardTheme(
-        elevation: 4,
-        margin: EdgeInsets.zero,
-        shape: OutlineInputBorder(
-          borderRadius: ThemeConstants.borderRadiusCircular,
-        ),
-      ),
+      bottomSheetTheme: _bottomSheetTheme,
+      cardTheme: _cardTheme,
       dialogTheme: _dialogTheme,
+      dividerTheme: _dividerTheme,
       elevatedButtonTheme: _elevatedButtonTheme,
       floatingActionButtonTheme: _floatingActionTheme,
       listTileTheme: _listTileTheme,
@@ -29,10 +25,31 @@ abstract class BaseTheme {
         centerTitle: true,
       );
 
+  BottomSheetThemeData get _bottomSheetTheme => BottomSheetThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: ThemeConstants.radiusCircular,
+            topRight: ThemeConstants.radiusCircular,
+          ),
+        ),
+      );
+
+  CardTheme get _cardTheme => CardTheme(
+        elevation: 4,
+        margin: EdgeInsets.zero,
+        shape: OutlineInputBorder(
+          borderRadius: ThemeConstants.borderRadiusCircular,
+        ),
+      );
+
   DialogTheme get _dialogTheme => DialogTheme(
         shape: RoundedRectangleBorder(
           borderRadius: ThemeConstants.borderRadiusCircular,
         ),
+      );
+
+  DividerThemeData get _dividerTheme => const DividerThemeData(
+        thickness: 4,
       );
 
   ElevatedButtonThemeData get _elevatedButtonTheme => ElevatedButtonThemeData(
