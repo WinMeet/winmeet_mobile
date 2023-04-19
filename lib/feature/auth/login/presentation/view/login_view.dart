@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
+import 'package:winmeet_mobile/app/cubit/app_cubit.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/widgets/button/custom_elevated_button.dart';
 import 'package:winmeet_mobile/app/widgets/input/email_input_field.dart';
@@ -10,7 +11,7 @@ import 'package:winmeet_mobile/app/widgets/text/winmeet_heading.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/core/utils/snackbar/snackbar_utils.dart';
-import 'package:winmeet_mobile/feature/auth/cubit/auth_cubit.dart';
+
 import 'package:winmeet_mobile/feature/auth/login/presentation/cubit/login_cubit.dart';
 import 'package:winmeet_mobile/injection.dart';
 
@@ -37,7 +38,7 @@ class _LoginViewBody extends StatelessWidget {
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status.isSubmissionSuccess) {
-          context.read<AuthCubit>().checkAuthState();
+          context.read<AppCubit>().checkAppState();
         } else if (state.status.isSubmissionFailure) {
           SnackbarUtils.showSnackbar(
             context: context,

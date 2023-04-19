@@ -58,11 +58,9 @@ class AppRouter extends _i12.RootStackRouter {
       );
     },
     OnboardingRoute.name: (routeData) {
-      final args = routeData.argsAs<OnboardingRouteArgs>(
-          orElse: () => const OnboardingRouteArgs());
       return _i12.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i2.OnboardingView(key: args.key),
+        child: const _i2.OnboardingView(),
       );
     },
     LoginRoute.name: (routeData) {
@@ -326,26 +324,14 @@ class AuthenticatedRoutes extends _i12.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.OnboardingView]
-class OnboardingRoute extends _i12.PageRouteInfo<OnboardingRouteArgs> {
-  OnboardingRoute({_i13.Key? key})
+class OnboardingRoute extends _i12.PageRouteInfo<void> {
+  const OnboardingRoute()
       : super(
           OnboardingRoute.name,
           path: '',
-          args: OnboardingRouteArgs(key: key),
         );
 
   static const String name = 'OnboardingRoute';
-}
-
-class OnboardingRouteArgs {
-  const OnboardingRouteArgs({this.key});
-
-  final _i13.Key? key;
-
-  @override
-  String toString() {
-    return 'OnboardingRouteArgs{key: $key}';
-  }
 }
 
 /// generated route for
