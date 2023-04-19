@@ -10,6 +10,7 @@ import 'package:winmeet_mobile/app/widgets/text/winmeet_heading.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
 import 'package:winmeet_mobile/core/utils/snackbar/snackbar_utils.dart';
+import 'package:winmeet_mobile/feature/auth/cubit/auth_cubit.dart';
 import 'package:winmeet_mobile/feature/auth/login/presentation/cubit/login_cubit.dart';
 import 'package:winmeet_mobile/injection.dart';
 
@@ -36,7 +37,7 @@ class _LoginViewBody extends StatelessWidget {
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status.isSubmissionSuccess) {
-          context.router.replace(const NavbarRoute());
+          context.read<AuthCubit>().checkAuthState();
         } else if (state.status.isSubmissionFailure) {
           SnackbarUtils.showSnackbar(
             context: context,

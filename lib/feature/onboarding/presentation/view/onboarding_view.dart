@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:winmeet_mobile/app/constants/assets.dart';
+import 'package:winmeet_mobile/app/constants/asset_constants.dart';
 import 'package:winmeet_mobile/app/widgets/text/winmeet_body_large.dart';
 import 'package:winmeet_mobile/app/widgets/text/winmeet_heading.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
@@ -15,19 +15,19 @@ class OnboardingView extends StatelessWidget {
 
   final List<OnboardingModel> onboardingItems = [
     const OnboardingModel(
-      imagePath: Assests.onboarding1,
+      imagePath: AssestsConstants.onboarding1,
       title: 'Easy Scheduling Ahead',
       description:
           'WinMeet is your scheduling automation platform for eliminating the back-and-forth emails for finding the perfect tim',
     ),
     const OnboardingModel(
-      imagePath: Assests.onboarding2,
+      imagePath: AssestsConstants.onboarding2,
       title: 'Create Events Quickly',
       description:
           'Creating events can be a time-consuming and complex task, but with WinMeet, you can create events quickly and easily',
     ),
     const OnboardingModel(
-      imagePath: Assests.onboarding3,
+      imagePath: AssestsConstants.onboarding3,
       title: 'Schedule as a Group',
       description: "With WinMeet's collaborative scheduling tools, planning group events has never been easier",
     )

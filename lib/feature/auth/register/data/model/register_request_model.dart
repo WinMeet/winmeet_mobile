@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'register_request_model.freezed.dart';
@@ -6,9 +8,10 @@ part 'register_request_model.g.dart';
 @freezed
 class RegisterRequestModel with _$RegisterRequestModel {
   const factory RegisterRequestModel({
-    required String name,
-    required String email,
-    required String password,
+    @JsonKey(name: 'userName') required String name,
+    @JsonKey(name: 'userSurname') required String surname,
+    @JsonKey(name: 'userEmail') required String email,
+    @JsonKey(name: 'userPassword') required String password,
   }) = _RegisterRequestModel;
 
   const RegisterRequestModel._();
