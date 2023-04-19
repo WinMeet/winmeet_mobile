@@ -16,13 +16,15 @@ dependencies:
     sdk: flutter
 
   # State management
-  bloc: ^8.1.0
   flutter_bloc: ^8.1.1
   hydrated_bloc: ^9.0.0
 
   # Networking
   dio: ^5.0.3
   pretty_dio_logger: ^1.1.1
+
+  # Caching
+  shared_preferences: ^2.1.0
 
   # Routing
   auto_route: ^5.0.4
@@ -45,6 +47,7 @@ dependencies:
 
   # Utility
   intl: ^0.17.0
+  jwt_decode: ^0.3.1
   flutter_svg: ^2.0.4
   path_provider: ^2.0.12
   

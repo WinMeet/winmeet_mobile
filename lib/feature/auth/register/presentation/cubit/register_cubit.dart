@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -24,9 +24,24 @@ class RegisterCubit extends Cubit<RegisterState> {
         name: newName,
         status: Formz.validate([
           newName,
+          state.surname,
           state.email,
           state.password,
-          state.confirmPassword,
+        ]),
+      ),
+    );
+  }
+
+  void surnameChanged({required String surname}) {
+    final newSurname = InputFormField.dirty(value: surname);
+    emit(
+      state.copyWith(
+        surname: newSurname,
+        status: Formz.validate([
+          state.name,
+          newSurname,
+          state.email,
+          state.password,
         ]),
       ),
     );
@@ -41,8 +56,8 @@ class RegisterCubit extends Cubit<RegisterState> {
           [
             newEmail,
             state.name,
+            state.surname,
             state.password,
-            state.confirmPassword,
           ],
         ),
       ),
@@ -51,37 +66,15 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   void passwordChanged({required String password}) {
     final newPassword = PasswordFormInput.dirty(password);
-    final confirmPassword = ConfirmPasswordFormInput.dirty(
-      password: newPassword.value,
-      value: state.confirmPassword.value,
-    );
+
     emit(
       state.copyWith(
         password: newPassword,
         status: Formz.validate([
           state.name,
+          state.surname,
           state.email,
           newPassword,
-          confirmPassword,
-        ]),
-      ),
-    );
-  }
-
-  void confirmPasswordChanged({required String confirmPassword}) {
-    final newConfirmPassword = ConfirmPasswordFormInput.dirty(
-      password: state.password.value,
-      value: confirmPassword,
-    );
-
-    emit(
-      state.copyWith(
-        confirmPassword: newConfirmPassword,
-        status: Formz.validate([
-          state.name,
-          state.email,
-          state.password,
-          newConfirmPassword,
         ]),
       ),
     );
@@ -98,6 +91,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       await _registerRepository.registerWithEmailAndPassword(
         registerRequestModel: RegisterRequestModel(
           name: state.name.value,
+          surname: state.surname.value,
           email: state.email.value,
           password: state.password.value,
         ),

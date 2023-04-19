@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -34,16 +34,16 @@ class LoginCubit extends Cubit<LoginState> {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
 
-    try {
-      await _loginRepository.loginWithEmailAndPassword(
-        loginRequestModel: LoginRequestModel(
-          email: state.email.value,
-          password: state.password.value,
-        ),
-      );
-      emit(state.copyWith(status: FormzStatus.submissionSuccess));
-    } on Exception {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
-    }
+    final response = await _loginRepository.loginWithEmailAndPassword(
+      loginRequestModel: LoginRequestModel(
+        email: state.email.value,
+        password: state.password.value,
+      ),
+    );
+
+    response.fold(
+      (failure) => emit(state.copyWith(status: FormzStatus.submissionFailure)),
+      (success) => emit(state.copyWith(status: FormzStatus.submissionSuccess)),
+    );
   }
 }

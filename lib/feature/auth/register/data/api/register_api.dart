@@ -12,7 +12,7 @@ class RegisterApi {
   Future<void> registerWithEmailAndPassword({
     required RegisterRequestModel registerRequestModel,
   }) async {
-    await _networkClient.post<RegisterRequestModel>(
+    await _networkClient.post<Map<String, dynamic>>(
       Endpoints.register,
       data: registerRequestModel.toJson(),
     );

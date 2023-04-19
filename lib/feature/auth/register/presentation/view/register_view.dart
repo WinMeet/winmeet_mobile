@@ -40,12 +40,12 @@ class _RegisterViewBody extends StatelessWidget {
           context.router.replace(const LoginRoute());
           SnackbarUtils.showSnackbar(
             context: context,
-            message: 'Account created',
+            message: 'Your account has been created!',
           );
         } else if (state.status.isSubmissionFailure) {
           SnackbarUtils.showSnackbar(
             context: context,
-            message: 'An error occured while creating user.',
+            message: 'Oops! Something went wrong with your registration.',
           );
         }
       },
@@ -61,7 +61,7 @@ class _RegisterViewBody extends StatelessWidget {
                   text: 'Register',
                 ),
                 const Text(
-                  'Enter your name, email and password to register',
+                  'Enter your information to register',
                 ),
                 BlocBuilder<RegisterCubit, RegisterState>(
                   builder: (context, state) {
@@ -72,6 +72,18 @@ class _RegisterViewBody extends StatelessWidget {
                       textInputAction: TextInputAction.next,
                       isValid: state.name.invalid,
                       onChanged: (name) => context.read<RegisterCubit>().nameChanged(name: name),
+                    );
+                  },
+                ),
+                BlocBuilder<RegisterCubit, RegisterState>(
+                  builder: (context, state) {
+                    return TextInputField(
+                      labelText: 'Surname',
+                      errorLabel: 'Surname cannot be empty',
+                      prefixIcon: const Icon(Icons.person),
+                      textInputAction: TextInputAction.next,
+                      isValid: state.surname.invalid,
+                      onChanged: (surname) => context.read<RegisterCubit>().surnameChanged(surname: surname),
                     );
                   },
                 ),
@@ -94,20 +106,6 @@ class _RegisterViewBody extends StatelessWidget {
                       labelText: 'Password',
                       errorText: 'Weak Password',
                       onChanged: (password) => context.read<RegisterCubit>().passwordChanged(password: password),
-                      onPressed: () => context.read<RegisterCubit>().passwordVisibilityChanged(),
-                    );
-                  },
-                ),
-                BlocBuilder<RegisterCubit, RegisterState>(
-                  builder: (context, state) {
-                    return PasswordInputField(
-                      textInputAction: TextInputAction.done,
-                      obscureText: state.isPasswordObscured,
-                      isValid: state.confirmPassword.invalid,
-                      labelText: 'Confirm Password',
-                      errorText: 'Passwords do not match',
-                      onChanged: (confirmPassword) =>
-                          context.read<RegisterCubit>().confirmPasswordChanged(confirmPassword: confirmPassword),
                       onPressed: () => context.read<RegisterCubit>().passwordVisibilityChanged(),
                     );
                   },
