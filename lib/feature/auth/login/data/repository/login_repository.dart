@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:winmeet_mobile/app/constants/cache_contants.dart';
-import 'package:winmeet_mobile/core/cache/cache_client.dart';
+import 'package:winmeet_mobile/core/clients/cache/cache_client.dart';
 import 'package:winmeet_mobile/core/model/failure/failure_model.dart';
 import 'package:winmeet_mobile/feature/auth/login/data/api/login_api.dart';
 import 'package:winmeet_mobile/feature/auth/login/data/model/login_request_model.dart';

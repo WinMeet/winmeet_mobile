@@ -17,13 +17,13 @@ dependencies:
 
   # State management
   flutter_bloc: ^8.1.1
-  hydrated_bloc: ^9.0.0
 
   # Networking
   dio: ^5.0.3
   pretty_dio_logger: ^1.1.1
 
   # Caching
+  hydrated_bloc: ^9.0.0
   shared_preferences: ^2.1.0
 
   # Routing
@@ -34,8 +34,8 @@ dependencies:
   injectable: ^2.1.0
 
   # Data class generation
-  freezed_annotation: ^2.2.0
   json_annotation: ^4.8.0
+  freezed_annotation: ^2.2.0
 
   # Functional programming
   dartz: ^0.10.1

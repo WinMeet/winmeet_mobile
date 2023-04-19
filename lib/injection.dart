@@ -5,4 +5,4 @@ import 'package:winmeet_mobile/injection.config.dart';
 final getIt = GetIt.instance;
 
 @InjectableInit()
-void configureDependencies(String environment) => getIt.init(environment: environment);
+Future<void> configureDependencies(String environment) => getIt.init(environment: environment);

@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:winmeet_mobile/app/constants/endpoints.dart';
-import 'package:winmeet_mobile/core/network/network_client.dart';
+import 'package:winmeet_mobile/core/clients/network/network_client.dart';
 
 import 'package:winmeet_mobile/feature/create_meeting/data/model/create_meeting_request_model.dart';
 

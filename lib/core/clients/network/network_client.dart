@@ -3,14 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:winmeet_mobile/core/config/app_config.dart';
-
 import 'package:winmeet_mobile/injection.dart';
 
 @singleton
 class NetworkClient {
-  NetworkClient() {
-    _dio = Dio();
-
+  NetworkClient({required Dio dio}) : _dio = dio {
     _dio.options.baseUrl = getIt<AppConfig>().baseUrl;
     _dio.options.connectTimeout = const Duration(seconds: 10);
     _dio.options.sendTimeout = const Duration(seconds: 10);
@@ -26,7 +23,7 @@ class NetworkClient {
     }
   }
 
-  late final Dio _dio;
+  final Dio _dio;
   // Post:----------------------------------------------------------------------
   Future<Response<T>> get<T>(
     String path, {
