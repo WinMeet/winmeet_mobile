@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:winmeet_mobile/app/constants/cache_contants.dart';
-import 'package:winmeet_mobile/core/cache/cache_client.dart';
+import 'package:winmeet_mobile/core/clients/cache/cache_client.dart';
 
 part 'app_state.dart';
 part 'app_cubit.freezed.dart';

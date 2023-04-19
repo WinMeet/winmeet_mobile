@@ -5,15 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 @singleton
 class CacheClient {
-  CacheClient() {
-    _init();
-  }
+  CacheClient({required SharedPreferences cacheClient}) : _cacheClient = cacheClient;
 
-  late SharedPreferences _cacheClient;
-
-  Future<void> _init() async {
-    _cacheClient = await SharedPreferences.getInstance();
-  }
+  final SharedPreferences _cacheClient;
 
   String? getString(String key) {
     return _cacheClient.getString(key);

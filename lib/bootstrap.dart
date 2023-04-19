@@ -22,7 +22,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder, String environment) 
     [DeviceOrientation.portraitUp],
   );
 
-  configureDependencies(environment);
+  await configureDependencies(environment);
 
   runApp(await builder());
 }
