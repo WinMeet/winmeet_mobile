@@ -40,12 +40,12 @@ class _RegisterViewBody extends StatelessWidget {
           context.router.replace(const LoginRoute());
           SnackbarUtils.showSnackbar(
             context: context,
-            message: 'Account created',
+            message: 'Your account has been created!',
           );
         } else if (state.status.isSubmissionFailure) {
           SnackbarUtils.showSnackbar(
             context: context,
-            message: 'An error occured while creating user.',
+            message: 'Oops! Something went wrong with your registration.',
           );
         }
       },
@@ -61,7 +61,7 @@ class _RegisterViewBody extends StatelessWidget {
                   text: 'Register',
                 ),
                 const Text(
-                  'Enter your name, email and password to register',
+                  'Enter your information to register',
                 ),
                 BlocBuilder<RegisterCubit, RegisterState>(
                   builder: (context, state) {
