@@ -1,6 +1,8 @@
 import 'dart:developer';
+import 'package:dartz/dartz.dart';
 
 import 'package:injectable/injectable.dart';
+import 'package:winmeet_mobile/core/model/failure/failure_model.dart';
 import 'package:winmeet_mobile/feature/auth/register/data/api/register_api.dart';
 import 'package:winmeet_mobile/feature/auth/register/data/model/register_request_model.dart';
 
@@ -10,14 +12,16 @@ class RegisterRepository {
 
   final RegisterApi _registerApi;
 
-  Future<void> registerWithEmailAndPassword({
+  Future<Either<FailureModel, void>> registerWithEmailAndPassword({
     required RegisterRequestModel registerRequestModel,
   }) async {
     try {
-      await _registerApi.registerWithEmailAndPassword(registerRequestModel: registerRequestModel);
+      final result = await _registerApi.registerWithEmailAndPassword(registerRequestModel: registerRequestModel);
+
+      return right(result);
     } catch (e) {
       log(e.toString());
-      throw Exception(e);
+      return left(const FailureModel());
     }
   }
 }
