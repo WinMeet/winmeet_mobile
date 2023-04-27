@@ -87,22 +87,19 @@ class RegisterCubit extends Cubit<RegisterState> {
   Future<void> formSubmitted() async {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
-    try {
-      await _registerRepository.registerWithEmailAndPassword(
-        registerRequestModel: RegisterRequestModel(
-          name: state.name.value,
-          surname: state.surname.value,
-          email: state.email.value,
-          password: state.password.value,
-        ),
-      );
-      emit(
-        state.copyWith(
-          status: FormzStatus.submissionSuccess,
-        ),
-      );
-    } on Exception {
-      emit(state.copyWith(status: FormzStatus.submissionFailure));
-    }
+
+    final response = await _registerRepository.registerWithEmailAndPassword(
+      registerRequestModel: RegisterRequestModel(
+        name: state.name.value,
+        surname: state.surname.value,
+        email: state.email.value,
+        password: state.password.value,
+      ),
+    );
+
+    response.fold(
+      (failure) => emit(state.copyWith(status: FormzStatus.submissionFailure)),
+      (success) => emit(state.copyWith(status: FormzStatus.submissionSuccess)),
+    );
   }
 }
