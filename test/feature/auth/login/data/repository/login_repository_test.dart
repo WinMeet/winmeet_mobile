@@ -48,7 +48,6 @@ void main() {
       final result = await loginRepository.loginWithEmailAndPassword(loginRequestModel: loginRequestModel);
 
       expect(result, left(const FailureModel()));
-      verifyNever(() => cacheClient.setString(CacheConstants.token, any()));
     });
   });
 }

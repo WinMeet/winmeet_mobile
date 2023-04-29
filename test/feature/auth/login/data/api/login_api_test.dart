@@ -59,7 +59,7 @@ void main() {
             password: password,
           ).toJson(),
         ),
-      ).thenThrow(Exception('Failed to login'));
+      ).thenThrow(Exception());
 
       expect(
         () => loginApi.loginWithEmailAndPassword(
