@@ -5,11 +5,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:winmeet_mobile/app/constants/cache_contants.dart';
-import 'package:winmeet_mobile/app/data/model/token_model.dart';
+
 import 'package:winmeet_mobile/core/clients/cache/cache_client.dart';
 import 'package:winmeet_mobile/core/model/failure/failure_model.dart';
 import 'package:winmeet_mobile/feature/auth/login/data/api/login_api.dart';
 import 'package:winmeet_mobile/feature/auth/login/data/model/login_request_model.dart';
+import 'package:winmeet_mobile/feature/auth/login/data/model/token_model.dart';
 import 'package:winmeet_mobile/feature/auth/login/data/repository/login_repository.dart';
 
 class MockLoginApi extends Mock implements LoginApi {}
