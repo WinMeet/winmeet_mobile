@@ -49,88 +49,90 @@ class _RegisterViewBody extends StatelessWidget {
           );
         }
       },
-      child: Padding(
-        padding: context.paddingAllDefault,
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const WinMeetHeading(
-                  text: 'Register',
-                ),
-                const Text(
-                  'Enter your information to register',
-                ),
-                BlocBuilder<RegisterCubit, RegisterState>(
-                  builder: (context, state) {
-                    return TextInputField(
-                      labelText: 'Name',
-                      errorLabel: 'Name cannot be empty',
-                      prefixIcon: const Icon(Icons.person),
-                      textInputAction: TextInputAction.next,
-                      isValid: state.name.invalid,
-                      onChanged: (name) => context.read<RegisterCubit>().nameChanged(name: name),
-                    );
-                  },
-                ),
-                BlocBuilder<RegisterCubit, RegisterState>(
-                  builder: (context, state) {
-                    return TextInputField(
-                      labelText: 'Surname',
-                      errorLabel: 'Surname cannot be empty',
-                      prefixIcon: const Icon(Icons.person),
-                      textInputAction: TextInputAction.next,
-                      isValid: state.surname.invalid,
-                      onChanged: (surname) => context.read<RegisterCubit>().surnameChanged(surname: surname),
-                    );
-                  },
-                ),
-                BlocBuilder<RegisterCubit, RegisterState>(
-                  builder: (context, state) {
-                    return EmailInputField(
-                      textInputAction: TextInputAction.next,
-                      isValid: state.email.invalid,
-                      labelText: 'Email',
-                      onChanged: (email) => context.read<RegisterCubit>().emailChanged(email: email),
-                    );
-                  },
-                ),
-                BlocBuilder<RegisterCubit, RegisterState>(
-                  builder: (context, state) {
-                    return PasswordInputField(
-                      textInputAction: TextInputAction.next,
-                      obscureText: state.isPasswordObscured,
-                      isValid: state.password.invalid,
-                      labelText: 'Password',
-                      errorText: 'Weak Password',
-                      onChanged: (password) => context.read<RegisterCubit>().passwordChanged(password: password),
-                      onPressed: () => context.read<RegisterCubit>().passwordVisibilityChanged(),
-                    );
-                  },
-                ),
-                BlocBuilder<RegisterCubit, RegisterState>(
-                  builder: (context, state) {
-                    return CustomElevatedButton(
-                      buttonText: 'Register',
-                      isValid: state.status.isValidated,
-                      onPressed: () => context.read<RegisterCubit>().formSubmitted(),
-                      status: state.status,
-                    );
-                  },
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Already have an account?'),
-                    TextButton(
-                      onPressed: () => context.router.replace(const LoginRoute()),
-                      child: const Text('Login'),
-                    )
-                  ],
-                ),
-              ].withSpaceBetween(height: context.mediumValue),
+      child: SafeArea(
+        child: Padding(
+          padding: context.paddingAllDefault,
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const WinMeetHeading(
+                    text: 'Register',
+                  ),
+                  const Text(
+                    'Enter your information to register',
+                  ),
+                  BlocBuilder<RegisterCubit, RegisterState>(
+                    builder: (context, state) {
+                      return TextInputField(
+                        labelText: 'Name',
+                        errorLabel: 'Name cannot be empty',
+                        prefixIcon: const Icon(Icons.person),
+                        textInputAction: TextInputAction.next,
+                        isValid: state.name.invalid,
+                        onChanged: (name) => context.read<RegisterCubit>().nameChanged(name: name),
+                      );
+                    },
+                  ),
+                  BlocBuilder<RegisterCubit, RegisterState>(
+                    builder: (context, state) {
+                      return TextInputField(
+                        labelText: 'Surname',
+                        errorLabel: 'Surname cannot be empty',
+                        prefixIcon: const Icon(Icons.person),
+                        textInputAction: TextInputAction.next,
+                        isValid: state.surname.invalid,
+                        onChanged: (surname) => context.read<RegisterCubit>().surnameChanged(surname: surname),
+                      );
+                    },
+                  ),
+                  BlocBuilder<RegisterCubit, RegisterState>(
+                    builder: (context, state) {
+                      return EmailInputField(
+                        textInputAction: TextInputAction.next,
+                        isValid: state.email.invalid,
+                        labelText: 'Email',
+                        onChanged: (email) => context.read<RegisterCubit>().emailChanged(email: email),
+                      );
+                    },
+                  ),
+                  BlocBuilder<RegisterCubit, RegisterState>(
+                    builder: (context, state) {
+                      return PasswordInputField(
+                        textInputAction: TextInputAction.next,
+                        obscureText: state.isPasswordObscured,
+                        isValid: state.password.invalid,
+                        labelText: 'Password',
+                        errorText: 'Weak Password',
+                        onChanged: (password) => context.read<RegisterCubit>().passwordChanged(password: password),
+                        onPressed: () => context.read<RegisterCubit>().passwordVisibilityChanged(),
+                      );
+                    },
+                  ),
+                  BlocBuilder<RegisterCubit, RegisterState>(
+                    builder: (context, state) {
+                      return CustomElevatedButton(
+                        buttonText: 'Register',
+                        isValid: state.status.isValidated,
+                        onPressed: () => context.read<RegisterCubit>().formSubmitted(),
+                        status: state.status,
+                      );
+                    },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('Already have an account?'),
+                      TextButton(
+                        onPressed: () => context.router.replace(const LoginRoute()),
+                        child: const Text('Login'),
+                      )
+                    ],
+                  ),
+                ].withSpaceBetween(height: context.mediumValue),
+              ),
             ),
           ),
         ),

@@ -48,53 +48,55 @@ class _ForgotPasswordViewBody extends StatelessWidget {
           );
         }
       },
-      child: Padding(
-        padding: context.paddingAllDefault,
-        child: Container(
-          alignment: Alignment.center,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const WinMeetHeading(
-                  text: 'Forgot Password',
-                ),
-                const Text(
-                  'Please provide your email and we will send you a link to reset your password',
-                ),
-                BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
-                  builder: (context, state) {
-                    return EmailInputField(
-                      textInputAction: TextInputAction.next,
-                      isValid: state.email.invalid,
-                      labelText: 'Email',
-                      onChanged: (email) => context.read<ForgotPasswordCubit>().emailChanged(email: email),
-                    );
-                  },
-                ),
-                BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
-                  builder: (context, state) {
-                    return CustomElevatedButton(
-                      buttonText: 'Reset',
-                      isValid: state.status.isValidated,
-                      onPressed: () => context.read<ForgotPasswordCubit>().formSubmitted(),
-                      status: state.status,
-                    );
-                  },
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Already have an account?'),
-                    TextButton(
-                      child: const Text('Login'),
-                      onPressed: () => context.router.replace(
-                        const LoginRoute(),
+      child: SafeArea(
+        child: Padding(
+          padding: context.paddingAllDefault,
+          child: Container(
+            alignment: Alignment.center,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const WinMeetHeading(
+                    text: 'Forgot Password',
+                  ),
+                  const Text(
+                    'Please provide your email and we will send you a link to reset your password',
+                  ),
+                  BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
+                    builder: (context, state) {
+                      return EmailInputField(
+                        textInputAction: TextInputAction.next,
+                        isValid: state.email.invalid,
+                        labelText: 'Email',
+                        onChanged: (email) => context.read<ForgotPasswordCubit>().emailChanged(email: email),
+                      );
+                    },
+                  ),
+                  BlocBuilder<ForgotPasswordCubit, ForgotPasswordState>(
+                    builder: (context, state) {
+                      return CustomElevatedButton(
+                        buttonText: 'Reset',
+                        isValid: state.status.isValidated,
+                        onPressed: () => context.read<ForgotPasswordCubit>().formSubmitted(),
+                        status: state.status,
+                      );
+                    },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('Already have an account?'),
+                      TextButton(
+                        child: const Text('Login'),
+                        onPressed: () => context.router.replace(
+                          const LoginRoute(),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ].withSpaceBetween(height: context.mediumValue),
+                    ],
+                  ),
+                ].withSpaceBetween(height: context.mediumValue),
+              ),
             ),
           ),
         ),

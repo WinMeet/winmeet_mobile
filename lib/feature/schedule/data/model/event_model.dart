@@ -15,10 +15,10 @@ class EventModel with _$EventModel {
     required String location,
     required DateTime eventStartDate,
     required DateTime eventEndDate,
-    required DateTime eventStartDate2,
-    required DateTime eventEndDate2,
-    required DateTime eventStartDate3,
-    required DateTime eventEndDate3,
+    required DateTime? eventStartDate2,
+    required DateTime? eventEndDate2,
+    required DateTime? eventStartDate3,
+    required DateTime? eventEndDate3,
     required List<String> participants,
   }) = _EventModel;
 

@@ -38,15 +38,17 @@ class _AddParticipantsViewState extends State<AddParticipantsView> {
       ),
       body: BlocProvider.value(
         value: widget._cubit,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: context.paddingAllDefault,
-            child: Column(
-              children: [
-                _EmailInput(controller: _controller),
-                _SearchResult(controller: _controller),
-                const _ParticipantList(),
-              ].withSpaceBetween(height: context.mediumValue),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: context.paddingAllDefault,
+              child: Column(
+                children: [
+                  _EmailInput(controller: _controller),
+                  _SearchResult(controller: _controller),
+                  const _ParticipantList(),
+                ].withSpaceBetween(height: context.mediumValue),
+              ),
             ),
           ),
         ),

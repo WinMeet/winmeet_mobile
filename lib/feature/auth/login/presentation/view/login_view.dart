@@ -46,75 +46,77 @@ class _LoginViewBody extends StatelessWidget {
           );
         }
       },
-      child: Padding(
-        padding: context.paddingAllDefault,
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const WinMeetHeading(
-                  text: 'Login',
-                ),
-                const Text(
-                  'Enter your email and password to login',
-                ),
-                BlocBuilder<LoginCubit, LoginState>(
-                  builder: (context, state) {
-                    return EmailInputField(
-                      textInputAction: TextInputAction.next,
-                      isValid: state.email.invalid,
-                      labelText: 'Email',
-                      onChanged: (email) => context.read<LoginCubit>().emailChanged(email: email),
-                    );
-                  },
-                ),
-                Column(
-                  children: [
-                    BlocBuilder<LoginCubit, LoginState>(
-                      builder: (context, state) {
-                        return PasswordInputField(
-                          textInputAction: TextInputAction.done,
-                          obscureText: state.isPasswordObscured,
-                          isValid: state.password.invalid,
-                          labelText: 'Password',
-                          errorText: 'Weak Password',
-                          onChanged: (password) => context.read<LoginCubit>().passwordChanged(password: password),
-                          onPressed: () => context.read<LoginCubit>().passwordVisibilityChanged(),
-                        );
-                      },
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () => context.router.replace(const ForgotPasswordRoute()),
-                        child: const Text('Forgot Password?'),
+      child: SafeArea(
+        child: Padding(
+          padding: context.paddingAllDefault,
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const WinMeetHeading(
+                    text: 'Login',
+                  ),
+                  const Text(
+                    'Enter your email and password to login',
+                  ),
+                  BlocBuilder<LoginCubit, LoginState>(
+                    builder: (context, state) {
+                      return EmailInputField(
+                        textInputAction: TextInputAction.next,
+                        isValid: state.email.invalid,
+                        labelText: 'Email',
+                        onChanged: (email) => context.read<LoginCubit>().emailChanged(email: email),
+                      );
+                    },
+                  ),
+                  Column(
+                    children: [
+                      BlocBuilder<LoginCubit, LoginState>(
+                        builder: (context, state) {
+                          return PasswordInputField(
+                            textInputAction: TextInputAction.done,
+                            obscureText: state.isPasswordObscured,
+                            isValid: state.password.invalid,
+                            labelText: 'Password',
+                            errorText: 'Weak Password',
+                            onChanged: (password) => context.read<LoginCubit>().passwordChanged(password: password),
+                            onPressed: () => context.read<LoginCubit>().passwordVisibilityChanged(),
+                          );
+                        },
                       ),
-                    ),
-                    BlocBuilder<LoginCubit, LoginState>(
-                      builder: (context, state) {
-                        return CustomElevatedButton(
-                          buttonText: 'Login',
-                          isValid: state.status.isValidated,
-                          onPressed: () => context.read<LoginCubit>().formSubmitted(),
-                          status: state.status,
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Don't have an account?"),
-                    TextButton(
-                      onPressed: () => context.router.replace(const RegisterRoute()),
-                      child: const Text('Register'),
-                    )
-                  ],
-                ),
-              ].withSpaceBetween(height: context.mediumValue),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () => context.router.replace(const ForgotPasswordRoute()),
+                          child: const Text('Forgot Password?'),
+                        ),
+                      ),
+                      BlocBuilder<LoginCubit, LoginState>(
+                        builder: (context, state) {
+                          return CustomElevatedButton(
+                            buttonText: 'Login',
+                            isValid: state.status.isValidated,
+                            onPressed: () => context.read<LoginCubit>().formSubmitted(),
+                            status: state.status,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Don't have an account?"),
+                      TextButton(
+                        onPressed: () => context.router.replace(const RegisterRoute()),
+                        child: const Text('Register'),
+                      )
+                    ],
+                  ),
+                ].withSpaceBetween(height: context.mediumValue),
+              ),
             ),
           ),
         ),
