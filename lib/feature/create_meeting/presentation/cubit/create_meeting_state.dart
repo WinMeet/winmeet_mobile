@@ -11,6 +11,10 @@ class CreateMeetingState with _$CreateMeetingState {
     required DateTime endDateTime,
     required ListFormInput<String> participants,
     required EmailFormInput email,
+    DateTime? startDateTime2,
+    DateTime? endDateTime2,
+    DateTime? startDateTime3,
+    DateTime? endDateTime3,
   }) = _CreateMeetingState;
 
   factory CreateMeetingState.initial() => CreateMeetingState(
