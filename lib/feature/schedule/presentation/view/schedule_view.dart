@@ -39,7 +39,7 @@ class _ScheduleViewScaffold extends StatelessWidget {
             return _buildLoadingState();
 
           case PageStatus.failure:
-            return _buildFailureState();
+            return _buildFailureState(context);
 
           case PageStatus.success:
             return _buildSuccessState(context, state);
@@ -56,10 +56,33 @@ class _ScheduleViewScaffold extends StatelessWidget {
     );
   }
 
-  Widget _buildFailureState() {
-    return const Scaffold(
-      body: Center(
-        child: Text('Failed'),
+  Widget _buildFailureState(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Schedule'),
+      ),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const WinMeetBodyLarge(
+              text: 'Something Went Wrong',
+            ),
+            Row(
+              children: [
+                const Spacer(),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    label: const Text('Retry'),
+                    icon: const Icon(Icons.refresh),
+                    onPressed: () => context.read<ScheduleCubit>().getAllMeetings(),
+                  ),
+                ),
+                const Spacer()
+              ],
+            ),
+          ].withSpaceBetween(height: context.highValue),
+        ),
       ),
     );
   }
