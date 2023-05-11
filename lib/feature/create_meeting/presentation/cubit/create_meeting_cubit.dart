@@ -36,6 +36,7 @@ class CreateMeetingCubit extends Cubit<CreateMeetingState> {
         location: state.location.value,
         eventStartDate: state.startDateTime.toIso8601String(),
         eventEndDate: state.endDateTime.toIso8601String(),
+        eventVoteDuration: state.eventVoteDuration.toIso8601String(),
         eventStartDate2: state.startDateTime2 != null ? state.startDateTime2!.toIso8601String() : null,
         eventEndDate2: state.endDateTime2 != null ? state.endDateTime2!.toIso8601String() : null,
         eventStartDate3: state.startDateTime3 != null ? state.startDateTime3!.toIso8601String() : null,
@@ -99,6 +100,10 @@ class CreateMeetingCubit extends Cubit<CreateMeetingState> {
         ]),
       ),
     );
+  }
+
+  void setVoteDueDateTime({required DateTime voteDueDateTime}) {
+    emit(state.copyWith(eventVoteDuration: voteDueDateTime));
   }
 
   void setStartDateTime({required DateTime startDateTime, required int index}) {

@@ -12,6 +12,7 @@ class CreateMeetingRequestModel with _$CreateMeetingRequestModel {
     required String location,
     required String eventStartDate,
     required String eventEndDate,
+    required String eventVoteDuration,
     required List<String> participants,
     String? eventStartDate2,
     String? eventEndDate2,

@@ -9,6 +9,7 @@ class CreateMeetingState with _$CreateMeetingState {
     required InputFormField location,
     required DateTime startDateTime,
     required DateTime endDateTime,
+    required DateTime eventVoteDuration,
     required ListFormInput<String> participants,
     required EmailFormInput email,
     DateTime? startDateTime2,
@@ -24,6 +25,7 @@ class CreateMeetingState with _$CreateMeetingState {
         location: const InputFormField.pure(isRequired: false),
         startDateTime: CalendarUtils.initialStartDate,
         endDateTime: CalendarUtils.initialEndDate,
+        eventVoteDuration: CalendarUtils.initialStartDate,
         participants: ListFormInput.pure(),
         email: const EmailFormInput.pure(),
       );

@@ -1,7 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, unused_element
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
+
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/utils/calendar/calendar_utils.dart';
 import 'package:winmeet_mobile/app/widgets/input/text_input_field.dart';
@@ -118,7 +120,22 @@ class _CreateMeetingScaffold extends StatelessWidget {
                         return _DateTimePicker(
                           startDateTime: state.startDateTime,
                           endDateTime: state.endDateTime,
+                          dueDate: state.eventVoteDuration,
                           index: 0,
+                        );
+                      },
+                    )
+                  ],
+                ),
+                ExpansionTile(
+                  title: const WinMeetBodyLarge(text: 'Vote Due Date *'),
+                  children: [
+                    BlocBuilder<CreateMeetingCubit, CreateMeetingState>(
+                      builder: (context, state) {
+                        return _DateTimeTile(
+                          label: 'Voting Ends At',
+                          dateTime: state.eventVoteDuration,
+                          onTap: () => _onDueDateSelected(context, state.startDateTime, state.eventVoteDuration),
                         );
                       },
                     )
@@ -163,10 +180,16 @@ class _CreateMeetingScaffold extends StatelessWidget {
 }
 
 class _DateTimePicker extends StatelessWidget {
-  const _DateTimePicker({required this.startDateTime, required this.endDateTime, required this.index});
+  const _DateTimePicker({
+    required this.index,
+    this.startDateTime,
+    this.endDateTime,
+    this.dueDate,
+  });
 
   final DateTime? startDateTime;
   final DateTime? endDateTime;
+  final DateTime? dueDate;
   final int index;
 
   @override
@@ -177,9 +200,10 @@ class _DateTimePicker extends StatelessWidget {
           label: 'Starts',
           dateTime: startDateTime,
           onTap: () => _onStartTimeSelected(
-            context,
-            startDateTime ?? CalendarUtils.initialStartDate,
-            endDateTime ?? CalendarUtils.initialEndDate,
+            context: context,
+            startDateTime: startDateTime ?? CalendarUtils.initialStartDate,
+            endDateTime: endDateTime ?? CalendarUtils.initialEndDate,
+            dueDate: dueDate,
           ),
         ),
         _DateTimeTile(
@@ -195,7 +219,12 @@ class _DateTimePicker extends StatelessWidget {
     );
   }
 
-  Future<void> _onStartTimeSelected(BuildContext context, DateTime startDateTime, DateTime endDateTime) async {
+  Future<void> _onStartTimeSelected({
+    required BuildContext context,
+    required DateTime startDateTime,
+    required DateTime endDateTime,
+    DateTime? dueDate,
+  }) async {
     final selectedStartTime = await DateTimePickerUtils.pickDateTime(
       context: context,
       initialTime: startDateTime,
@@ -222,6 +251,9 @@ class _DateTimePicker extends StatelessWidget {
         );
       } else {
         context.read<CreateMeetingCubit>().setStartDateTime(startDateTime: selectedStartTime, index: index);
+      }
+      if (dueDate != null && selectedStartTime.isBefore(dueDate)) {
+        context.read<CreateMeetingCubit>().setVoteDueDateTime(voteDueDateTime: selectedStartTime);
       }
     }
   }
@@ -318,5 +350,34 @@ class _Participants extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+Future<void> _onDueDateSelected(BuildContext context, DateTime startDateTime, DateTime dueDate) async {
+  final selectedDueDateTime = await DateTimePickerUtils.pickDateTime(
+    context: context,
+    initialTime: startDateTime,
+    firstDate: CalendarUtils.today,
+    lastDate: CalendarUtils.lastDay,
+    datePickerHelpText: 'Select Due Date For Voting',
+    timePickerHelpText: 'Select Due Time For Voting',
+    cancelText: 'Cancel',
+    confirmText: 'Confirm',
+  );
+
+  if (context.mounted && selectedDueDateTime != null) {
+    if (selectedDueDateTime.isAfter(startDateTime)) {
+      SnackbarUtils.showSnackbar(
+        context: context,
+        message: 'Voting cannot end before event start time',
+      );
+    } else if (selectedDueDateTime.isBefore(CalendarUtils.today)) {
+      SnackbarUtils.showSnackbar(
+        context: context,
+        message: 'Voting cannot end earlier than now',
+      );
+    } else {
+      context.read<CreateMeetingCubit>().setVoteDueDateTime(voteDueDateTime: selectedDueDateTime);
+    }
   }
 }
