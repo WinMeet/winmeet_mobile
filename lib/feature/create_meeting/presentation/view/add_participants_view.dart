@@ -163,7 +163,7 @@ class _AddParticipantListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: context.paddingAllLow,
-      title: Text(title),
+      title: WinMeetBodyLarge(text: title),
       trailing: trailing,
       onTap: onTap,
     );

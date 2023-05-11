@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:winmeet_mobile/app/cubit/app_cubit.dart';
 import 'package:winmeet_mobile/app/theme/cubit/theme_cubit.dart';
+import 'package:winmeet_mobile/app/widgets/text/winmeet_body_large.dart';
 import 'package:winmeet_mobile/app/widgets/text/winmeet_title_large.dart';
 import 'package:winmeet_mobile/app/widgets/text/winmeet_title_medium.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/core/extensions/widget_extesions.dart';
+import 'package:winmeet_mobile/feature/settings/data/repository/settings_repository.dart';
+import 'package:winmeet_mobile/injection.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -19,21 +22,53 @@ class SettingsView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Settings'),
       ),
-      body: Padding(
+      body: RepositoryProvider(
+        create: (context) => getIt<SettingsRepository>(),
+        child: const _SettingsViewBody(),
+      ),
+    );
+  }
+}
+
+class _SettingsViewBody extends StatelessWidget {
+  const _SettingsViewBody();
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Padding(
         padding: context.paddingAllDefault,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Center(
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    radius: context.highValue,
+                    child: WinMeetTitleLarge(
+                      text: context.read<SettingsRepository>().getInitialsFromUserToken(),
+                    ),
+                  ),
+                  WinMeetBodyLarge(
+                    text: context.read<SettingsRepository>().getNameSurnameFromUserToken(),
+                  ),
+                  Text(
+                    context.read<SettingsRepository>().getEmailFromUserToken(),
+                  )
+                ].withSpaceBetween(height: context.lowValue),
+              ),
+            ),
             const WinMeetTitleLarge(text: 'Display'),
             ListTile(
               leading: const Icon(Icons.brightness_medium),
-              title: const Text('Theme'),
+              title: const WinMeetBodyLarge(text: 'Theme'),
               onTap: () => showDialog(context: context, builder: (context) => const _ThemeDialog()),
             ),
             const WinMeetTitleLarge(text: 'Account'),
             ListTile(
               leading: const Icon(Icons.logout),
-              title: const Text('Logout'),
+              title: const WinMeetBodyLarge(text: 'Logout'),
               onTap: () => showDialog(context: context, builder: (context) => const _LogoutDialog()),
             )
           ].withSpaceBetween(height: context.lowValue),
@@ -62,21 +97,21 @@ class _ThemeDialog extends StatelessWidget {
                 ),
                 RadioListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('System Default'),
+                  title: const WinMeetBodyLarge(text: 'System Default'),
                   value: ThemeMode.system,
                   groupValue: state.settingsValue ?? state.theme,
                   onChanged: (ThemeMode? theme) => context.read<ThemeCubit>().modifyTheme(theme!),
                 ),
                 RadioListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Light'),
+                  title: const WinMeetBodyLarge(text: 'Light'),
                   value: ThemeMode.light,
                   groupValue: state.settingsValue ?? state.theme,
                   onChanged: (ThemeMode? theme) => context.read<ThemeCubit>().modifyTheme(theme!),
                 ),
                 RadioListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: const Text('Dark'),
+                  title: const WinMeetBodyLarge(text: 'Dark'),
                   value: ThemeMode.dark,
                   groupValue: state.settingsValue ?? state.theme,
                   onChanged: (ThemeMode? theme) => context.read<ThemeCubit>().modifyTheme(theme!),

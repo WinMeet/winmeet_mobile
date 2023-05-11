@@ -204,7 +204,7 @@ class _EventCard extends StatelessWidget {
             ),
           );
         },
-        title: Text(event.eventName),
+        title: WinMeetBodyLarge(text: event.eventName),
         subtitle: Text(event.eventDescription, maxLines: 1),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -251,7 +251,7 @@ class _MeetingDetails extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const WinMeetBodyLarge(text: 'When'),
+              const WinMeetTitleMedium(text: 'When'),
               Text(
                 '${DateFormatUtils.getMonthDayYearHour(event.eventStartDate)} - ${DateFormatUtils.getMonthDayYearHour(event.eventEndDate)}',
               ),
