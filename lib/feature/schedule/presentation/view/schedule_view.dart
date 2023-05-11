@@ -39,7 +39,7 @@ class _ScheduleViewScaffold extends StatelessWidget {
             return _buildLoadingState();
 
           case PageStatus.failure:
-            return _buildFailureState();
+            return _buildFailureState(context);
 
           case PageStatus.success:
             return _buildSuccessState(context, state);
@@ -56,10 +56,33 @@ class _ScheduleViewScaffold extends StatelessWidget {
     );
   }
 
-  Widget _buildFailureState() {
-    return const Scaffold(
-      body: Center(
-        child: Text('Failed'),
+  Widget _buildFailureState(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Schedule'),
+      ),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const WinMeetBodyLarge(
+              text: 'Something Went Wrong',
+            ),
+            Row(
+              children: [
+                const Spacer(),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    label: const Text('Retry'),
+                    icon: const Icon(Icons.refresh),
+                    onPressed: () => context.read<ScheduleCubit>().getAllMeetings(),
+                  ),
+                ),
+                const Spacer()
+              ],
+            ),
+          ].withSpaceBetween(height: context.highValue),
+        ),
       ),
     );
   }
@@ -181,7 +204,7 @@ class _EventCard extends StatelessWidget {
             ),
           );
         },
-        title: Text(event.eventName),
+        title: WinMeetBodyLarge(text: event.eventName),
         subtitle: Text(event.eventDescription, maxLines: 1),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -228,7 +251,7 @@ class _MeetingDetails extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const WinMeetBodyLarge(text: 'When'),
+              const WinMeetTitleMedium(text: 'When'),
               Text(
                 '${DateFormatUtils.getMonthDayYearHour(event.eventStartDate)} - ${DateFormatUtils.getMonthDayYearHour(event.eventEndDate)}',
               ),

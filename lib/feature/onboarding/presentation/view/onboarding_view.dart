@@ -25,7 +25,7 @@ class _OnboardingViewState extends State<OnboardingView> {
       imagePath: AssestsConstants.onboarding1,
       title: 'Easy Scheduling Ahead',
       description:
-          'WinMeet is your scheduling automation platform for eliminating the back-and-forth emails for finding the perfect tim',
+          'WinMeet is your scheduling automation platform for eliminating the back-and-forth emails for finding the perfect time',
     ),
     const OnboardingModel(
       imagePath: AssestsConstants.onboarding2,

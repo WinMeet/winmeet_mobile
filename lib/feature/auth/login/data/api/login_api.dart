@@ -1,8 +1,10 @@
 import 'package:injectable/injectable.dart';
 import 'package:winmeet_mobile/app/constants/endpoints.dart';
-import 'package:winmeet_mobile/app/data/model/token_model.dart';
+
 import 'package:winmeet_mobile/core/clients/network/network_client.dart';
 import 'package:winmeet_mobile/feature/auth/login/data/model/login_request_model.dart';
+
+import 'package:winmeet_mobile/feature/auth/login/data/model/token_model.dart';
 
 @injectable
 class LoginApi {

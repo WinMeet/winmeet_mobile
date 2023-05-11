@@ -6,6 +6,7 @@ import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/theme/cubit/theme_cubit.dart';
 import 'package:winmeet_mobile/app/theme/dark/dark_theme.dart';
 import 'package:winmeet_mobile/app/theme/light/light_theme.dart';
+import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 import 'package:winmeet_mobile/injection.dart';
 
 class App extends StatelessWidget {
@@ -38,6 +39,7 @@ class App extends StatelessWidget {
             builder: (context, themeState) {
               return MaterialApp.router(
                 debugShowCheckedModeBanner: false,
+                //
 
                 // Theme
                 themeMode: themeState.theme,
@@ -48,17 +50,15 @@ class App extends StatelessWidget {
                 routerDelegate: AutoRouterDelegate.declarative(_appRouter, routes: (_) => routes),
                 routeInformationParser: _appRouter.defaultRouteParser(),
 
-                builder: (context, child) {
-                  return GestureDetector(
-                    onTap: () {
-                      final currentFocus = FocusScope.of(context);
-                      if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-                        FocusManager.instance.primaryFocus!.unfocus();
-                      }
-                    },
+                builder: (context, child) => MediaQuery(
+                  // Disables font scaling and bold text
+                  data: context.mediaQuery.copyWith(textScaleFactor: 1, boldText: false),
+                  // Dismisses the keyboard globally
+                  child: GestureDetector(
+                    onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
                     child: child,
-                  );
-                },
+                  ),
+                ),
               );
             },
           );

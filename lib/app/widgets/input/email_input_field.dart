@@ -29,6 +29,7 @@ class EmailInputField extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.email),
         labelText: labelText,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
         errorText: (isValid ?? false) ? 'Invalid email' : null,
       ),
       onChanged: onChanged,

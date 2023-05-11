@@ -14,6 +14,7 @@ abstract class BaseTheme {
       dialogTheme: _dialogTheme,
       dividerTheme: _dividerTheme,
       elevatedButtonTheme: _elevatedButtonTheme,
+      expansionTileTheme: _expansionTileThemeData,
       floatingActionButtonTheme: _floatingActionTheme,
       listTileTheme: _listTileTheme,
       inputDecorationTheme: _inputDecorationTheme,
@@ -59,6 +60,11 @@ abstract class BaseTheme {
             borderRadius: ThemeConstants.borderRadiusCircular,
           ),
         ),
+      );
+
+  ExpansionTileThemeData get _expansionTileThemeData => const ExpansionTileThemeData(
+        childrenPadding: EdgeInsets.zero,
+        tilePadding: EdgeInsets.zero,
       );
 
   FloatingActionButtonThemeData get _floatingActionTheme => FloatingActionButtonThemeData(
