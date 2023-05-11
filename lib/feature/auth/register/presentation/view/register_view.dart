@@ -105,7 +105,7 @@ class _RegisterViewBody extends StatelessWidget {
                         obscureText: state.isPasswordObscured,
                         isValid: state.password.invalid,
                         labelText: 'Password',
-                        errorText: 'Weak Password',
+                        errorText: 'Must be 8+ chars, Uppercase, Number',
                         onChanged: (password) => context.read<RegisterCubit>().passwordChanged(password: password),
                         onPressed: () => context.read<RegisterCubit>().passwordVisibilityChanged(),
                       );

@@ -80,7 +80,7 @@ class _LoginViewBody extends StatelessWidget {
                             obscureText: state.isPasswordObscured,
                             isValid: state.password.invalid,
                             labelText: 'Password',
-                            errorText: 'Weak Password',
+                            errorText: 'Invalid Password',
                             onChanged: (password) => context.read<LoginCubit>().passwordChanged(password: password),
                             onPressed: () => context.read<LoginCubit>().passwordVisibilityChanged(),
                           );
