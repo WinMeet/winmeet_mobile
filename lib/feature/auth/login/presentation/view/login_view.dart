@@ -66,7 +66,7 @@ class _LoginViewBody extends StatelessWidget {
                       return EmailInputField(
                         textInputAction: TextInputAction.next,
                         isValid: state.email.invalid,
-                        labelText: 'Email',
+                        labelText: 'Email *',
                         onChanged: (email) => context.read<LoginCubit>().emailChanged(email: email),
                       );
                     },
@@ -79,7 +79,7 @@ class _LoginViewBody extends StatelessWidget {
                             textInputAction: TextInputAction.done,
                             obscureText: state.isPasswordObscured,
                             isValid: state.password.invalid,
-                            labelText: 'Password',
+                            labelText: 'Password *',
                             errorText: 'Invalid Password',
                             onChanged: (password) => context.read<LoginCubit>().passwordChanged(password: password),
                             onPressed: () => context.read<LoginCubit>().passwordVisibilityChanged(),

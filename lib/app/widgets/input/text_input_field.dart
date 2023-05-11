@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class TextInputField extends StatelessWidget {
@@ -26,6 +25,7 @@ class TextInputField extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         labelText: labelText,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
         errorText: (isValid ?? true) ? errorLabel : null,
       ),
       onChanged: onChanged,

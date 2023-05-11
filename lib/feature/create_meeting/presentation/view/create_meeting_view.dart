@@ -83,7 +83,7 @@ class _CreateMeetingScaffold extends StatelessWidget {
                 BlocBuilder<CreateMeetingCubit, CreateMeetingState>(
                   builder: (context, state) {
                     return TextInputField(
-                      labelText: 'Meeting Title',
+                      labelText: 'Meeting Title *',
                       errorLabel: 'Title cannot be empty',
                       textInputAction: TextInputAction.next,
                       isValid: state.title.invalid,
@@ -111,7 +111,7 @@ class _CreateMeetingScaffold extends StatelessWidget {
                   },
                 ),
                 ExpansionTile(
-                  title: const WinMeetBodyLarge(text: 'Date & Time'),
+                  title: const WinMeetBodyLarge(text: 'Date & Time *'),
                   children: [
                     BlocBuilder<CreateMeetingCubit, CreateMeetingState>(
                       builder: (context, state) {
@@ -290,7 +290,7 @@ class _Participants extends StatelessWidget {
       children: [
         ListTile(
           leading: const WinMeetBodyLarge(
-            text: 'Participants',
+            text: 'Participants *',
           ),
           trailing: const Icon(Icons.add),
           onTap: () async {

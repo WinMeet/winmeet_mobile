@@ -27,6 +27,7 @@ class PasswordInputField extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: const Icon(Icons.password),
         labelText: labelText,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
         errorText: isValid ? errorText : null,
         errorMaxLines: 2,
         suffixIcon: IconButton(

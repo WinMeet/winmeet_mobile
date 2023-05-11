@@ -67,7 +67,7 @@ class _RegisterViewBody extends StatelessWidget {
                   BlocBuilder<RegisterCubit, RegisterState>(
                     builder: (context, state) {
                       return TextInputField(
-                        labelText: 'Name',
+                        labelText: 'Name *',
                         errorLabel: 'Name cannot be empty',
                         prefixIcon: const Icon(Icons.person),
                         textInputAction: TextInputAction.next,
@@ -79,7 +79,7 @@ class _RegisterViewBody extends StatelessWidget {
                   BlocBuilder<RegisterCubit, RegisterState>(
                     builder: (context, state) {
                       return TextInputField(
-                        labelText: 'Surname',
+                        labelText: 'Surname *',
                         errorLabel: 'Surname cannot be empty',
                         prefixIcon: const Icon(Icons.person),
                         textInputAction: TextInputAction.next,
@@ -93,7 +93,7 @@ class _RegisterViewBody extends StatelessWidget {
                       return EmailInputField(
                         textInputAction: TextInputAction.next,
                         isValid: state.email.invalid,
-                        labelText: 'Email',
+                        labelText: 'Email *',
                         onChanged: (email) => context.read<RegisterCubit>().emailChanged(email: email),
                       );
                     },
@@ -104,7 +104,7 @@ class _RegisterViewBody extends StatelessWidget {
                         textInputAction: TextInputAction.next,
                         obscureText: state.isPasswordObscured,
                         isValid: state.password.invalid,
-                        labelText: 'Password',
+                        labelText: 'Password *',
                         errorText: 'At least 8 chars and contain Uppercase Lowercase & Number',
                         onChanged: (password) => context.read<RegisterCubit>().passwordChanged(password: password),
                         onPressed: () => context.read<RegisterCubit>().passwordVisibilityChanged(),
