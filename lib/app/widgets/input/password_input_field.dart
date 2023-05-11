@@ -28,6 +28,7 @@ class PasswordInputField extends StatelessWidget {
         prefixIcon: const Icon(Icons.password),
         labelText: labelText,
         errorText: isValid ? errorText : null,
+        errorMaxLines: 2,
         suffixIcon: IconButton(
           icon: obscureText ? const Icon(Icons.visibility_off) : const Icon(Icons.visibility),
           onPressed: onPressed,
