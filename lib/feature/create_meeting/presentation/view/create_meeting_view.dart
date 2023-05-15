@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, unused_element
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -250,7 +251,9 @@ class _DateTimePicker extends StatelessWidget {
           message: 'Meeting cannot start earlier than now',
         );
       } else {
-        context.read<CreateMeetingCubit>().setStartDateTime(startDateTime: selectedStartTime, index: index);
+        context
+            .read<CreateMeetingCubit>()
+            .setStartAndEndDateTime(startDateTime: selectedStartTime, endDateTime: endDateTime, index: index);
       }
       if (dueDate != null && selectedStartTime.isBefore(dueDate)) {
         context.read<CreateMeetingCubit>().setVoteDueDateTime(voteDueDateTime: selectedStartTime);
@@ -262,7 +265,7 @@ class _DateTimePicker extends StatelessWidget {
     if (startDateTime == null) {
       SnackbarUtils.showSnackbar(
         context: context,
-        message: 'Please select start date time first',
+        message: 'Select start date & time first',
       );
       return;
     }

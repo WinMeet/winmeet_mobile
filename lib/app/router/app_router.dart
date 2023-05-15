@@ -53,6 +53,7 @@ const authenticated = AutoRoute(
           page: EmptyRouterPage,
           name: 'ScheduleRouter',
           initial: true,
+          maintainState: false,
           children: [
             AutoRoute(page: ScheduleView, initial: true),
             RedirectRoute(path: '*', redirectTo: ''),
@@ -60,6 +61,7 @@ const authenticated = AutoRoute(
         ),
         AutoRoute(
           page: EmptyRouterPage,
+          maintainState: false,
           name: 'PendingRouter',
           children: [
             AutoRoute(page: PendingView, initial: true),
