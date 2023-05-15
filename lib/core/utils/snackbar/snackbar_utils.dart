@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
 
 abstract class SnackbarUtils {
   static void showSnackbar({
@@ -7,6 +8,11 @@ abstract class SnackbarUtils {
   }) {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(message)));
+      ..showSnackBar(
+        SnackBar(
+          duration: context.durationVeryHigh,
+          content: Text(message),
+        ),
+      );
   }
 }

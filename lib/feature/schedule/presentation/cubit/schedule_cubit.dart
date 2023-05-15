@@ -47,4 +47,8 @@ class ScheduleCubit extends Cubit<ScheduleState> {
   void updateFocusedDay(DateTime focusedDay) {
     emit(state.copyWith(focusedDay: focusedDay));
   }
+
+  bool isOwner({required String email}) {
+    return _scheduleRepository.isOwner(email: email);
+  }
 }

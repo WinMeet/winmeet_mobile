@@ -29,14 +29,14 @@ class _OnboardingViewState extends State<OnboardingView> {
     ),
     const OnboardingModel(
       imagePath: AssestsConstants.onboarding2,
-      title: 'Create Events Quickly',
+      title: 'Create Meetings Quickly',
       description:
-          'Creating events can be a time-consuming and complex task, but with WinMeet, you can create events quickly and easily',
+          'Creating meetings can be a time-consuming and complex task, but with WinMeet, you can create meetings quickly and easily',
     ),
     const OnboardingModel(
       imagePath: AssestsConstants.onboarding3,
       title: 'Schedule as a Group',
-      description: "With WinMeet's collaborative scheduling tools, planning group events has never been easier",
+      description: "With WinMeet's collaborative scheduling tools, planning group meetings has never been easier",
     )
   ];
 

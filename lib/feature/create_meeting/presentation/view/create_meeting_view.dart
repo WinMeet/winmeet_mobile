@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, unused_element
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -211,7 +212,7 @@ class _DateTimePicker extends StatelessWidget {
           dateTime: endDateTime,
           onTap: () => _onEndTimeSelected(
             context,
-            startDateTime ?? CalendarUtils.initialStartDate,
+            startDateTime,
             endDateTime ?? CalendarUtils.initialEndDate,
           ),
         ),
@@ -247,10 +248,12 @@ class _DateTimePicker extends StatelessWidget {
       } else if (selectedStartTime.isBefore(CalendarUtils.today)) {
         SnackbarUtils.showSnackbar(
           context: context,
-          message: 'Event cannot start earlier than now',
+          message: 'Meeting cannot start earlier than now',
         );
       } else {
-        context.read<CreateMeetingCubit>().setStartDateTime(startDateTime: selectedStartTime, index: index);
+        context
+            .read<CreateMeetingCubit>()
+            .setStartAndEndDateTime(startDateTime: selectedStartTime, endDateTime: endDateTime, index: index);
       }
       if (dueDate != null && selectedStartTime.isBefore(dueDate)) {
         context.read<CreateMeetingCubit>().setVoteDueDateTime(voteDueDateTime: selectedStartTime);
@@ -258,7 +261,14 @@ class _DateTimePicker extends StatelessWidget {
     }
   }
 
-  Future<void> _onEndTimeSelected(BuildContext context, DateTime startDateTime, DateTime endDateTime) async {
+  Future<void> _onEndTimeSelected(BuildContext context, DateTime? startDateTime, DateTime endDateTime) async {
+    if (startDateTime == null) {
+      SnackbarUtils.showSnackbar(
+        context: context,
+        message: 'Select start date & time first',
+      );
+      return;
+    }
     final selectedEndTime = await DateTimePickerUtils.pickDateTime(
       context: context,
       initialTime: endDateTime,
@@ -271,15 +281,15 @@ class _DateTimePicker extends StatelessWidget {
     );
 
     if (context.mounted && selectedEndTime != null) {
-      if (selectedEndTime.isBefore(startDateTime)) {
+      if (selectedEndTime.isBefore(CalendarUtils.today)) {
         SnackbarUtils.showSnackbar(
           context: context,
-          message: 'Event cannot end earlier start date',
+          message: 'Meeting cannot start earlier than now',
         );
-      } else if (selectedEndTime.isBefore(CalendarUtils.today)) {
+      } else if (selectedEndTime.isBefore(startDateTime)) {
         SnackbarUtils.showSnackbar(
           context: context,
-          message: 'Event cannot start earlier than now',
+          message: 'Meeting cannot end earlier than start date',
         );
       } else {
         context.read<CreateMeetingCubit>().setEndDateTime(endDateTime: selectedEndTime, index: index);
@@ -369,7 +379,7 @@ Future<void> _onDueDateSelected(BuildContext context, DateTime startDateTime, Da
     if (selectedDueDateTime.isAfter(startDateTime)) {
       SnackbarUtils.showSnackbar(
         context: context,
-        message: 'Voting cannot end before event start time',
+        message: 'Voting cannot end before meeting start time',
       );
     } else if (selectedDueDateTime.isBefore(CalendarUtils.today)) {
       SnackbarUtils.showSnackbar(

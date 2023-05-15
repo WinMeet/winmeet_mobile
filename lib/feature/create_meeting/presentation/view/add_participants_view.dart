@@ -120,6 +120,7 @@ class _ParticipantList extends StatelessWidget {
                 text: 'Participants',
               ),
               ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 separatorBuilder: (context, index) => SizedBox(
                   height: context.mediumValue,

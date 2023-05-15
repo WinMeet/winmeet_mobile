@@ -35,6 +35,7 @@ class _ScheduleViewScaffold extends StatelessWidget {
     return BlocBuilder<ScheduleCubit, ScheduleState>(
       builder: (context, state) {
         switch (state.status) {
+          case PageStatus.initial:
           case PageStatus.loading:
             return _buildLoadingState();
 
@@ -191,11 +192,11 @@ class _EventCard extends StatelessWidget {
               child: BlocListener<ScheduleCubit, ScheduleState>(
                 listener: (context, state) {
                   if (state.status == PageStatus.success) {
-                    SnackbarUtils.showSnackbar(context: context, message: 'Event deleted successfully');
+                    SnackbarUtils.showSnackbar(context: context, message: 'Meeting deleted successfully');
                     Navigator.of(context).pop(); // Closes the bottom sheet
                   }
                   if (state.status == PageStatus.failure) {
-                    SnackbarUtils.showSnackbar(context: context, message: 'An error occurred while deleting event');
+                    SnackbarUtils.showSnackbar(context: context, message: 'An error occurred while deleting meeting');
                     Navigator.of(context).pop(); // Closes the bottom sheet
                   }
                 },
@@ -239,7 +240,16 @@ class _MeetingDetails extends StatelessWidget {
             ),
           ),
           WinMeetTitleLarge(text: event.eventName),
-          if (event.eventDescription.isNotEmpty) ...[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const WinMeetTitleMedium(text: 'Scheduled By'),
+              Text(
+                event.eventOwner,
+              ),
+            ],
+          ),
+          if (event.eventDescription.isNotEmpty)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -247,7 +257,6 @@ class _MeetingDetails extends StatelessWidget {
                 Text(event.eventDescription),
               ],
             ),
-          ],
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -257,7 +266,7 @@ class _MeetingDetails extends StatelessWidget {
               ),
             ],
           ),
-          if (event.location.isNotEmpty) ...[
+          if (event.location.isNotEmpty)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -265,7 +274,6 @@ class _MeetingDetails extends StatelessWidget {
                 Text(event.location),
               ],
             ),
-          ],
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -281,21 +289,22 @@ class _MeetingDetails extends StatelessWidget {
               )
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              TextButton.icon(
-                onPressed: () => context.read<ScheduleCubit>().deleteMeeting(event.id),
-                icon: const Icon(Icons.delete),
-                label: const Text('Delete'),
-              ),
-              TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.edit),
-                label: const Text('Edit'),
-              ),
-            ],
-          ),
+          if (context.read<ScheduleCubit>().isOwner(email: event.eventOwner))
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                TextButton.icon(
+                  onPressed: () => context.read<ScheduleCubit>().deleteMeeting(event.id),
+                  icon: const Icon(Icons.delete),
+                  label: const Text('Delete'),
+                ),
+                TextButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.edit),
+                  label: const Text('Edit'),
+                ),
+              ],
+            ),
         ].withSpaceBetween(height: context.mediumValue),
       ),
     );
