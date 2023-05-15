@@ -35,6 +35,7 @@ class _ScheduleViewScaffold extends StatelessWidget {
     return BlocBuilder<ScheduleCubit, ScheduleState>(
       builder: (context, state) {
         switch (state.status) {
+          case PageStatus.initial:
           case PageStatus.loading:
             return _buildLoadingState();
 
@@ -239,6 +240,15 @@ class _MeetingDetails extends StatelessWidget {
             ),
           ),
           WinMeetTitleLarge(text: event.eventName),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const WinMeetTitleMedium(text: 'Scheduled By'),
+              Text(
+                event.eventOwner,
+              ),
+            ],
+          ),
           if (event.eventDescription.isNotEmpty) ...[
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -28,7 +28,7 @@ import '../../feature/create_meeting/presentation/view/create_meeting_view.dart'
     as _i7;
 import '../../feature/navbar/navbar_view.dart' as _i6;
 import '../../feature/onboarding/presentation/view/onboarding_view.dart' as _i2;
-import '../../feature/pending/view/pending_view.dart' as _i10;
+import '../../feature/pending/presentation/view/pending_view.dart' as _i10;
 import '../../feature/schedule/presentation/cubit/schedule_cubit.dart' as _i14;
 import '../../feature/schedule/presentation/view/schedule_view.dart' as _i9;
 import '../../feature/settings/presentation/view/settings_view.dart' as _i11;

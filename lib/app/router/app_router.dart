@@ -7,7 +7,7 @@ import 'package:winmeet_mobile/feature/create_meeting/presentation/view/add_part
 import 'package:winmeet_mobile/feature/create_meeting/presentation/view/create_meeting_view.dart';
 import 'package:winmeet_mobile/feature/navbar/navbar_view.dart';
 import 'package:winmeet_mobile/feature/onboarding/presentation/view/onboarding_view.dart';
-import 'package:winmeet_mobile/feature/pending/view/pending_view.dart';
+import 'package:winmeet_mobile/feature/pending/presentation/view/pending_view.dart';
 import 'package:winmeet_mobile/feature/schedule/presentation/view/schedule_view.dart';
 import 'package:winmeet_mobile/feature/settings/presentation/view/settings_view.dart';
 

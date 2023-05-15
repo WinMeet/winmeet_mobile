@@ -9,7 +9,7 @@ class ScheduleState with _$ScheduleState {
   }) = _ScheduleState;
 
   factory ScheduleState.initial() => ScheduleState(
-        status: PageStatus.loading,
+        status: PageStatus.initial,
         focusedDay: CalendarUtils.today,
         allEvents: List.empty(),
       );
