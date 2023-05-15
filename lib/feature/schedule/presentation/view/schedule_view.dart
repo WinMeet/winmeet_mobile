@@ -192,11 +192,11 @@ class _EventCard extends StatelessWidget {
               child: BlocListener<ScheduleCubit, ScheduleState>(
                 listener: (context, state) {
                   if (state.status == PageStatus.success) {
-                    SnackbarUtils.showSnackbar(context: context, message: 'Event deleted successfully');
+                    SnackbarUtils.showSnackbar(context: context, message: 'Meeting deleted successfully');
                     Navigator.of(context).pop(); // Closes the bottom sheet
                   }
                   if (state.status == PageStatus.failure) {
-                    SnackbarUtils.showSnackbar(context: context, message: 'An error occurred while deleting event');
+                    SnackbarUtils.showSnackbar(context: context, message: 'An error occurred while deleting meeting');
                     Navigator.of(context).pop(); // Closes the bottom sheet
                   }
                 },
