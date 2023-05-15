@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -40,7 +39,7 @@ class _PendingViewBody extends StatelessWidget {
         switch (state.status) {
           case PageStatus.initial:
           case PageStatus.loading:
-            return const CircularProgressIndicator.adaptive();
+            return const Center(child: CircularProgressIndicator.adaptive());
           case PageStatus.success:
             return _SuccessWidget(state: state);
           case PageStatus.failure:
