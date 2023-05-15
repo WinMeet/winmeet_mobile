@@ -249,7 +249,7 @@ class _MeetingDetails extends StatelessWidget {
               ),
             ],
           ),
-          if (event.eventDescription.isNotEmpty) ...[
+          if (event.eventDescription.isNotEmpty)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -257,7 +257,6 @@ class _MeetingDetails extends StatelessWidget {
                 Text(event.eventDescription),
               ],
             ),
-          ],
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -267,7 +266,7 @@ class _MeetingDetails extends StatelessWidget {
               ),
             ],
           ),
-          if (event.location.isNotEmpty) ...[
+          if (event.location.isNotEmpty)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -275,7 +274,6 @@ class _MeetingDetails extends StatelessWidget {
                 Text(event.location),
               ],
             ),
-          ],
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -291,21 +289,22 @@ class _MeetingDetails extends StatelessWidget {
               )
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              TextButton.icon(
-                onPressed: () => context.read<ScheduleCubit>().deleteMeeting(event.id),
-                icon: const Icon(Icons.delete),
-                label: const Text('Delete'),
-              ),
-              TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.edit),
-                label: const Text('Edit'),
-              ),
-            ],
-          ),
+          if (context.read<ScheduleCubit>().isOwner(email: event.eventOwner))
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                TextButton.icon(
+                  onPressed: () => context.read<ScheduleCubit>().deleteMeeting(event.id),
+                  icon: const Icon(Icons.delete),
+                  label: const Text('Delete'),
+                ),
+                TextButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.edit),
+                  label: const Text('Edit'),
+                ),
+              ],
+            ),
         ].withSpaceBetween(height: context.mediumValue),
       ),
     );
