@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:jwt_decode/jwt_decode.dart';
 import 'package:winmeet_mobile/app/constants/cache_contants.dart';
+import 'package:winmeet_mobile/app/utils/jwt/jwt_utils.dart';
 import 'package:winmeet_mobile/core/clients/cache/cache_client.dart';
 import 'package:winmeet_mobile/core/model/failure/failure_model.dart';
 import 'package:winmeet_mobile/feature/schedule/data/api/schedule_api.dart';
@@ -40,8 +40,8 @@ class ScheduleRepository {
 
   bool isOwner({required String email}) {
     final token = _cacheClient.getString(CacheConstants.token);
-    final jwt = Jwt.parseJwt(token!);
-    if (jwt['email'] as String == email) {
+    final emailToken = JwtUtils.getEmailFromToken(token: token!);
+    if (emailToken == email) {
       return true;
     }
     return false;

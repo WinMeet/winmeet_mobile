@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
-import 'package:jwt_decode/jwt_decode.dart';
 import 'package:winmeet_mobile/app/constants/cache_contants.dart';
+import 'package:winmeet_mobile/app/utils/jwt/jwt_utils.dart';
 import 'package:winmeet_mobile/core/clients/cache/cache_client.dart';
 
 @injectable
@@ -14,10 +14,7 @@ class SettingsRepository {
     if (token == null) {
       return '?';
     }
-    final jwt = Jwt.parseJwt(token);
-    final email = jwt['email'] as String;
-
-    return email;
+    return JwtUtils.getEmailFromToken(token: token);
   }
 
   String getNameSurnameFromUserToken() {
@@ -25,10 +22,7 @@ class SettingsRepository {
     if (token == null) {
       return '?';
     }
-    final jwt = Jwt.parseJwt(token);
-    final name = jwt['given_name'] as String;
-    final surname = jwt['family_name'] as String;
-    return '$name $surname';
+    return JwtUtils.getNameFromUserToken(token: token) + JwtUtils.getSurnameFromUserToken(token: token);
   }
 
   String getInitialsFromUserToken() {
@@ -36,9 +30,9 @@ class SettingsRepository {
     if (token == null) {
       return '?';
     }
-    final jwt = Jwt.parseJwt(token);
-    final name = jwt['given_name'] as String;
-    final surname = jwt['family_name'] as String;
+
+    final name = JwtUtils.getNameFromUserToken(token: token);
+    final surname = JwtUtils.getSurnameFromUserToken(token: token);
     return name[0] + surname[0];
   }
 }

@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:jwt_decode/jwt_decode.dart';
 import 'package:winmeet_mobile/app/constants/cache_contants.dart';
+import 'package:winmeet_mobile/app/utils/jwt/jwt_utils.dart';
 import 'package:winmeet_mobile/core/clients/cache/cache_client.dart';
 import 'package:winmeet_mobile/core/model/failure/failure_model.dart';
 import 'package:winmeet_mobile/feature/pending/data/api/pending_api.dart';
@@ -22,11 +22,16 @@ class PendingRepository {
     try {
       final response = await _pendingApi.getPendingMeetings();
       final token = _cacheClient.getString(CacheConstants.token);
-      final jwt = Jwt.parseJwt(token!);
-      final email = jwt['email'] as String;
+      final email = JwtUtils.getEmailFromToken(token: token!);
 
       final filteredResponse = response
-          .where((event) => event.isPending && !event.voters.contains(email) && event.eventOwner != email)
+          .where(
+            (event) =>
+                event.isPending &&
+                !event.voters.contains(email) &&
+                event.eventOwner != email &&
+                event.voteDueDate.isAfter(DateTime.now()),
+          )
           .toList();
 
       return right(filteredResponse);
