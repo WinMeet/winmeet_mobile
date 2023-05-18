@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, unused_element
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,31 +47,33 @@ class _CreateMeetingScaffold extends StatelessWidget {
         ),
         actions: [
           BlocConsumer<CreateMeetingCubit, CreateMeetingState>(
-            listener: (context, state) async {
+            listener: (context, state) {
               if (state.status.isSubmissionSuccess) {
-                await _cubit.getAllMeetings();
-                if (context.mounted) await context.router.pop();
-                if (context.mounted) {
-                  SnackbarUtils.showSnackbar(
-                    context: context,
-                    message: 'Invitation email has been sent to all participants..',
-                  );
-                }
+                _cubit.getAllMeetings().then(
+                      (_) => context.router.pop().then(
+                            (_) => SnackbarUtils.showSnackbar(
+                              context: context,
+                              message: 'Invitation email has been sent to all participants',
+                            ),
+                          ),
+                    );
               } else if (state.status.isSubmissionFailure) {
                 SnackbarUtils.showSnackbar(
                   context: context,
-                  message: 'An error occured while creating meeting.',
+                  message: 'An error occured while creating meeting',
                 );
               }
             },
             builder: (context, state) {
               return IconButton(
                 onPressed: state.status.isValid || state.status.isSubmissionFailure
-                    ? () async {
-                        await context.read<CreateMeetingCubit>().createMeeting();
-                      }
+                    ? () => context.read<CreateMeetingCubit>().createMeeting()
                     : null,
-                icon: const Icon(Icons.done),
+                icon: state.status.isSubmissionInProgress
+                    ? const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      )
+                    : const Icon(Icons.done),
               );
             },
           ),
