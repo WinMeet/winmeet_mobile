@@ -49,13 +49,16 @@ class _CreateMeetingScaffold extends StatelessWidget {
         ),
         actions: [
           BlocConsumer<CreateMeetingCubit, CreateMeetingState>(
-            listener: (context, state) {
+            listener: (context, state) async {
               if (state.status.isSubmissionSuccess) {
-                context.router.pop();
-                SnackbarUtils.showSnackbar(
-                  context: context,
-                  message: 'Meeting has been scheduled and emails have been sent out to all participants.',
-                );
+                await _cubit.getAllMeetings();
+                if (context.mounted) await context.router.pop();
+                if (context.mounted) {
+                  SnackbarUtils.showSnackbar(
+                    context: context,
+                    message: 'Invitation email has been sent to all participants..',
+                  );
+                }
               } else if (state.status.isSubmissionFailure) {
                 SnackbarUtils.showSnackbar(
                   context: context,
@@ -68,7 +71,6 @@ class _CreateMeetingScaffold extends StatelessWidget {
                 onPressed: state.status.isValid || state.status.isSubmissionFailure
                     ? () async {
                         await context.read<CreateMeetingCubit>().createMeeting();
-                        await _cubit.getAllMeetings();
                       }
                     : null,
                 icon: const Icon(Icons.done),

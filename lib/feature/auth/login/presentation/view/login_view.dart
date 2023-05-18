@@ -86,13 +86,6 @@ class _LoginViewBody extends StatelessWidget {
                           );
                         },
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () => context.router.replace(const ForgotPasswordRoute()),
-                          child: const Text('Forgot Password?'),
-                        ),
-                      ),
                       BlocBuilder<LoginCubit, LoginState>(
                         builder: (context, state) {
                           return CustomElevatedButton(
@@ -103,7 +96,7 @@ class _LoginViewBody extends StatelessWidget {
                           );
                         },
                       ),
-                    ],
+                    ].withSpaceBetween(height: context.mediumValue),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
