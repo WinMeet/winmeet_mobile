@@ -22,7 +22,7 @@ class SettingsRepository {
     if (token == null) {
       return '?';
     }
-    return JwtUtils.getNameFromUserToken(token: token) + JwtUtils.getSurnameFromUserToken(token: token);
+    return '${JwtUtils.getNameFromUserToken(token: token)} ${JwtUtils.getSurnameFromUserToken(token: token)}';
   }
 
   String getInitialsFromUserToken() {

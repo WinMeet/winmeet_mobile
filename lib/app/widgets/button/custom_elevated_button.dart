@@ -20,7 +20,7 @@ class CustomElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: isValid ? onPressed : null,
+      onPressed: status == FormzStatus.submissionInProgress || !isValid ? null : onPressed,
       child: status == FormzStatus.submissionInProgress
           ? SizedBox.square(
               dimension: context.mediumValue,
