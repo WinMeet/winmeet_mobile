@@ -317,7 +317,7 @@ class _MeetingDetails extends StatelessWidget {
             ],
           ),
           if (context.read<ScheduleCubit>().isOwner(email: event.eventOwner) &&
-              event.voteDueDate.isAfter(
+              event.eventStartDate.isAfter(
                 DateTime.now(),
               ))
             Row(
@@ -349,7 +349,7 @@ class _MeetingDetails extends StatelessWidget {
               !(event.isPending || event.eventStartDate2 == null || event.eventStartDate3 == null))
             Center(
               child: TextButton.icon(
-                onPressed: () {},
+                onPressed: () => context.read<ScheduleCubit>().iCannotAttend(id: event.id),
                 icon: const Icon(Icons.not_interested),
                 label: const Text('Cannot Attend'),
               ),

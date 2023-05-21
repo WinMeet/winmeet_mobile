@@ -38,6 +38,16 @@ class ScheduleRepository {
     }
   }
 
+  Future<Either<FailureModel, void>> iCannotAttend({required String id}) async {
+    try {
+      final response = await _scheduleApi.iCannotAttend(id: id);
+      return right(response);
+    } catch (e) {
+      log(e.toString());
+      return left(const FailureModel());
+    }
+  }
+
   bool isOwner({required String email}) {
     final token = _cacheClient.getString(CacheConstants.token);
     final emailToken = JwtUtils.getEmailFromToken(token: token!);

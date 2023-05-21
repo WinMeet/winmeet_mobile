@@ -7,4 +7,5 @@ abstract class Endpoints {
   static const String getPendingMeetings = '/createMeeting/all';
   static const String voteMeetingDate = '/createMeeting/pending';
   static const String addParticipant = '/createMeeting';
+  static const String iCannotAttend = '/createMeeting/removeParticipant';
 }

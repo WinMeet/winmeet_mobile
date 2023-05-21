@@ -40,6 +40,16 @@ class ScheduleCubit extends Cubit<ScheduleState> {
     });
   }
 
+  Future<void> iCannotAttend({required String id}) async {
+    final response = await _scheduleRepository.iCannotAttend(id: id);
+
+    response.fold((failure) => emit(state.copyWith(status: PageStatus.failure)), (success) {
+      final events = state.allEvents;
+      final newEvents = events.where((event) => event.id != id).toList();
+      emit(state.copyWith(status: PageStatus.success, allEvents: newEvents));
+    });
+  }
+
   List<EventModel> getByDay(DateTime date) {
     return state.allEvents.where((event) => isSameDay(date, event.eventStartDate.toLocal())).toList();
   }

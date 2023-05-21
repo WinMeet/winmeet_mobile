@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:injectable/injectable.dart';
 import 'package:winmeet_mobile/app/constants/cache_contants.dart';
 import 'package:winmeet_mobile/app/constants/endpoints.dart';
@@ -46,10 +44,24 @@ class ScheduleApi {
 
   Future<void> deleteMeeting(String id) async {
     try {
-      final response = await _networkClient.delete<Map<String, dynamic>>(Endpoints.deleteMeeting + id);
-      if (response.statusCode == HttpStatus.notFound) {
-        throw Exception('Delete failed');
+      await _networkClient.delete<Map<String, dynamic>>(Endpoints.deleteMeeting + id);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<void> iCannotAttend({required String id}) async {
+    try {
+      final token = _cacheClient.getString(CacheConstants.token);
+      if (token == null) {
+        throw Exception('No token found');
       }
+      await _networkClient.put<Map<String, dynamic>>(
+        '${Endpoints.iCannotAttend}/$id',
+        data: {
+          'participants': [JwtUtils.getEmailFromToken(token: token)],
+        },
+      );
     } catch (e) {
       throw Exception(e);
     }
