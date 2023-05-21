@@ -104,13 +104,18 @@ class _EventDetailsWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                WinMeetTitleLarge(
-                  text: state.events[index].eventName,
+                Expanded(
+                  flex: 5,
+                  child: WinMeetTitleLarge(
+                    text: state.events[index].eventName,
+                  ),
                 ),
                 if (state.events[index].voteDueDate.isAtSameMomentAs(CalendarUtils.today) ||
                     state.events[index].voteDueDate.isAfter(CalendarUtils.today))
-                  Text(
-                    'Ends in ${timeago.format(state.events[index].voteDueDate, allowFromNow: true, locale: 'en_short')}',
+                  Expanded(
+                    child: Text(
+                      'Ends in ${timeago.format(state.events[index].voteDueDate, allowFromNow: true, locale: 'en_short')}',
+                    ),
                   )
               ],
             ),

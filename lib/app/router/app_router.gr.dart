@@ -11,87 +11,78 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i12;
+import 'package:auto_route/auto_route.dart' as _i11;
 import 'package:auto_route/empty_router_widgets.dart' as _i1;
-import 'package:flutter/material.dart' as _i13;
+import 'package:flutter/material.dart' as _i12;
+import 'package:form_inputs/form_inputs.dart' as _i14;
 
-import '../../feature/auth/forgot_password/presentation/view/forgot_password_view.dart'
-    as _i5;
+import '../../feature/add_participants/presentation/view/add_participants_view.dart'
+    as _i7;
 import '../../feature/auth/login/presentation/view/login_view.dart' as _i3;
 import '../../feature/auth/register/presentation/view/register_view.dart'
     as _i4;
-import '../../feature/create_meeting/presentation/cubit/create_meeting_cubit.dart'
-    as _i15;
-import '../../feature/create_meeting/presentation/view/add_participants_view.dart'
-    as _i8;
 import '../../feature/create_meeting/presentation/view/create_meeting_view.dart'
-    as _i7;
-import '../../feature/navbar/navbar_view.dart' as _i6;
+    as _i6;
+import '../../feature/navbar/navbar_view.dart' as _i5;
 import '../../feature/onboarding/presentation/view/onboarding_view.dart' as _i2;
-import '../../feature/pending/presentation/view/pending_view.dart' as _i10;
-import '../../feature/schedule/presentation/cubit/schedule_cubit.dart' as _i14;
-import '../../feature/schedule/presentation/view/schedule_view.dart' as _i9;
-import '../../feature/settings/presentation/view/settings_view.dart' as _i11;
+import '../../feature/pending/presentation/view/pending_view.dart' as _i9;
+import '../../feature/schedule/presentation/cubit/schedule_cubit.dart' as _i13;
+import '../../feature/schedule/presentation/view/schedule_view.dart' as _i8;
+import '../../feature/settings/presentation/view/settings_view.dart' as _i10;
 
-class AppRouter extends _i12.RootStackRouter {
-  AppRouter([_i13.GlobalKey<_i13.NavigatorState>? navigatorKey])
+class AppRouter extends _i11.RootStackRouter {
+  AppRouter([_i12.GlobalKey<_i12.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i12.PageFactory> pagesMap = {
+  final Map<String, _i11.PageFactory> pagesMap = {
     OnboardingRutes.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
+      return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.EmptyRouterPage(),
       );
     },
     UnauthenticatedRoutes.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
+      return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.EmptyRouterPage(),
       );
     },
     AuthenticatedRoutes.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
+      return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.EmptyRouterPage(),
       );
     },
     OnboardingRoute.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
+      return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i2.OnboardingView(),
       );
     },
     LoginRoute.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
+      return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i3.LoginView(),
       );
     },
     RegisterRoute.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
+      return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i4.RegisterView(),
       );
     },
-    ForgotPasswordRoute.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: const _i5.ForgotPasswordView(),
-      );
-    },
     NavbarRoute.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
+      return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i6.NavbarView(),
+        child: const _i5.NavbarView(),
       );
     },
     CreateMeetingRoute.name: (routeData) {
       final args = routeData.argsAs<CreateMeetingRouteArgs>();
-      return _i12.MaterialPageX<dynamic>(
+      return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i7.CreateMeetingView(
+        child: _i6.CreateMeetingView(
           cubit: args.cubit,
           key: args.key,
         ),
@@ -99,66 +90,69 @@ class AppRouter extends _i12.RootStackRouter {
     },
     AddParticipantsRoute.name: (routeData) {
       final args = routeData.argsAs<AddParticipantsRouteArgs>();
-      return _i12.MaterialPageX<dynamic>(
+      return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i8.AddParticipantsView(
-          cubit: args.cubit,
+        child: _i7.AddParticipantsView(
+          participants: args.participants,
+          meetingId: args.meetingId,
+          scheduleCubit: args.scheduleCubit,
+          canRemoveParticipant: args.canRemoveParticipant,
           key: args.key,
         ),
       );
     },
     ScheduleRouter.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
+      return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.EmptyRouterPage(),
         maintainState: false,
       );
     },
     PendingRouter.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
+      return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.EmptyRouterPage(),
         maintainState: false,
       );
     },
     SettingsRouter.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
+      return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.EmptyRouterPage(),
       );
     },
     ScheduleRoute.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
+      return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i9.ScheduleView(),
+        child: const _i8.ScheduleView(),
       );
     },
     PendingRoute.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
+      return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i10.PendingView(),
+        child: const _i9.PendingView(),
       );
     },
     SettingsRoute.name: (routeData) {
-      return _i12.MaterialPageX<dynamic>(
+      return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i11.SettingsView(),
+        child: const _i10.SettingsView(),
       );
     },
   };
 
   @override
-  List<_i12.RouteConfig> get routes => [
-        _i12.RouteConfig(
+  List<_i11.RouteConfig> get routes => [
+        _i11.RouteConfig(
           OnboardingRutes.name,
           path: '/empty-router-page',
           children: [
-            _i12.RouteConfig(
+            _i11.RouteConfig(
               OnboardingRoute.name,
               path: '',
               parent: OnboardingRutes.name,
             ),
-            _i12.RouteConfig(
+            _i11.RouteConfig(
               '*#redirect',
               path: '*',
               parent: OnboardingRutes.name,
@@ -167,26 +161,21 @@ class AppRouter extends _i12.RootStackRouter {
             ),
           ],
         ),
-        _i12.RouteConfig(
+        _i11.RouteConfig(
           UnauthenticatedRoutes.name,
           path: '/empty-router-page',
           children: [
-            _i12.RouteConfig(
+            _i11.RouteConfig(
               LoginRoute.name,
               path: '',
               parent: UnauthenticatedRoutes.name,
             ),
-            _i12.RouteConfig(
+            _i11.RouteConfig(
               RegisterRoute.name,
               path: 'register-view',
               parent: UnauthenticatedRoutes.name,
             ),
-            _i12.RouteConfig(
-              ForgotPasswordRoute.name,
-              path: 'forgot-password-view',
-              parent: UnauthenticatedRoutes.name,
-            ),
-            _i12.RouteConfig(
+            _i11.RouteConfig(
               '*#redirect',
               path: '*',
               parent: UnauthenticatedRoutes.name,
@@ -195,26 +184,26 @@ class AppRouter extends _i12.RootStackRouter {
             ),
           ],
         ),
-        _i12.RouteConfig(
+        _i11.RouteConfig(
           AuthenticatedRoutes.name,
           path: '/empty-router-page',
           children: [
-            _i12.RouteConfig(
+            _i11.RouteConfig(
               NavbarRoute.name,
               path: '',
               parent: AuthenticatedRoutes.name,
               children: [
-                _i12.RouteConfig(
+                _i11.RouteConfig(
                   ScheduleRouter.name,
                   path: '',
                   parent: NavbarRoute.name,
                   children: [
-                    _i12.RouteConfig(
+                    _i11.RouteConfig(
                       ScheduleRoute.name,
                       path: '',
                       parent: ScheduleRouter.name,
                     ),
-                    _i12.RouteConfig(
+                    _i11.RouteConfig(
                       '*#redirect',
                       path: '*',
                       parent: ScheduleRouter.name,
@@ -223,17 +212,17 @@ class AppRouter extends _i12.RootStackRouter {
                     ),
                   ],
                 ),
-                _i12.RouteConfig(
+                _i11.RouteConfig(
                   PendingRouter.name,
                   path: 'empty-router-page',
                   parent: NavbarRoute.name,
                   children: [
-                    _i12.RouteConfig(
+                    _i11.RouteConfig(
                       PendingRoute.name,
                       path: '',
                       parent: PendingRouter.name,
                     ),
-                    _i12.RouteConfig(
+                    _i11.RouteConfig(
                       '*#redirect',
                       path: '*',
                       parent: PendingRouter.name,
@@ -242,17 +231,17 @@ class AppRouter extends _i12.RootStackRouter {
                     ),
                   ],
                 ),
-                _i12.RouteConfig(
+                _i11.RouteConfig(
                   SettingsRouter.name,
                   path: 'empty-router-page',
                   parent: NavbarRoute.name,
                   children: [
-                    _i12.RouteConfig(
+                    _i11.RouteConfig(
                       SettingsRoute.name,
                       path: '',
                       parent: SettingsRouter.name,
                     ),
-                    _i12.RouteConfig(
+                    _i11.RouteConfig(
                       '*#redirect',
                       path: '*',
                       parent: SettingsRouter.name,
@@ -263,17 +252,17 @@ class AppRouter extends _i12.RootStackRouter {
                 ),
               ],
             ),
-            _i12.RouteConfig(
+            _i11.RouteConfig(
               CreateMeetingRoute.name,
               path: 'create-meeting-view',
               parent: AuthenticatedRoutes.name,
             ),
-            _i12.RouteConfig(
+            _i11.RouteConfig(
               AddParticipantsRoute.name,
               path: 'add-participants-view',
               parent: AuthenticatedRoutes.name,
             ),
-            _i12.RouteConfig(
+            _i11.RouteConfig(
               '*#redirect',
               path: '*',
               parent: AuthenticatedRoutes.name,
@@ -287,8 +276,8 @@ class AppRouter extends _i12.RootStackRouter {
 
 /// generated route for
 /// [_i1.EmptyRouterPage]
-class OnboardingRutes extends _i12.PageRouteInfo<void> {
-  const OnboardingRutes({List<_i12.PageRouteInfo>? children})
+class OnboardingRutes extends _i11.PageRouteInfo<void> {
+  const OnboardingRutes({List<_i11.PageRouteInfo>? children})
       : super(
           OnboardingRutes.name,
           path: '/empty-router-page',
@@ -300,8 +289,8 @@ class OnboardingRutes extends _i12.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.EmptyRouterPage]
-class UnauthenticatedRoutes extends _i12.PageRouteInfo<void> {
-  const UnauthenticatedRoutes({List<_i12.PageRouteInfo>? children})
+class UnauthenticatedRoutes extends _i11.PageRouteInfo<void> {
+  const UnauthenticatedRoutes({List<_i11.PageRouteInfo>? children})
       : super(
           UnauthenticatedRoutes.name,
           path: '/empty-router-page',
@@ -313,8 +302,8 @@ class UnauthenticatedRoutes extends _i12.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.EmptyRouterPage]
-class AuthenticatedRoutes extends _i12.PageRouteInfo<void> {
-  const AuthenticatedRoutes({List<_i12.PageRouteInfo>? children})
+class AuthenticatedRoutes extends _i11.PageRouteInfo<void> {
+  const AuthenticatedRoutes({List<_i11.PageRouteInfo>? children})
       : super(
           AuthenticatedRoutes.name,
           path: '/empty-router-page',
@@ -326,7 +315,7 @@ class AuthenticatedRoutes extends _i12.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.OnboardingView]
-class OnboardingRoute extends _i12.PageRouteInfo<void> {
+class OnboardingRoute extends _i11.PageRouteInfo<void> {
   const OnboardingRoute()
       : super(
           OnboardingRoute.name,
@@ -338,7 +327,7 @@ class OnboardingRoute extends _i12.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.LoginView]
-class LoginRoute extends _i12.PageRouteInfo<void> {
+class LoginRoute extends _i11.PageRouteInfo<void> {
   const LoginRoute()
       : super(
           LoginRoute.name,
@@ -350,7 +339,7 @@ class LoginRoute extends _i12.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.RegisterView]
-class RegisterRoute extends _i12.PageRouteInfo<void> {
+class RegisterRoute extends _i11.PageRouteInfo<void> {
   const RegisterRoute()
       : super(
           RegisterRoute.name,
@@ -361,21 +350,9 @@ class RegisterRoute extends _i12.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.ForgotPasswordView]
-class ForgotPasswordRoute extends _i12.PageRouteInfo<void> {
-  const ForgotPasswordRoute()
-      : super(
-          ForgotPasswordRoute.name,
-          path: 'forgot-password-view',
-        );
-
-  static const String name = 'ForgotPasswordRoute';
-}
-
-/// generated route for
-/// [_i6.NavbarView]
-class NavbarRoute extends _i12.PageRouteInfo<void> {
-  const NavbarRoute({List<_i12.PageRouteInfo>? children})
+/// [_i5.NavbarView]
+class NavbarRoute extends _i11.PageRouteInfo<void> {
+  const NavbarRoute({List<_i11.PageRouteInfo>? children})
       : super(
           NavbarRoute.name,
           path: '',
@@ -386,11 +363,11 @@ class NavbarRoute extends _i12.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.CreateMeetingView]
-class CreateMeetingRoute extends _i12.PageRouteInfo<CreateMeetingRouteArgs> {
+/// [_i6.CreateMeetingView]
+class CreateMeetingRoute extends _i11.PageRouteInfo<CreateMeetingRouteArgs> {
   CreateMeetingRoute({
-    required _i14.ScheduleCubit cubit,
-    _i13.Key? key,
+    required _i13.ScheduleCubit cubit,
+    _i12.Key? key,
   }) : super(
           CreateMeetingRoute.name,
           path: 'create-meeting-view',
@@ -409,9 +386,9 @@ class CreateMeetingRouteArgs {
     this.key,
   });
 
-  final _i14.ScheduleCubit cubit;
+  final _i13.ScheduleCubit cubit;
 
-  final _i13.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {
@@ -420,17 +397,23 @@ class CreateMeetingRouteArgs {
 }
 
 /// generated route for
-/// [_i8.AddParticipantsView]
+/// [_i7.AddParticipantsView]
 class AddParticipantsRoute
-    extends _i12.PageRouteInfo<AddParticipantsRouteArgs> {
+    extends _i11.PageRouteInfo<AddParticipantsRouteArgs> {
   AddParticipantsRoute({
-    required _i15.CreateMeetingCubit cubit,
-    _i13.Key? key,
+    required _i14.ListFormInput<String> participants,
+    String? meetingId,
+    _i13.ScheduleCubit? scheduleCubit,
+    bool canRemoveParticipant = true,
+    _i12.Key? key,
   }) : super(
           AddParticipantsRoute.name,
           path: 'add-participants-view',
           args: AddParticipantsRouteArgs(
-            cubit: cubit,
+            participants: participants,
+            meetingId: meetingId,
+            scheduleCubit: scheduleCubit,
+            canRemoveParticipant: canRemoveParticipant,
             key: key,
           ),
         );
@@ -440,24 +423,33 @@ class AddParticipantsRoute
 
 class AddParticipantsRouteArgs {
   const AddParticipantsRouteArgs({
-    required this.cubit,
+    required this.participants,
+    this.meetingId,
+    this.scheduleCubit,
+    this.canRemoveParticipant = true,
     this.key,
   });
 
-  final _i15.CreateMeetingCubit cubit;
+  final _i14.ListFormInput<String> participants;
 
-  final _i13.Key? key;
+  final String? meetingId;
+
+  final _i13.ScheduleCubit? scheduleCubit;
+
+  final bool canRemoveParticipant;
+
+  final _i12.Key? key;
 
   @override
   String toString() {
-    return 'AddParticipantsRouteArgs{cubit: $cubit, key: $key}';
+    return 'AddParticipantsRouteArgs{participants: $participants, meetingId: $meetingId, scheduleCubit: $scheduleCubit, canRemoveParticipant: $canRemoveParticipant, key: $key}';
   }
 }
 
 /// generated route for
 /// [_i1.EmptyRouterPage]
-class ScheduleRouter extends _i12.PageRouteInfo<void> {
-  const ScheduleRouter({List<_i12.PageRouteInfo>? children})
+class ScheduleRouter extends _i11.PageRouteInfo<void> {
+  const ScheduleRouter({List<_i11.PageRouteInfo>? children})
       : super(
           ScheduleRouter.name,
           path: '',
@@ -469,8 +461,8 @@ class ScheduleRouter extends _i12.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.EmptyRouterPage]
-class PendingRouter extends _i12.PageRouteInfo<void> {
-  const PendingRouter({List<_i12.PageRouteInfo>? children})
+class PendingRouter extends _i11.PageRouteInfo<void> {
+  const PendingRouter({List<_i11.PageRouteInfo>? children})
       : super(
           PendingRouter.name,
           path: 'empty-router-page',
@@ -482,8 +474,8 @@ class PendingRouter extends _i12.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.EmptyRouterPage]
-class SettingsRouter extends _i12.PageRouteInfo<void> {
-  const SettingsRouter({List<_i12.PageRouteInfo>? children})
+class SettingsRouter extends _i11.PageRouteInfo<void> {
+  const SettingsRouter({List<_i11.PageRouteInfo>? children})
       : super(
           SettingsRouter.name,
           path: 'empty-router-page',
@@ -494,8 +486,8 @@ class SettingsRouter extends _i12.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.ScheduleView]
-class ScheduleRoute extends _i12.PageRouteInfo<void> {
+/// [_i8.ScheduleView]
+class ScheduleRoute extends _i11.PageRouteInfo<void> {
   const ScheduleRoute()
       : super(
           ScheduleRoute.name,
@@ -506,8 +498,8 @@ class ScheduleRoute extends _i12.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i10.PendingView]
-class PendingRoute extends _i12.PageRouteInfo<void> {
+/// [_i9.PendingView]
+class PendingRoute extends _i11.PageRouteInfo<void> {
   const PendingRoute()
       : super(
           PendingRoute.name,
@@ -518,8 +510,8 @@ class PendingRoute extends _i12.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i11.SettingsView]
-class SettingsRoute extends _i12.PageRouteInfo<void> {
+/// [_i10.SettingsView]
+class SettingsRoute extends _i11.PageRouteInfo<void> {
   const SettingsRoute()
       : super(
           SettingsRoute.name,

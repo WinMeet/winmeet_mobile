@@ -1,9 +1,8 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/empty_router_widgets.dart';
-import 'package:winmeet_mobile/feature/auth/forgot_password/presentation/view/forgot_password_view.dart';
+import 'package:winmeet_mobile/feature/add_participants/presentation/view/add_participants_view.dart';
 import 'package:winmeet_mobile/feature/auth/login/presentation/view/login_view.dart';
 import 'package:winmeet_mobile/feature/auth/register/presentation/view/register_view.dart';
-import 'package:winmeet_mobile/feature/create_meeting/presentation/view/add_participants_view.dart';
 import 'package:winmeet_mobile/feature/create_meeting/presentation/view/create_meeting_view.dart';
 import 'package:winmeet_mobile/feature/navbar/navbar_view.dart';
 import 'package:winmeet_mobile/feature/onboarding/presentation/view/onboarding_view.dart';
@@ -36,7 +35,6 @@ const unauthenticated = AutoRoute(
   children: [
     AutoRoute(initial: true, page: LoginView),
     AutoRoute(page: RegisterView),
-    AutoRoute(page: ForgotPasswordView),
     RedirectRoute(path: '*', redirectTo: ''),
   ],
 );

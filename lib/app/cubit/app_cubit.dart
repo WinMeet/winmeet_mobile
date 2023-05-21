@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:jwt_decode/jwt_decode.dart';
 import 'package:winmeet_mobile/app/constants/cache_contants.dart';
+import 'package:winmeet_mobile/app/utils/jwt/jwt_utils.dart';
 import 'package:winmeet_mobile/core/clients/cache/cache_client.dart';
 
 part 'app_state.dart';
@@ -21,7 +21,7 @@ class AppCubit extends Cubit<AppState> {
 
     if (isOnboardingCompleted ?? false) {
       final token = _cacheClient.getString(CacheConstants.token);
-      if (token != null && !Jwt.isExpired(token)) {
+      if (token != null && !JwtUtils.isTokenExpired(token: token)) {
         emit(const AppState.authenticated());
       } else {
         await _cacheClient.deleteKey(CacheConstants.token);

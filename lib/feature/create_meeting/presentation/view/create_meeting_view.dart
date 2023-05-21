@@ -1,12 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, unused_element
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
-
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/utils/calendar/calendar_utils.dart';
+import 'package:winmeet_mobile/app/widgets/indicators/custom_circular_progress_indicator.dart';
 import 'package:winmeet_mobile/app/widgets/input/text_input_field.dart';
 import 'package:winmeet_mobile/app/widgets/text/winmeet_body_large.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
@@ -51,27 +49,31 @@ class _CreateMeetingScaffold extends StatelessWidget {
           BlocConsumer<CreateMeetingCubit, CreateMeetingState>(
             listener: (context, state) {
               if (state.status.isSubmissionSuccess) {
-                context.router.pop();
-                SnackbarUtils.showSnackbar(
-                  context: context,
-                  message: 'Meeting has been scheduled and emails have been sent out to all participants.',
-                );
+                _cubit.getAllMeetings().then(
+                      (_) => context.router.pop().then(
+                            (_) => SnackbarUtils.showSnackbar(
+                              context: context,
+                              message: 'Invitation email has been sent to all participants',
+                            ),
+                          ),
+                    );
               } else if (state.status.isSubmissionFailure) {
                 SnackbarUtils.showSnackbar(
                   context: context,
-                  message: 'An error occured while creating meeting.',
+                  message: 'An error occured while creating meeting',
                 );
               }
             },
             builder: (context, state) {
               return IconButton(
                 onPressed: state.status.isValid || state.status.isSubmissionFailure
-                    ? () async {
-                        await context.read<CreateMeetingCubit>().createMeeting();
-                        await _cubit.getAllMeetings();
-                      }
+                    ? () => context.read<CreateMeetingCubit>().createMeeting()
                     : null,
-                icon: const Icon(Icons.done),
+                icon: state.status.isSubmissionInProgress
+                    ? const Center(
+                        child: CustomCircularProgressIndicator(),
+                      )
+                    : const Icon(Icons.done),
               );
             },
           ),
@@ -336,8 +338,11 @@ class _Participants extends StatelessWidget {
           ),
           trailing: const Icon(Icons.add),
           onTap: () async {
-            await context.router.push(AddParticipantsRoute(cubit: context.read<CreateMeetingCubit>()));
-            if (context.mounted) context.read<CreateMeetingCubit>().resetAddParticipantsVariables();
+            final participants = await context.router
+                .push(AddParticipantsRoute(participants: context.read<CreateMeetingCubit>().state.participants));
+            if (context.mounted && participants is ListFormInput<String>) {
+              context.read<CreateMeetingCubit>().setParticipants(participants: participants);
+            }
           },
         ),
         BlocBuilder<CreateMeetingCubit, CreateMeetingState>(

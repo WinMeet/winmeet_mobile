@@ -2,9 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:jwt_decode/jwt_decode.dart';
 import 'package:winmeet_mobile/app/constants/cache_contants.dart';
 import 'package:winmeet_mobile/app/utils/calendar/calendar_utils.dart';
+import 'package:winmeet_mobile/app/utils/jwt/jwt_utils.dart';
 import 'package:winmeet_mobile/core/clients/cache/cache_client.dart';
 import 'package:winmeet_mobile/feature/create_meeting/data/model/create_meeting_request_model.dart';
 import 'package:winmeet_mobile/feature/create_meeting/data/repository/create_meeting_repository.dart';
@@ -26,11 +26,10 @@ class CreateMeetingCubit extends Cubit<CreateMeetingState> {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
     final token = _cacheClient.getString(CacheConstants.token);
-    final jwt = Jwt.parseJwt(token!);
 
     final response = await _createMeetingRepository.createMeeting(
       createMeetingRequestModel: CreateMeetingRequestModel(
-        eventOwner: jwt['email'] as String,
+        eventOwner: JwtUtils.getEmailFromToken(token: token!),
         eventName: state.title.value,
         eventDescription: state.description.value,
         location: state.location.value,
@@ -136,39 +135,18 @@ class CreateMeetingCubit extends Cubit<CreateMeetingState> {
     }
   }
 
-  void emailChanged({required String email}) {
-    final newEmail = EmailFormInput.dirty(email);
-    emit(state.copyWith(email: newEmail, status: Formz.validate([newEmail])));
-  }
-
-  void resetAddParticipantsVariables() {
-    emit(state.copyWith(email: const EmailFormInput.pure()));
-  }
-
-  bool addParticipantToParticipants({required String email}) {
-    final participants = state.participants;
-    if (!participants.value.contains(email)) {
-      final newParticipants = <String>[email, ...participants.value];
-
-      emit(
-        state.copyWith(
-          participants: ListFormInput<String>.dirty(newParticipants),
-          status: Formz.validate([
-            state.title,
-            ListFormInput<String>.dirty(newParticipants),
-            state.description,
-            state.location,
-          ]),
-        ),
-      );
-      emit(
-        state.copyWith(
-          email: const EmailFormInput.pure(),
-        ),
-      );
-      return true;
-    }
-    return false;
+  void setParticipants({required ListFormInput<String> participants}) {
+    emit(
+      state.copyWith(
+        participants: ListFormInput<String>.dirty(participants.value),
+        status: Formz.validate([
+          state.title,
+          ListFormInput<String>.dirty(participants.value),
+          state.description,
+          state.location,
+        ]),
+      ),
+    );
   }
 
   void removeParticipantFromParticipants({required String email}) {

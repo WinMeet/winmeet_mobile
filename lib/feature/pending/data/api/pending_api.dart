@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
-import 'package:jwt_decode/jwt_decode.dart';
 import 'package:winmeet_mobile/app/constants/cache_contants.dart';
 import 'package:winmeet_mobile/app/constants/endpoints.dart';
+import 'package:winmeet_mobile/app/utils/jwt/jwt_utils.dart';
 import 'package:winmeet_mobile/core/clients/cache/cache_client.dart';
 import 'package:winmeet_mobile/core/clients/network/network_client.dart';
 import 'package:winmeet_mobile/feature/schedule/data/model/event_model.dart';
@@ -21,11 +21,11 @@ class PendingApi {
       if (token == null) {
         throw Exception('No token found');
       }
-      final jwt = Jwt.parseJwt(token);
+
       final response = await _networkClient.post<Map<String, dynamic>>(
         Endpoints.getPendingMeetings,
         data: {
-          'eventOwner': jwt['email'],
+          'eventOwner': JwtUtils.getEmailFromToken(token: token),
         },
       );
 
@@ -33,7 +33,8 @@ class PendingApi {
       if (model == null) {
         throw Exception('Null data getPendingMeetings()');
       } else {
-        return model.map((e) => EventModel.fromJson(e as Map<String, dynamic>)).toList();
+        return model.map((e) => EventModel.fromJson(e as Map<String, dynamic>)).toList()
+          ..sort((a, b) => a.eventStartDate.compareTo(b.eventStartDate));
       }
     } catch (e) {
       throw Exception(e);
@@ -46,10 +47,9 @@ class PendingApi {
       if (token == null) {
         throw Exception('No token found');
       }
-      final jwt = Jwt.parseJwt(token);
 
       await _networkClient.put<Map<String, dynamic>>(
-        "${Endpoints.voteMeetingDate}/$eventId/${jwt['email']}",
+        Endpoints.voteMeetingDate(id: eventId, currentUser: JwtUtils.getEmailFromToken(token: token)),
         data: {'fieldToIncrement': dateIndex},
       );
     } catch (e) {

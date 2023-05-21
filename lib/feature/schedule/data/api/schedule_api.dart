@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:injectable/injectable.dart';
-import 'package:jwt_decode/jwt_decode.dart';
 import 'package:winmeet_mobile/app/constants/cache_contants.dart';
 import 'package:winmeet_mobile/app/constants/endpoints.dart';
+import 'package:winmeet_mobile/app/utils/jwt/jwt_utils.dart';
 import 'package:winmeet_mobile/core/clients/cache/cache_client.dart';
 import 'package:winmeet_mobile/core/clients/network/network_client.dart';
 
@@ -24,11 +22,11 @@ class ScheduleApi {
       if (token == null) {
         throw Exception('No token found');
       }
-      final jwt = Jwt.parseJwt(token);
+
       final response = await _networkClient.post<Map<String, dynamic>>(
         Endpoints.getAllMeetings,
         data: {
-          'eventOwner': jwt['email'],
+          'eventOwner': JwtUtils.getEmailFromToken(token: token),
         },
       );
 
@@ -36,7 +34,8 @@ class ScheduleApi {
       if (model == null) {
         throw Exception('Null data getAllMeetings()');
       } else {
-        return model.map((e) => EventModel.fromJson(e as Map<String, dynamic>)).toList();
+        return model.map((e) => EventModel.fromJson(e as Map<String, dynamic>)).toList()
+          ..sort((a, b) => a.eventStartDate.compareTo(b.eventStartDate));
       }
     } catch (e) {
       throw Exception(e);
@@ -45,10 +44,24 @@ class ScheduleApi {
 
   Future<void> deleteMeeting(String id) async {
     try {
-      final response = await _networkClient.delete<Map<String, dynamic>>(Endpoints.deleteMeeting + id);
-      if (response.statusCode == HttpStatus.notFound) {
-        throw Exception('Delete failed');
+      await _networkClient.delete<Map<String, dynamic>>(Endpoints.deleteMeeting(id: id));
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<void> iCannotAttend({required String id}) async {
+    try {
+      final token = _cacheClient.getString(CacheConstants.token);
+      if (token == null) {
+        throw Exception('No token found');
       }
+      await _networkClient.put<Map<String, dynamic>>(
+        Endpoints.iCannotAttend(id: id),
+        data: {
+          'participants': [JwtUtils.getEmailFromToken(token: token)],
+        },
+      );
     } catch (e) {
       throw Exception(e);
     }

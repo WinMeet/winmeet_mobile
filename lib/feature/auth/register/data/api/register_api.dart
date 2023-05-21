@@ -9,12 +9,14 @@ class RegisterApi {
 
   final NetworkClient _networkClient;
 
-  Future<void> registerWithEmailAndPassword({
-    required RegisterRequestModel registerRequestModel,
-  }) async {
-    await _networkClient.post<Map<String, dynamic>>(
-      Endpoints.register,
-      data: registerRequestModel.toJson(),
-    );
+  Future<void> registerWithEmailAndPassword({required RegisterRequestModel registerRequestModel}) async {
+    try {
+      await _networkClient.post<Map<String, dynamic>>(
+        Endpoints.register,
+        data: registerRequestModel.toJson(),
+      );
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }
