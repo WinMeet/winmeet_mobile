@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
-
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
+
 import 'package:winmeet_mobile/app/utils/calendar/calendar_utils.dart';
 import 'package:winmeet_mobile/app/widgets/input/text_input_field.dart';
 import 'package:winmeet_mobile/app/widgets/text/winmeet_body_large.dart';
@@ -338,8 +338,11 @@ class _Participants extends StatelessWidget {
           ),
           trailing: const Icon(Icons.add),
           onTap: () async {
-            await context.router.push(AddParticipantsRoute(cubit: context.read<CreateMeetingCubit>()));
-            if (context.mounted) context.read<CreateMeetingCubit>().resetAddParticipantsVariables();
+            final participants = await context.router
+                .push(AddParticipantsRoute(participants: context.read<CreateMeetingCubit>().state.participants));
+            if (context.mounted && participants is ListFormInput<String>) {
+              context.read<CreateMeetingCubit>().setParticipants(participants: participants);
+            }
           },
         ),
         BlocBuilder<CreateMeetingCubit, CreateMeetingState>(

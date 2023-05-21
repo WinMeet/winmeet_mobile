@@ -14,14 +14,13 @@
 import 'package:auto_route/auto_route.dart' as _i11;
 import 'package:auto_route/empty_router_widgets.dart' as _i1;
 import 'package:flutter/material.dart' as _i12;
+import 'package:form_inputs/form_inputs.dart' as _i14;
 
+import '../../feature/add_participants/presentation/view/add_participants_view.dart'
+    as _i7;
 import '../../feature/auth/login/presentation/view/login_view.dart' as _i3;
 import '../../feature/auth/register/presentation/view/register_view.dart'
     as _i4;
-import '../../feature/create_meeting/presentation/cubit/create_meeting_cubit.dart'
-    as _i14;
-import '../../feature/create_meeting/presentation/view/add_participants_view.dart'
-    as _i7;
 import '../../feature/create_meeting/presentation/view/create_meeting_view.dart'
     as _i6;
 import '../../feature/navbar/navbar_view.dart' as _i5;
@@ -94,7 +93,10 @@ class AppRouter extends _i11.RootStackRouter {
       return _i11.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i7.AddParticipantsView(
-          cubit: args.cubit,
+          participants: args.participants,
+          meetingId: args.meetingId,
+          scheduleCubit: args.scheduleCubit,
+          canRemoveParticipant: args.canRemoveParticipant,
           key: args.key,
         ),
       );
@@ -399,13 +401,19 @@ class CreateMeetingRouteArgs {
 class AddParticipantsRoute
     extends _i11.PageRouteInfo<AddParticipantsRouteArgs> {
   AddParticipantsRoute({
-    required _i14.CreateMeetingCubit cubit,
+    required _i14.ListFormInput<String> participants,
+    String? meetingId,
+    _i13.ScheduleCubit? scheduleCubit,
+    bool canRemoveParticipant = true,
     _i12.Key? key,
   }) : super(
           AddParticipantsRoute.name,
           path: 'add-participants-view',
           args: AddParticipantsRouteArgs(
-            cubit: cubit,
+            participants: participants,
+            meetingId: meetingId,
+            scheduleCubit: scheduleCubit,
+            canRemoveParticipant: canRemoveParticipant,
             key: key,
           ),
         );
@@ -415,17 +423,26 @@ class AddParticipantsRoute
 
 class AddParticipantsRouteArgs {
   const AddParticipantsRouteArgs({
-    required this.cubit,
+    required this.participants,
+    this.meetingId,
+    this.scheduleCubit,
+    this.canRemoveParticipant = true,
     this.key,
   });
 
-  final _i14.CreateMeetingCubit cubit;
+  final _i14.ListFormInput<String> participants;
+
+  final String? meetingId;
+
+  final _i13.ScheduleCubit? scheduleCubit;
+
+  final bool canRemoveParticipant;
 
   final _i12.Key? key;
 
   @override
   String toString() {
-    return 'AddParticipantsRouteArgs{cubit: $cubit, key: $key}';
+    return 'AddParticipantsRouteArgs{participants: $participants, meetingId: $meetingId, scheduleCubit: $scheduleCubit, canRemoveParticipant: $canRemoveParticipant, key: $key}';
   }
 }
 

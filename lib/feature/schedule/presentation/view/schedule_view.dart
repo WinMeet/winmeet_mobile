@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_inputs/form_inputs.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
 import 'package:winmeet_mobile/app/widgets/calendar/winmeet_calendar.dart';
 import 'package:winmeet_mobile/app/widgets/text/winmeet_body_large.dart';
@@ -192,12 +193,11 @@ class _EventCard extends StatelessWidget {
               child: BlocListener<ScheduleCubit, ScheduleState>(
                 listener: (context, state) {
                   if (state.status == PageStatus.success) {
-                    SnackbarUtils.showSnackbar(context: context, message: 'Meeting deleted successfully');
-                    Navigator.of(context).pop(); // Closes the bottom sheet
+                    context.router.pop();
                   }
                   if (state.status == PageStatus.failure) {
                     SnackbarUtils.showSnackbar(context: context, message: 'An error occurred while deleting meeting');
-                    Navigator.of(context).pop(); // Closes the bottom sheet
+                    context.router.pop();
                   }
                 },
                 child: _MeetingDetails(event: event),
@@ -299,9 +299,16 @@ class _MeetingDetails extends StatelessWidget {
                   label: const Text('Delete'),
                 ),
                 TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.edit),
-                  label: const Text('Edit'),
+                  onPressed: () => context.router.push(
+                    AddParticipantsRoute(
+                      meetingId: event.id,
+                      scheduleCubit: context.read<ScheduleCubit>(),
+                      participants: ListFormInput.fromStringList(event.participants),
+                      canRemoveParticipant: false,
+                    ),
+                  ),
+                  icon: const Icon(Icons.person_add),
+                  label: const Text('Add Participants'),
                 ),
               ],
             ),

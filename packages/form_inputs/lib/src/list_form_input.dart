@@ -17,4 +17,8 @@ class ListFormInput<T> extends FormzInput<List<T>, ListFormInputError> {
   String toString() {
     return value.toString();
   }
+
+  static ListFormInput<String> fromStringList(List<String> list) {
+    return ListFormInput<String>.dirty(list);
+  }
 }

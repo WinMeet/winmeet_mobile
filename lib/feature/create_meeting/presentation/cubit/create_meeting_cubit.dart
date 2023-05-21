@@ -135,39 +135,18 @@ class CreateMeetingCubit extends Cubit<CreateMeetingState> {
     }
   }
 
-  void emailChanged({required String email}) {
-    final newEmail = EmailFormInput.dirty(email);
-    emit(state.copyWith(email: newEmail, status: Formz.validate([newEmail])));
-  }
-
-  void resetAddParticipantsVariables() {
-    emit(state.copyWith(email: const EmailFormInput.pure()));
-  }
-
-  bool addParticipantToParticipants({required String email}) {
-    final participants = state.participants;
-    if (!participants.value.contains(email)) {
-      final newParticipants = <String>[email, ...participants.value];
-
-      emit(
-        state.copyWith(
-          participants: ListFormInput<String>.dirty(newParticipants),
-          status: Formz.validate([
-            state.title,
-            ListFormInput<String>.dirty(newParticipants),
-            state.description,
-            state.location,
-          ]),
-        ),
-      );
-      emit(
-        state.copyWith(
-          email: const EmailFormInput.pure(),
-        ),
-      );
-      return true;
-    }
-    return false;
+  void setParticipants({required ListFormInput<String> participants}) {
+    emit(
+      state.copyWith(
+        participants: ListFormInput<String>.dirty(participants.value),
+        status: Formz.validate([
+          state.title,
+          ListFormInput<String>.dirty(participants.value),
+          state.description,
+          state.location,
+        ]),
+      ),
+    );
   }
 
   void removeParticipantFromParticipants({required String email}) {

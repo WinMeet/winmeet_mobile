@@ -41,7 +41,7 @@ class ScheduleCubit extends Cubit<ScheduleState> {
   }
 
   List<EventModel> getByDay(DateTime date) {
-    return state.allEvents.where((event) => isSameDay(date, event.eventStartDate)).toList();
+    return state.allEvents.where((event) => isSameDay(date, event.eventStartDate.toLocal())).toList();
   }
 
   void updateFocusedDay(DateTime focusedDay) {
