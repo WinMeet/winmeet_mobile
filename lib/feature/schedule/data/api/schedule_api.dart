@@ -44,7 +44,7 @@ class ScheduleApi {
 
   Future<void> deleteMeeting(String id) async {
     try {
-      await _networkClient.delete<Map<String, dynamic>>(Endpoints.deleteMeeting + id);
+      await _networkClient.delete<Map<String, dynamic>>(Endpoints.deleteMeeting(id: id));
     } catch (e) {
       throw Exception(e);
     }
@@ -57,7 +57,7 @@ class ScheduleApi {
         throw Exception('No token found');
       }
       await _networkClient.put<Map<String, dynamic>>(
-        '${Endpoints.iCannotAttend}/$id',
+        Endpoints.iCannotAttend(id: id),
         data: {
           'participants': [JwtUtils.getEmailFromToken(token: token)],
         },

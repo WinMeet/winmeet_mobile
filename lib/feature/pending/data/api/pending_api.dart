@@ -49,7 +49,7 @@ class PendingApi {
       }
 
       await _networkClient.put<Map<String, dynamic>>(
-        '${Endpoints.voteMeetingDate}/$eventId/${JwtUtils.getEmailFromToken(token: token)}',
+        Endpoints.voteMeetingDate(id: eventId, currentUser: JwtUtils.getEmailFromToken(token: token)),
         data: {'fieldToIncrement': dateIndex},
       );
     } catch (e) {

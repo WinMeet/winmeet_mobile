@@ -12,7 +12,7 @@ class AddParticipantsApi {
   Future<void> updateMeetingParticipants({required String id, required List<String> participants}) async {
     try {
       await _networkClient.put<Map<String, dynamic>>(
-        '${Endpoints.addParticipant}/$id',
+        Endpoints.addParticipant(id: id),
         data: {
           'participants': participants,
         },
