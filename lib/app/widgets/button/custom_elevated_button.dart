@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:form_inputs/form_inputs.dart';
-
-import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
+import 'package:winmeet_mobile/app/widgets/indicators/custom_circular_progress_indicator.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({
@@ -21,14 +20,7 @@ class CustomElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: status == FormzStatus.submissionInProgress || !isValid ? null : onPressed,
-      child: status == FormzStatus.submissionInProgress
-          ? SizedBox.square(
-              dimension: context.mediumValue,
-              child: const CircularProgressIndicator.adaptive(
-                strokeWidth: 2,
-              ),
-            )
-          : Text(buttonText),
+      child: status == FormzStatus.submissionInProgress ? const CustomCircularProgressIndicator() : Text(buttonText),
     );
   }
 }

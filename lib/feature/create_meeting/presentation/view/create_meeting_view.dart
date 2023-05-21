@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:winmeet_mobile/app/router/app_router.gr.dart';
-
 import 'package:winmeet_mobile/app/utils/calendar/calendar_utils.dart';
+import 'package:winmeet_mobile/app/widgets/indicators/custom_circular_progress_indicator.dart';
 import 'package:winmeet_mobile/app/widgets/input/text_input_field.dart';
 import 'package:winmeet_mobile/app/widgets/text/winmeet_body_large.dart';
 import 'package:winmeet_mobile/core/extensions/context_extensions.dart';
@@ -71,7 +71,7 @@ class _CreateMeetingScaffold extends StatelessWidget {
                     : null,
                 icon: state.status.isSubmissionInProgress
                     ? const Center(
-                        child: CircularProgressIndicator.adaptive(),
+                        child: CustomCircularProgressIndicator(),
                       )
                     : const Icon(Icons.done),
               );
