@@ -46,4 +46,13 @@ class ScheduleRepository {
     }
     return false;
   }
+
+  bool isVoted({required List<String> participants}) {
+    final token = _cacheClient.getString(CacheConstants.token);
+    final emailToken = JwtUtils.getEmailFromToken(token: token!);
+    if (participants.contains(emailToken)) {
+      return true;
+    }
+    return false;
+  }
 }

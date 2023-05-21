@@ -36,7 +36,8 @@ class ScheduleApi {
       if (model == null) {
         throw Exception('Null data getAllMeetings()');
       } else {
-        return model.map((e) => EventModel.fromJson(e as Map<String, dynamic>)).toList();
+        return model.map((e) => EventModel.fromJson(e as Map<String, dynamic>)).toList()
+          ..sort((a, b) => a.eventStartDate.compareTo(b.eventStartDate));
       }
     } catch (e) {
       throw Exception(e);

@@ -181,39 +181,57 @@ class _EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        contentPadding: context.paddingAllLow,
-        onTap: () {
-          showModalBottomSheet<dynamic>(
-            context: context,
-            isScrollControlled: true,
-            builder: (bottomSheetContext) => BlocProvider.value(
-              value: context.read<ScheduleCubit>(),
-              child: BlocListener<ScheduleCubit, ScheduleState>(
-                listener: (context, state) {
-                  if (state.status == PageStatus.success) {
-                    context.router.pop();
-                  }
-                  if (state.status == PageStatus.failure) {
-                    SnackbarUtils.showSnackbar(context: context, message: 'An error occurred while deleting meeting');
-                    context.router.pop();
-                  }
-                },
-                child: _MeetingDetails(event: event),
-              ),
+    return ClipRect(
+      child: Banner(
+        message: event.eventEndDate.isBefore(DateTime.now())
+            ? 'Ended'
+            : event.isPending
+                ? 'Pending'
+                : 'Scheduled',
+        color: event.eventEndDate.isBefore(DateTime.now())
+            ? context.theme.colorScheme.error
+            : event.isPending
+                ? context.theme.disabledColor
+                : context.theme.colorScheme.primary,
+        location: BannerLocation.topEnd,
+        child: Card(
+          child: ListTile(
+            contentPadding: context.paddingAllLow,
+            onTap: () {
+              showModalBottomSheet<dynamic>(
+                context: context,
+                isScrollControlled: true,
+                builder: (bottomSheetContext) => BlocProvider.value(
+                  value: context.read<ScheduleCubit>(),
+                  child: BlocListener<ScheduleCubit, ScheduleState>(
+                    listener: (context, state) {
+                      if (state.status == PageStatus.success) {
+                        context.router.pop();
+                      }
+                      if (state.status == PageStatus.failure) {
+                        SnackbarUtils.showSnackbar(
+                          context: context,
+                          message: 'An error occurred while deleting meeting',
+                        );
+                        context.router.pop();
+                      }
+                    },
+                    child: _MeetingDetails(event: event),
+                  ),
+                ),
+              );
+            },
+            title: WinMeetBodyLarge(text: event.eventName),
+            subtitle: Text(event.eventDescription, maxLines: 1),
+            trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(DateFormatUtils.get12HourFormat(event.eventStartDate)),
+                Text(DateFormatUtils.get12HourFormat(event.eventEndDate)),
+              ],
             ),
-          );
-        },
-        title: WinMeetBodyLarge(text: event.eventName),
-        subtitle: Text(event.eventDescription, maxLines: 1),
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(DateFormatUtils.get12HourFormat(event.eventStartDate)),
-            Text(DateFormatUtils.get12HourFormat(event.eventEndDate)),
-          ],
+          ),
         ),
       ),
     );
@@ -266,6 +284,15 @@ class _MeetingDetails extends StatelessWidget {
               ),
             ],
           ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const WinMeetTitleMedium(text: 'Vote Due Date'),
+              Text(
+                DateFormatUtils.getMonthDayYearHour(event.voteDueDate),
+              ),
+            ],
+          ),
           if (event.location.isNotEmpty)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -289,7 +316,10 @@ class _MeetingDetails extends StatelessWidget {
               )
             ],
           ),
-          if (context.read<ScheduleCubit>().isOwner(email: event.eventOwner))
+          if (context.read<ScheduleCubit>().isOwner(email: event.eventOwner) &&
+              event.voteDueDate.isAfter(
+                DateTime.now(),
+              ))
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -312,6 +342,18 @@ class _MeetingDetails extends StatelessWidget {
                 ),
               ],
             ),
+          if (!context.read<ScheduleCubit>().isOwner(email: event.eventOwner) &&
+                  event.voteDueDate.isAfter(DateTime.now()) &&
+                  !context.read<ScheduleCubit>().isVoted(participants: event.voters) &&
+                  (!event.isPending) ||
+              !(event.isPending || event.eventStartDate2 == null || event.eventStartDate3 == null))
+            Center(
+              child: TextButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.not_interested),
+                label: const Text('Cannot Attend'),
+              ),
+            )
         ].withSpaceBetween(height: context.mediumValue),
       ),
     );

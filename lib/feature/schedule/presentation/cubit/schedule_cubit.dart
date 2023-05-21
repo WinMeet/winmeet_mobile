@@ -51,4 +51,8 @@ class ScheduleCubit extends Cubit<ScheduleState> {
   bool isOwner({required String email}) {
     return _scheduleRepository.isOwner(email: email);
   }
+
+  bool isVoted({required List<String> participants}) {
+    return _scheduleRepository.isVoted(participants: participants);
+  }
 }
