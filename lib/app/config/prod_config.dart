@@ -5,5 +5,5 @@ import 'package:winmeet_mobile/core/config/app_config.dart';
 class ProdConfig implements AppConfig {
   @override
   // TODO: implement baseUrl
-  String get baseUrl => 'https://1049-176-88-89-194.ngrok-free.app';
+  String get baseUrl => '';
 }
