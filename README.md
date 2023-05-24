@@ -5,8 +5,9 @@
 1. [Project Architecture and Structure](#project-architecture-and-structure)
    - [Architecture](#architecture)
    - [Structure](#structure)
-2. [Coding Standards](#coding-standards)
-3. [How to Run](#how-to-run)
+2. [Preview](#preview)
+3. [Coding Standards](#coding-standards)
+4. [How to Run](#how-to-run)
 
 ## Project Architecture and Structure <a name="project-architecture-and-structure"></a>
 
@@ -27,6 +28,35 @@ In our project, we used feature-first layered architecture, which divides each f
     - presentation: Contains "view" and "cubit" files.
       - view: Contains the UI code for the feature
       - cubit: Calls "repositories" and emits new states based on the results returned from the repository.
+
+## Preview <a name="preview"></a>
+
+<table>
+  <tr>
+    <td>Login</td>
+    <td>Register</td>
+    <td>Schedule</td>
+    <td>Details</td>
+  </tr>
+  <tr>
+     <td><img src="screenshots/login.png"></td>
+     <td><img src="screenshots/register.png"></td>
+     <td><img src="screenshots/schedule.png"></td>
+     <td><img src="screenshots/details.png"></td>
+  </tr>
+  <tr>
+    <td>Create Meeting</td>
+    <td>Add Participants</td>
+    <td>Pending</td>
+    <td>Settings</td>
+  </tr>
+  <tr>
+     <td><img src="screenshots/create_meeting.png"></td>
+     <td><img src="screenshots/add_participants.png"></td>
+     <td><img src="screenshots/pending.png"></td>
+     <td><img src="screenshots/settings.png"></td>
+  </tr>
+</table>
 
 ## Coding Standards <a name="coding-standards"></a>
 
